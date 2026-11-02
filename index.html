@@ -1,0 +1,1657 @@
+<!DOCTYPE html>
+<html lang="th" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Position Size Calculator & TradingView Gemini AI Analyzer</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Thai:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', 'Noto Sans Thai', sans-serif;
+      background-color: #141414;
+      color: #e5e5e5;
+    }
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    input[type=number] {
+      -moz-appearance: textfield;
+    }
+    .calc-card {
+      background-color: #1e1e1e;
+      border: 1px solid #2e2e2e;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+    .calc-input-box {
+      background-color: #262626;
+      border: 1px solid #383838;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+    .calc-input-box:focus-within {
+      border-color: #525252;
+      box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.06);
+    }
+    .calc-output-box {
+      background-color: #222222;
+      border: 1px dashed #3a3a3a;
+    }
+    .tooltip-container {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+    }
+    .tooltip-box {
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.15s ease, transform 0.15s ease;
+      transform: translateY(4px);
+      pointer-events: none;
+      z-index: 50;
+    }
+    .tooltip-container:hover .tooltip-box,
+    .tooltip-container:focus-within .tooltip-box {
+      visibility: visible;
+      opacity: 1;
+      transform: translateY(0);
+    }
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #181818;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #3a3a3a;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #525252;
+    }
+  </style>
+</head>
+<body class="min-h-screen p-3 sm:p-5 md:p-6 flex flex-col items-center justify-start">
+
+  <div class="w-full max-w-[1440px] space-y-5">
+
+    <!-- Top Navigation / Status Bar -->
+    <div class="calc-card rounded-md px-4 sm:px-6 py-3.5 flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/>
+          </svg>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="font-semibold text-white text-sm sm:text-base">TradingView + Position Size & Gemini AI Terminal</span>
+            <span class="text-[11px] bg-emerald-950/80 text-emerald-300 border border-emerald-700/50 px-2 py-0.5 rounded font-medium">All-in-One</span>
+          </div>
+          <p class="text-xs text-[#9ca3af]">วิเคราะห์กราฟเรียลไทม์ คำนวณขนาด Position Size (USDT & BTC) และประเมินแผนเทรดด้วย Gemini AI</p>
+        </div>
+      </div>
+
+      <!-- Quick Symbol & Timeframe Bar -->
+      <div class="flex flex-wrap items-center gap-2">
+        <div class="flex items-center gap-1.5 bg-[#161616] border border-[#333333] rounded px-2.5 py-1.5">
+          <label for="symbolSelect" class="text-xs text-[#9ca3af]">คู่เหรียญ:</label>
+          <select id="symbolSelect" class="bg-transparent text-xs sm:text-sm font-semibold text-white focus:outline-none cursor-pointer">
+            <option value="BTCUSDT" class="bg-[#1e1e1e]" selected>BTCUSDT</option>
+            <option value="ETHUSDT" class="bg-[#1e1e1e]">ETHUSDT</option>
+            <option value="SOLUSDT" class="bg-[#1e1e1e]">SOLUSDT</option>
+            <option value="BNBUSDT" class="bg-[#1e1e1e]">BNBUSDT</option>
+            <option value="XRPUSDT" class="bg-[#1e1e1e]">XRPUSDT</option>
+            <option value="DOGEUSDT" class="bg-[#1e1e1e]">DOGEUSDT</option>
+            <option value="ADAUSDT" class="bg-[#1e1e1e]">ADAUSDT</option>
+            <option value="AVAXUSDT" class="bg-[#1e1e1e]">AVAXUSDT</option>
+            <option value="LINKUSDT" class="bg-[#1e1e1e]">LINKUSDT</option>
+            <option value="PAXGUSDT" class="bg-[#1e1e1e]">PAXGUSDT (Gold)</option>
+          </select>
+        </div>
+
+        <div class="flex items-center gap-1.5 bg-[#161616] border border-[#333333] rounded px-2.5 py-1.5">
+          <label for="intervalSelect" class="text-xs text-[#9ca3af]">Timeframe:</label>
+          <select id="intervalSelect" class="bg-transparent text-xs sm:text-sm font-semibold text-white focus:outline-none cursor-pointer">
+            <option value="15" data-binance="15m" class="bg-[#1e1e1e]">15 นาที (15m)</option>
+            <option value="60" data-binance="1h" selected class="bg-[#1e1e1e]">1 ชั่วโมง (1H)</option>
+            <option value="240" data-binance="4h" class="bg-[#1e1e1e]">4 ชั่วโมง (4H)</option>
+            <option value="D" data-binance="1d" class="bg-[#1e1e1e]">1 วัน (1D)</option>
+          </select>
+        </div>
+
+        <button id="fetchLivePriceTopBtn" type="button" class="text-xs bg-sky-500/15 hover:bg-sky-500/25 text-sky-300 border border-sky-500/30 px-3 py-1.5 rounded transition flex items-center gap-1.5">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span>ราคาตลาด: <strong id="liveTickerPriceDisplay">กำลังโหลด...</strong></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Main 2-Column Workspace: Left = Position Size Calculator + Market Order Form | Right = TradingView Chart & Gemini AI -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
+
+      <!-- LEFT COLUMN (5 cols on lg): Position Size Calculator + Exact Market Order Panel from Screenshot -->
+      <div class="lg:col-span-5 space-y-5">
+
+        <!-- Main Position Size Calculator Card -->
+        <div class="calc-card rounded-md overflow-hidden">
+          
+          <!-- Card Header -->
+          <div class="px-5 sm:px-6 py-4 border-b border-[#2e2e2e]">
+            <div class="flex items-center justify-between flex-wrap gap-2">
+              <div class="flex items-center gap-2.5">
+                <svg class="w-6 h-6 text-[#d4d4d4] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="4" y="2" width="16" height="20" rx="2" />
+                  <line x1="8" y1="6" x2="16" y2="6" />
+                  <line x1="16" y1="14" x2="16" y2="18" />
+                  <path d="M16 10h.01" />
+                  <path d="M12 10h.01" />
+                  <path d="M8 10h.01" />
+                  <path d="M12 14h.01" />
+                  <path d="M8 14h.01" />
+                  <path d="M12 18h.01" />
+                  <path d="M8 18h.01" />
+                </svg>
+                <h1 class="text-lg sm:text-xl font-semibold text-[#e5e5e5] tracking-tight">Position Size Calculator</h1>
+              </div>
+              <button id="resetBtn" type="button" class="text-xs text-[#9ca3af] hover:text-white bg-[#282828] hover:bg-[#333333] px-2.5 py-1.5 rounded transition flex items-center gap-1" title="รีเซ็ตเป็นค่าตามรูปตารางเทรด (5,000 USDT / 3x)">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+                  <path d="M3 3v5h5"/>
+                </svg>
+                <span>ค่าเริ่มต้น</span>
+              </button>
+            </div>
+            <p class="mt-1.5 text-xs sm:text-sm text-[#b0b0b0]">
+              เครื่องคิดเลขเพื่อช่วยคำนวน Position Size ของคุณก่อนเข้า Position
+            </p>
+          </div>
+
+          <!-- Form Rows -->
+          <div class="px-5 sm:px-6 divide-y divide-[#282828]">
+            
+            <!-- Row 1: MY PORTFOLIO BALANCE -->
+            <div class="py-3.5 sm:py-4 grid grid-cols-1 sm:grid-cols-12 items-center gap-2 sm:gap-3">
+              <div class="sm:col-span-5 flex items-center gap-1.5 text-xs font-medium tracking-wide text-[#cccccc] uppercase">
+                <label for="balanceInput" class="cursor-pointer">MY PORTFOLIO BALANCE *</label>
+                <div class="tooltip-container" tabindex="0">
+                  <svg class="w-4 h-4 text-[#9ca3af] hover:text-white cursor-help shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10" />
+                    <line x1="12" y1="16" x2="12" y2="12" />
+                    <line x1="12" y1="8" x2="12.01" y2="8" />
+                  </svg>
+                  <div class="tooltip-box absolute left-0 bottom-full mb-2 w-56 p-2.5 bg-[#111111] border border-[#3f3f3f] rounded text-[12px] normal-case font-normal text-[#e0e0e0] shadow-xl">
+                    เงินทุนทั้งหมดในพอร์ตของคุณ (Avbl 5,000.00 USDT ตามภาพที่แนบ)
+                  </div>
+                </div>
+              </div>
+              <div class="sm:col-span-7">
+                <div class="calc-input-box rounded flex items-center px-3.5 py-2">
+                  <input
+                    id="balanceInput"
+                    type="number"
+                    step="any"
+                    min="0"
+                    value="5000"
+                    placeholder="5000"
+                    class="w-full bg-transparent text-center text-[#e5e5e5] text-sm sm:text-[15px] font-medium focus:outline-none"
+                  />
+                  <span class="text-xs font-medium text-[#b0b0b0] select-none pl-2">USDT</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Row 2: % RISK OF RUIN -->
+            <div class="py-3.5 sm:py-4 grid grid-cols-1 sm:grid-cols-12 items-center gap-2 sm:gap-3">
+              <div class="sm:col-span-5 flex items-center gap-1.5 text-xs font-medium tracking-wide text-[#cccccc] uppercase">
+                <label for="riskInput" class="cursor-pointer">% RISK OF RUIN *</label>
+                <div class="tooltip-container" tabindex="0">
+                  <svg class="w-4 h-4 text-[#9ca3af] hover:text-white cursor-help shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10" />
+                    <line x1="12" y1="16" x2="12" y2="12" />
+                    <line x1="12" y1="8" x2="12.01" y2="8" />
+                  </svg>
+                  <div class="tooltip-box absolute left-0 bottom-full mb-2 w-60 p-2.5 bg-[#111111] border border-[#3f3f3f] rounded text-[12px] normal-case font-normal text-[#e0e0e0] shadow-xl">
+                    เปอร์เซ็นต์ความเสี่ยงของพอร์ตที่ยอมเสียได้ในการเทรด 1 ครั้ง (นิยมตั้งไว้ที่ 1% - 2% ของพอร์ต)
+                  </div>
+                </div>
+              </div>
+              <div class="sm:col-span-7">
+                <div class="calc-input-box rounded flex items-center px-3.5 py-2">
+                  <input
+                    id="riskInput"
+                    type="number"
+                    step="any"
+                    min="0.01"
+                    max="100"
+                    value="2"
+                    placeholder="2"
+                    class="w-full bg-transparent text-center text-[#e5e5e5] text-sm sm:text-[15px] font-medium focus:outline-none"
+                  />
+                  <span class="text-xs font-medium text-[#b0b0b0] select-none pl-2">%</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Row 3: % STOP LOSS -->
+            <div class="py-3.5 sm:py-4 grid grid-cols-1 sm:grid-cols-12 items-center gap-2 sm:gap-3">
+              <div class="sm:col-span-5 flex items-center gap-1.5 text-xs font-medium tracking-wide text-[#cccccc] uppercase">
+                <label for="stopLossInput" class="cursor-pointer">% STOP LOSS *</label>
+                <div class="tooltip-container" tabindex="0">
+                  <svg class="w-4 h-4 text-[#9ca3af] hover:text-white cursor-help shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10" />
+                    <line x1="12" y1="16" x2="12" y2="12" />
+                    <line x1="12" y1="8" x2="12.01" y2="8" />
+                  </svg>
+                  <div class="tooltip-box absolute left-0 bottom-full mb-2 w-60 p-2.5 bg-[#111111] border border-[#3f3f3f] rounded text-[12px] normal-case font-normal text-[#e0e0e0] shadow-xl">
+                    ระยะตัดขาดทุน (% การเคลื่อนที่ของราคาจากจุดเข้า ไปยังจุด Stop Loss ที่วัดได้จากกราฟ)
+                  </div>
+                </div>
+              </div>
+              <div class="sm:col-span-7">
+                <div class="calc-input-box rounded flex items-center px-3.5 py-2">
+                  <input
+                    id="stopLossInput"
+                    type="number"
+                    step="any"
+                    min="0.01"
+                    value="3"
+                    placeholder="3"
+                    class="w-full bg-transparent text-center text-[#e5e5e5] text-sm sm:text-[15px] font-medium focus:outline-none"
+                  />
+                  <span class="text-xs font-medium text-[#b0b0b0] select-none pl-2">%</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Row 4: LEVERAGE -->
+            <div class="py-3.5 sm:py-4 grid grid-cols-1 sm:grid-cols-12 items-center gap-2 sm:gap-3">
+              <div class="sm:col-span-5 flex items-center gap-1.5 text-xs font-medium tracking-wide text-[#cccccc] uppercase">
+                <label for="leverageInput" class="cursor-pointer">LEVERAGE *</label>
+                <div class="tooltip-container" tabindex="0">
+                  <svg class="w-4 h-4 text-[#9ca3af] hover:text-white cursor-help shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10" />
+                    <line x1="12" y1="16" x2="12" y2="12" />
+                    <line x1="12" y1="8" x2="12.01" y2="8" />
+                  </svg>
+                  <div class="tooltip-box absolute left-0 bottom-full mb-2 w-60 p-2.5 bg-[#111111] border border-[#3f3f3f] rounded text-[12px] normal-case font-normal text-[#e0e0e0] shadow-xl">
+                    ตัวคูณ Leverage ที่ตั้งค่าไว้ (3X ตามภาพที่แนบ)
+                  </div>
+                </div>
+              </div>
+              <div class="sm:col-span-7">
+                <div class="calc-input-box rounded flex items-center px-3.5 py-2">
+                  <input
+                    id="leverageInput"
+                    type="number"
+                    step="any"
+                    min="1"
+                    max="500"
+                    value="3"
+                    placeholder="3"
+                    class="w-full bg-transparent text-center text-[#e5e5e5] text-sm sm:text-[15px] font-medium focus:outline-none"
+                  />
+                  <span class="text-xs font-medium text-[#b0b0b0] select-none pl-2">X</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Row 5: POSITION SIZE (Margin Cost in USDT) -->
+            <div class="py-4 sm:py-5 grid grid-cols-1 sm:grid-cols-12 items-center gap-2 sm:gap-3">
+              <div class="sm:col-span-5 flex items-center gap-1.5 text-xs font-medium tracking-wide text-[#cccccc] uppercase">
+                <span>POSITION SIZE (COST)</span>
+              </div>
+              <div class="sm:col-span-7">
+                <div class="calc-output-box rounded flex items-center px-3.5 py-2.5 relative group">
+                  <div id="positionSizeDisplay" class="w-full text-center text-[#ffffff] text-sm sm:text-[15px] font-semibold select-all">
+                    1111.11
+                  </div>
+                  <div class="flex items-center gap-2 pl-2">
+                    <span class="text-xs font-medium text-[#b0b0b0] select-none">USDT</span>
+                    <button
+                      id="copyPosBtn"
+                      type="button"
+                      title="คัดลอกขนาด Position (USDT)"
+                      class="text-[#888888] hover:text-white transition p-1 rounded hover:bg-[#333333]"
+                    >
+                      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Bottom Summary Bullets -->
+          <div class="px-5 sm:px-7 py-4 sm:py-5 border-t border-[#2e2e2e] bg-[#1c1c1c]">
+            <ul class="list-disc list-inside space-y-1.5 text-xs sm:text-sm text-[#d4d4d4]">
+              <li>
+                Position Size (Cost / Margin) ของคุณในครั้งนี้คือ <span id="bulletPositionSize" class="font-semibold text-white">1111.11</span> USDT
+              </li>
+              <li>
+                ขนาดช่อง <strong>Size (BTC)</strong> ที่ต้องกรอกในหน้าส่งคำสั่งคือ <span id="bulletBtcSize" class="font-semibold text-amber-400">0.0428</span> BTC
+              </li>
+              <li>
+                หากคุณเทรดแล้วแพ้ในครั้งนี้ คุณจะเหลือโอกาสอีก <span id="bulletRemainingChances" class="font-semibold text-white">49</span> ครั้ง
+              </li>
+            </ul>
+            <div id="copyToast" class="hidden mt-2.5 text-xs text-emerald-400 font-medium">
+              คัดลอกค่าเรียบร้อยแล้ว!
+            </div>
+          </div>
+
+        </div>
+
+        <!-- UPDATED: Exact Market Order Panel Simulator (Matching New Screenshot with Market, Slippage Tolerance, TP/SL Inputs) -->
+        <div class="bg-[#161a1e] border border-[#2b3139] rounded-lg p-4 sm:p-5 shadow-2xl space-y-3.5 text-[#eaecef]">
+          <div class="flex items-center justify-between border-b border-[#2b3139] pb-2.5">
+            <span class="text-xs font-semibold text-amber-400 uppercase tracking-wider">ตารางคำสั่ง Market ตามภาพที่แนบ (กรอกค่าให้ครบแล้ว)</span>
+            <!-- Direction Switcher for TP/SL inputs -->
+            <div class="flex items-center gap-1 bg-[#2b3139] p-0.5 rounded text-[11px]">
+              <button id="dirLongBtn" type="button" class="px-2 py-0.5 rounded bg-[#0ecb81] text-white font-semibold transition">ฝั่ง Long</button>
+              <button id="dirShortBtn" type="button" class="px-2 py-0.5 rounded text-[#848e9c] hover:text-white font-semibold transition">ฝั่ง Short</button>
+            </div>
+          </div>
+
+          <!-- Top Buttons: Isolated | 3x | S -->
+          <div class="flex items-center justify-between gap-2">
+            <div class="flex items-center gap-2 flex-1">
+              <div class="bg-[#2b3139] text-[#eaecef] text-xs font-semibold py-1.5 px-4 rounded text-center flex-1">
+                Isolated
+              </div>
+              <div class="bg-[#2b3139] text-[#eaecef] text-xs font-semibold py-1.5 px-4 rounded text-center flex-1">
+                <span id="orderPanelLeverageBadge">3</span>x
+              </div>
+              <div class="bg-[#2b3139] text-[#eaecef] text-xs font-semibold py-1.5 px-3 rounded text-center">
+                S
+              </div>
+            </div>
+            <div class="text-[#848e9c] font-bold px-1 select-none">•••</div>
+          </div>
+
+          <!-- Order Type Tabs: Limit | Market (Active) | Conditional -->
+          <div class="flex items-center justify-between border-b border-[#2b3139] text-xs font-semibold pt-1">
+            <div class="flex items-center gap-5">
+              <span class="text-[#848e9c] pb-2">Limit</span>
+              <span class="text-[#eaecef] border-b-2 border-[#f0b90b] pb-2">Market</span>
+              <span class="text-[#848e9c] pb-2">Conditional ▾</span>
+            </div>
+            <span class="text-[#848e9c] pb-2">ⓘ</span>
+          </div>
+
+          <!-- Avbl Row + Reference Market Price -->
+          <div class="flex items-center justify-between text-xs pt-0.5">
+            <div>
+              <span class="text-[#848e9c]">Avbl </span>
+              <strong id="orderPanelAvbl" class="text-[#eaecef]">5,000.00 USDT</strong>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="text-[11px] text-[#848e9c]">ราคาตลาดอ้างอิง:</span>
+              <input
+                id="entryPriceInput"
+                type="number"
+                step="any"
+                min="0"
+                value="77815.0"
+                class="w-24 bg-[#1e2329] border border-[#3b4149] rounded px-2 py-0.5 text-right text-xs font-semibold text-white focus:outline-none"
+              />
+              <button id="useCurrentPriceBtn" type="button" class="text-[11px] text-[#f0b90b] hover:underline font-medium">
+                + ดึงราคาปัจจุบัน
+              </button>
+            </div>
+          </div>
+
+          <!-- Size Input Box (Auto-calculated in BTC) -->
+          <div class="space-y-1">
+            <div class="flex items-center justify-between">
+              <label class="text-xs text-[#848e9c]">Size</label>
+              <button id="copyBtcSizeBtn" type="button" class="text-[11px] text-[#f0b90b] hover:underline font-medium">
+                คัดลอกค่า Size (BTC)
+              </button>
+            </div>
+            <div class="bg-[#1e2329] border-2 border-[#f0b90b]/80 rounded-md px-3 py-2.5 flex items-center justify-between">
+              <div id="orderPanelSizeBtc" class="text-base font-bold text-[#f0b90b] select-all">
+                0.0428
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="text-xs text-[#848e9c]">(<span id="orderPanelSizeUsdt">3,333.33</span> USDT)</span>
+                <span class="text-xs font-semibold text-[#eaecef]">BTC ▾</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Percentage Slider Visual -->
+          <div class="space-y-1 pt-1">
+            <div class="relative w-full h-1.5 bg-[#2b3139] rounded">
+              <div id="orderPanelSliderFill" class="absolute left-0 top-0 h-1.5 bg-[#f0b90b] rounded" style="width: 22.2%;"></div>
+            </div>
+            <div class="flex justify-between text-[10px] text-[#848e9c]">
+              <span>ใช้ Margin: <strong id="orderPanelPctUsed" class="text-[#eaecef]">22.22%</strong> ของ Avbl</span>
+              <span>Max: <span id="orderPanelMaxBtcTop">0.1925</span> BTC</span>
+            </div>
+          </div>
+
+          <!-- Slippage Tolerance Checked Box (Matching New Screenshot) -->
+          <div class="space-y-2 pt-1 border-t border-[#2b3139]">
+            <label class="flex items-center gap-2 text-xs">
+              <input type="checkbox" checked disabled class="accent-[#eaecef] rounded" />
+              <span class="font-medium text-[#eaecef]">Slippage Tolerance</span>
+            </label>
+            <div class="bg-[#1e2329] border border-[#3b4149] rounded-md px-3 py-2 flex items-center justify-between">
+              <span class="text-sm font-semibold text-[#eaecef]">0.2</span>
+              <div class="flex items-center gap-2">
+                <span class="text-[11px] text-[#848e9c]">(แนะนำ 0.1% - 0.5% สำหรับ BTC)</span>
+                <span class="text-xs font-semibold text-[#eaecef]">% ▾</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- TP/SL Checked Section with Exact Take Profit & Stop Loss Boxes -->
+          <div class="pt-1 space-y-2.5">
+            <div class="flex items-center justify-between text-xs">
+              <label class="flex items-center gap-2">
+                <input type="checkbox" checked disabled class="accent-[#eaecef] rounded" />
+                <span class="font-medium text-[#eaecef]">TP/SL</span>
+                <span id="activeDirLabel" class="text-[11px] text-[#0ecb81] font-semibold">(โหมด Buy/Long)</span>
+              </label>
+              <span class="text-xs font-semibold text-[#f0b90b]">Advanced</span>
+            </div>
+
+            <!-- Take Profit Box -->
+            <div class="space-y-1">
+              <div class="flex items-center justify-between text-xs">
+                <span class="text-[#848e9c]">Take Profit (<span id="tpBoxPctHint" class="text-[#0ecb81]">+6.00% | RR 1:2</span>)</span>
+                <span class="text-[#eaecef] font-semibold">Last ▾</span>
+              </div>
+              <div class="bg-[#1e2329] border border-[#0ecb81]/60 rounded-md px-3 py-2 flex items-center justify-between">
+                <span id="orderPanelTpInputBox" class="text-sm font-bold text-[#0ecb81] select-all">82,483.9</span>
+                <div class="flex items-center gap-2">
+                  <button id="copyTpPriceBtn" type="button" class="text-[11px] text-[#848e9c] hover:text-white">คัดลอก</button>
+                  <span class="text-xs font-semibold text-[#eaecef]">USDT ▾</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Stop Loss Box -->
+            <div class="space-y-1">
+              <div class="flex items-center justify-between text-xs">
+                <span class="text-[#848e9c]">Stop Loss (<span id="slBoxPctHint" class="text-[#f6465d]">-3.00% | เสีย 100 USDT</span>)</span>
+                <span class="text-[#eaecef] font-semibold">Last ▾</span>
+              </div>
+              <div class="bg-[#1e2329] border border-[#f6465d]/60 rounded-md px-3 py-2 flex items-center justify-between">
+                <span id="orderPanelSlInputBox" class="text-sm font-bold text-[#f6465d] select-all">75,480.6</span>
+                <div class="flex items-center gap-2">
+                  <button id="copySlPriceBtn" type="button" class="text-[11px] text-[#848e9c] hover:text-white">คัดลอก</button>
+                  <span class="text-xs font-semibold text-[#eaecef]">USDT ▾</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Dual Reference Summary (Long vs Short) -->
+            <div class="grid grid-cols-2 gap-2 text-[11px] pt-1">
+              <div class="bg-[#1e2329] border border-[#2b3139] rounded p-2">
+                <div class="text-[#0ecb81] font-semibold">ฝั่ง Buy/Long (RR 1:2)</div>
+                <div class="text-[#848e9c]">TP (+<span id="tpLongPctLabel">6.00</span>%): <strong id="tpLongPriceDisplay" class="text-[#eaecef]">82,483.9</strong></div>
+                <div class="text-[#848e9c]">SL (-<span id="slLongPctLabel">3.00</span>%): <strong id="slLongPriceDisplay" class="text-[#eaecef]">75,480.6</strong></div>
+              </div>
+              <div class="bg-[#1e2329] border border-[#2b3139] rounded p-2">
+                <div class="text-[#f6465d] font-semibold">ฝั่ง Sell/Short (RR 1:2)</div>
+                <div class="text-[#848e9c]">TP (-<span id="tpShortPctLabel">6.00</span>%): <strong id="tpShortPriceDisplay" class="text-[#eaecef]">73,146.1</strong></div>
+                <div class="text-[#848e9c]">SL (+<span id="slShortPctLabel">3.00</span>%): <strong id="slShortPriceDisplay" class="text-[#eaecef]">80,149.5</strong></div>
+              </div>
+            </div>
+
+            <!-- Reduce-Only Unchecked -->
+            <div class="flex items-center gap-2 text-xs pt-0.5">
+              <input type="checkbox" disabled class="rounded" />
+              <span class="text-[#eaecef]">Reduce-Only <span class="text-[11px] text-[#848e9c]">(ไม่ต้องติ๊กเมื่อเปิดสถานะใหม่)</span></span>
+            </div>
+          </div>
+
+          <!-- Buy/Long & Sell/Short Buttons -->
+          <div class="grid grid-cols-2 gap-3 pt-1">
+            <button id="simBuyLongBtn" type="button" class="bg-[#0ecb81] hover:bg-[#0bb572] text-white font-semibold text-sm py-2.5 rounded-md text-center shadow transition">
+              Buy/Long
+            </button>
+            <button id="simSellShortBtn" type="button" class="bg-[#f6465d] hover:bg-[#e03c52] text-white font-semibold text-sm py-2.5 rounded-md text-center shadow transition">
+              Sell/Short
+            </button>
+          </div>
+
+          <!-- Bottom Summary Footer: Liq Price | Cost | Max (Exact Match to Screenshot: Max 0.1925 / 0.1930 BTC) -->
+          <div class="grid grid-cols-2 gap-3 pt-1 text-xs border-t border-[#2b3139]">
+            <div class="space-y-1">
+              <div class="flex justify-between">
+                <span class="text-[#848e9c]">Liq Price</span>
+                <strong id="liqPriceLongDisplay" class="text-[#eaecef]">52,136.1 USDT</strong>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-[#848e9c]">Cost</span>
+                <strong id="costLongDisplay" class="text-[#eaecef]">1,111.11 USDT</strong>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-[#848e9c]">Max</span>
+                <strong id="maxBtcLongDisplay" class="text-[#eaecef]">0.1925 BTC</strong>
+              </div>
+            </div>
+
+            <div class="space-y-1">
+              <div class="flex justify-between">
+                <span class="text-[#848e9c]">Liq Price</span>
+                <strong id="liqPriceShortDisplay" class="text-[#eaecef]">103,494.0 USDT</strong>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-[#848e9c]">Cost</span>
+                <strong id="costShortDisplay" class="text-[#eaecef]">1,111.11 USDT</strong>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-[#848e9c]">Max</span>
+                <strong id="maxBtcShortDisplay" class="text-[#eaecef]">0.1930 BTC</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Entry Price & Stop Loss Distance Calculator Card -->
+        <div class="calc-card rounded-md p-4 sm:p-5 space-y-3.5">
+          <div class="flex items-center justify-between flex-wrap gap-2">
+            <div class="flex items-center gap-2">
+              <span class="text-xs sm:text-sm font-semibold text-amber-400">คำนวณ % Stop Loss จากราคาเหรียญบนกราฟ</span>
+              <span id="slDirectionBadge" class="text-[11px] px-2 py-0.5 rounded bg-emerald-950/60 text-emerald-300 border border-emerald-800/50">ฝั่ง LONG (SL ต่ำกว่าราคาเข้า)</span>
+            </div>
+            <button id="toggleSlHelperBtn" type="button" class="text-xs text-[#9ca3af] hover:text-white underline">
+              คำนวณ % Stop Loss จากราคาเข้า
+            </button>
+          </div>
+
+          <div id="slHelperPanel" class="space-y-3">
+            <div class="grid grid-cols-1 gap-3">
+              <div>
+                <div class="flex items-center justify-between mb-1">
+                  <label for="slPriceInput" class="text-xs text-[#9ca3af]">ถ้ารู้ราคา Stop Loss บนกราฟ กรอกที่นี่เพื่อคำนวณย้อนกลับเป็น % SL</label>
+                  <span class="text-[11px] text-[#737373]">USDT</span>
+                </div>
+                <input id="slPriceInput" type="number" step="any" min="0" value="75480.6" placeholder="เช่น 75480.6" class="w-full calc-input-box rounded px-3 py-2 text-sm text-white focus:outline-none" />
+              </div>
+            </div>
+
+            <button id="applySlPercentBtn" type="button" class="w-full bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 rounded px-3 py-2 text-xs font-medium transition flex items-center justify-center gap-1.5">
+              <span>นำค่า % SL ไปใช้ (<span id="previewSlPercent">3.00</span>%)</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- RIGHT COLUMN (7 cols on lg): Live TradingView Widget + Quick Presets Table + Gemini AI Analyzer + RR Table -->
+      <div class="lg:col-span-7 space-y-5">
+
+        <!-- Quick Presets Table for the Attached Order Screenshot -->
+        <div class="calc-card rounded-md p-4 sm:p-5 space-y-3 border border-amber-500/30">
+          <div class="flex items-center justify-between flex-wrap gap-2">
+            <div>
+              <h2 class="text-sm sm:text-base font-semibold text-white">ตารางสรุปค่าที่ต้องกรอกตามความเสี่ยง (สำหรับพอร์ต <span id="tablePortLabel">5,000</span> USDT | Leverage <span id="tableLevLabel">3</span>x | ราคา <span id="tablePriceLabel">77,815.0</span>)</h2>
+              <p class="text-xs text-[#9ca3af]">คลิกปุ่ม "เลือกใช้" ในแถวที่ตรงกับแผนของคุณเพื่อกรอกค่าลงในตารางคำสั่ง Market ด้านซ้ายอัตโนมัติ</p>
+            </div>
+          </div>
+
+          <div class="overflow-x-auto border border-[#2b2b2b] rounded">
+            <table class="w-full text-left border-collapse text-xs sm:text-sm">
+              <thead>
+                <tr class="bg-[#222222] text-[#a3a3a3] border-b border-[#2e2e2e]">
+                  <th class="py-2 px-3 font-medium">แผนความเสี่ยง</th>
+                  <th class="py-2 px-3 font-medium">เงินที่ยอมเสีย</th>
+                  <th class="py-2 px-3 font-medium">ระยะ % SL</th>
+                  <th class="py-2 px-3 font-medium text-amber-300">ช่อง Size (BTC)</th>
+                  <th class="py-2 px-3 font-medium">Cost (Margin)</th>
+                  <th class="py-2 px-3 font-medium text-right">นำไปใช้</th>
+                </tr>
+              </thead>
+              <tbody id="quickPresetTableBody" class="divide-y divide-[#262626] bg-[#181818]">
+                <!-- Populated dynamically by JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Live TradingView Advanced Chart Card -->
+        <div class="calc-card rounded-md overflow-hidden">
+          <div class="px-4 sm:px-5 py-3 border-b border-[#2e2e2e] flex items-center justify-between flex-wrap gap-2">
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+              <h2 class="text-sm sm:text-base font-semibold text-white">กราฟ TradingView เรียลไทม์ (<span id="chartHeaderSymbol">BINANCE:BTCUSDT</span>)</h2>
+            </div>
+            <span class="text-[11px] text-[#9ca3af]">ใช้แถบเครื่องมือซ้ายมือบนกราฟเพื่อตีเส้นและวัดระยะ % SL ได้เลย</span>
+          </div>
+          <div class="w-full h-[400px] sm:h-[430px] bg-[#141414]" id="tv_chart_container"></div>
+        </div>
+
+        <!-- Gemini AI Chart & Trade Setup Analyzer Card -->
+        <div class="calc-card rounded-md p-4 sm:p-6 space-y-4 border border-indigo-500/30">
+          <div class="flex items-start justify-between flex-wrap gap-3 border-b border-[#2e2e2e] pb-3.5">
+            <div class="flex items-center gap-2.5">
+              <div class="w-8 h-8 rounded-lg bg-indigo-500/20 border border-indigo-500/40 flex items-center justify-center text-indigo-300 shrink-0">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 3l1.912 5.813a2 2 0 001.275 1.275L21 12l-5.813 1.912a2 2 0 00-1.275 1.275L12 21l-1.912-5.813a2 2 0 00-1.275-1.275L3 12l5.813-1.912a2 2 0 001.275-1.275L12 3z"/>
+                </svg>
+              </div>
+              <div>
+                <h2 class="text-sm sm:text-base font-semibold text-white">Gemini AI วิเคราะห์กราฟ & ฟันธงแผน Long / Short</h2>
+                <p class="text-xs text-[#9ca3af]">ดึงข้อมูลแท่งเทียน RSI/EMA ล่าสุดจากตลาดจริง หรือวางภาพแคปหน้าจอกราฟเพื่อให้ Gemini วิเคราะห์</p>
+              </div>
+            </div>
+            <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer" class="text-xs text-indigo-400 hover:text-indigo-300 underline flex items-center gap-1">
+              <span>รับฟรี Gemini API Key</span>
+              <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            </a>
+          </div>
+
+          <!-- API Key Input + Save -->
+          <div class="grid grid-cols-1 sm:grid-cols-12 gap-2.5 items-center">
+            <label for="geminiApiKeyInput" class="sm:col-span-3 text-xs font-medium text-[#cccccc]">Gemini API Key:</label>
+            <div class="sm:col-span-9 flex gap-2">
+              <div class="calc-input-box rounded flex-1 flex items-center px-3 py-1.5">
+                <input
+                  id="geminiApiKeyInput"
+                  type="password"
+                  placeholder="วางรหัส AIza... ของคุณที่นี่ (ระบบบันทึกไว้ในเบราว์เซอร์ของคุณเท่านั้น)"
+                  class="w-full bg-transparent text-xs sm:text-sm text-white focus:outline-none"
+                />
+                <button id="toggleApiKeyVisBtn" type="button" class="text-xs text-[#9ca3af] hover:text-white pl-2">แสดง</button>
+              </div>
+              <button id="saveApiKeyBtn" type="button" class="bg-[#2c2c2c] hover:bg-[#383838] text-xs text-white px-3 py-1.5 rounded border border-[#404040] transition shrink-0">
+                บันทึกคีย์
+              </button>
+            </div>
+          </div>
+
+          <!-- Live Technical Indicators Snapshot -->
+          <div class="bg-[#161616] border border-[#2b2b2b] rounded p-3 flex flex-wrap items-center justify-between gap-2 text-xs">
+            <div class="flex flex-wrap items-center gap-3">
+              <span class="text-[#9ca3af]">ข้อมูลเทคนิคเรียลไทม์ (<strong id="techSymbolLabel" class="text-white">BTCUSDT 1h</strong>):</span>
+              <span>สัญญาณเทรนด์: <strong id="liveSignalBiasBadge" class="text-emerald-400">กำลังประมวลผล...</strong></span>
+              <span>RSI(14): <strong id="liveRsiValue" class="text-amber-300">-</strong></span>
+              <span>EMA(20): <strong id="liveEma20Value" class="text-sky-300">-</strong></span>
+              <span>EMA(50): <strong id="liveEma50Value" class="text-indigo-300">-</strong></span>
+              <span>กรอบ 24ชม.: <strong id="liveRange24hValue" class="text-[#d4d4d4]">-</strong></span>
+            </div>
+            <button id="refreshMarketDataBtn" type="button" class="text-[11px] text-sky-400 hover:text-sky-300 underline">
+              อัปเดตข้อมูลแท่งเทียน
+            </button>
+          </div>
+
+          <!-- Optional Chart Image Upload / Paste Zone -->
+          <div class="grid grid-cols-1 sm:grid-cols-12 gap-3 items-center">
+            <div class="sm:col-span-7">
+              <label for="chartImageInput" class="flex items-center justify-between gap-2 bg-[#161616] hover:bg-[#1c1c1c] border border-dashed border-[#3e3e3e] rounded px-3.5 py-2.5 cursor-pointer transition">
+                <div class="flex items-center gap-2 text-xs text-[#b0b0b0]">
+                  <svg class="w-4 h-4 text-indigo-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>
+                  </svg>
+                  <span id="imageUploadStatusText">แนบรูปกราฟ หรือกด <strong>Ctrl+V</strong> เพื่อวางภาพแคปกราฟ (ไม่บังคับ)</span>
+                </div>
+                <input id="chartImageInput" type="file" accept="image/*" class="hidden" />
+              </label>
+            </div>
+            <div class="sm:col-span-5 flex items-center gap-2">
+              <button id="clearImageBtn" type="button" class="hidden text-xs bg-rose-950/60 hover:bg-rose-900/60 text-rose-300 border border-rose-800/50 px-2.5 py-2 rounded transition">
+                ลบรูป
+              </button>
+              <button
+                id="runGeminiAnalysisBtn"
+                type="button"
+                class="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white font-medium text-xs sm:text-sm py-2.5 px-4 rounded shadow transition flex items-center justify-center gap-2"
+              >
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                </svg>
+                <span>วิเคราะห์กราฟ & แผนเทรดด้วย Gemini</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Image Preview if attached -->
+          <div id="imagePreviewContainer" class="hidden bg-[#141414] border border-[#2e2e2e] rounded p-2.5 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <img id="chartImagePreview" src="" alt="Chart Preview" class="h-14 w-auto rounded border border-[#383838] object-cover" />
+              <div class="text-xs text-[#b0b0b0]">
+                <div class="text-white font-medium">แนบภาพกราฟสำหรับส่งให้ Gemini Vision เรียบร้อย</div>
+                <div>ระบบจะวิเคราะห์จากทั้งภาพกราฟของคุณ + ข้อมูลแท่งเทียน + ค่า Position Size</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Analysis Output Area -->
+          <div id="aiAnalysisResultBox" class="bg-[#151515] border border-[#2c2c2c] rounded-md p-4 text-xs sm:text-sm text-[#e0e0e0] leading-relaxed max-h-[360px] overflow-y-auto space-y-2">
+            <!-- Auto-populated on load -->
+          </div>
+        </div>
+
+        <!-- 4 Key Money Management Metrics + RR Table -->
+        <div class="calc-card rounded-md p-4 sm:p-5 space-y-4">
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <div class="bg-[#161616] border border-[#2a2a2a] rounded p-3">
+              <div class="text-[11px] text-[#9ca3af]">เงินที่ยอมเสีย (Risk Amount)</div>
+              <div class="text-base font-semibold text-rose-400 mt-0.5">
+                <span id="metricRiskAmount">100.00</span> <span class="text-[11px] font-normal text-[#9ca3af]">USDT</span>
+              </div>
+              <div class="text-[10px] text-[#737373] mt-0.5">
+                พอร์ต × <span id="formulaRiskPct">2</span>%
+              </div>
+            </div>
+
+            <div class="bg-[#161616] border border-[#2a2a2a] rounded p-3">
+              <div class="text-[11px] text-[#9ca3af]">Margin ที่ต้องวาง (Cost)</div>
+              <div class="text-base font-semibold text-white mt-0.5">
+                <span id="metricMarginUsed">1,111.11</span> <span class="text-[11px] font-normal text-[#9ca3af]">USDT</span>
+              </div>
+              <div class="text-[10px] text-[#737373] mt-0.5">
+                คิดเป็น <span id="metricMarginPctOfPort">22.22</span>% ของพอร์ต
+              </div>
+            </div>
+
+            <div class="bg-[#161616] border border-[#2a2a2a] rounded p-3">
+              <div class="text-[11px] text-[#9ca3af]">มูลค่าสัญญารวม (รวม Lev)</div>
+              <div class="text-base font-semibold text-sky-400 mt-0.5">
+                <span id="metricTotalNotional">3,333.33</span> <span class="text-[11px] font-normal text-[#9ca3af]">USDT</span>
+              </div>
+              <div class="text-[10px] text-[#737373] mt-0.5">
+                Cost × <span id="formulaLev">3</span>X
+              </div>
+            </div>
+
+            <div class="bg-[#161616] border border-[#2a2a2a] rounded p-3">
+              <div class="text-[11px] text-[#9ca3af]">จำนวนไม้ทั้งหมด</div>
+              <div class="text-base font-semibold text-emerald-400 mt-0.5">
+                <span id="metricTotalChances">50</span> <span class="text-[11px] font-normal text-[#9ca3af]">ครั้ง (เหลือ <span id="metricRemainingInline">49</span>)</span>
+              </div>
+              <div class="text-[10px] text-[#737373] mt-0.5">
+                คงเหลือหลังแพ้: <span id="metricBalanceAfterLoss">4,900.00</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-[#161616] border border-[#2a2a2a] rounded p-3 text-[11px] text-[#a3a3a3] space-y-1">
+            <div><strong class="text-white">สูตร Position Size (Cost):</strong> <span id="liveFormulaStep1"></span></div>
+            <div><strong class="text-white">สูตรโอกาสคงเหลือ:</strong> <span id="liveFormulaStep2"></span></div>
+          </div>
+
+          <div class="overflow-x-auto border border-[#2b2b2b] rounded">
+            <table class="w-full text-left border-collapse text-xs sm:text-sm">
+              <thead>
+                <tr class="bg-[#222222] text-[#a3a3a3] border-b border-[#2e2e2e]">
+                  <th class="py-2 px-3 font-medium">สัดส่วน RR</th>
+                  <th class="py-2 px-3 font-medium">ระยะ Take Profit (% ราคา)</th>
+                  <th class="py-2 px-3 font-medium">กำไรที่จะได้รับ (USDT)</th>
+                  <th class="py-2 px-3 font-medium">% กำไรต่อพอร์ต</th>
+                  <th class="py-2 px-3 font-medium">Win Rate ขั้นต่ำ</th>
+                </tr>
+              </thead>
+              <tbody id="rrTableBody" class="divide-y divide-[#262626] bg-[#181818]">
+                <!-- Populated by JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Load TradingView Official Widget Script -->
+  <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+  <script>
+    (function() {
+      // Calculator DOM Elements
+      const balanceInput = document.getElementById('balanceInput');
+      const riskInput = document.getElementById('riskInput');
+      const stopLossInput = document.getElementById('stopLossInput');
+      const leverageInput = document.getElementById('leverageInput');
+      const resetBtn = document.getElementById('resetBtn');
+      const copyPosBtn = document.getElementById('copyPosBtn');
+      const copyBtcSizeBtn = document.getElementById('copyBtcSizeBtn');
+      const copyTpPriceBtn = document.getElementById('copyTpPriceBtn');
+      const copySlPriceBtn = document.getElementById('copySlPriceBtn');
+      const copyToast = document.getElementById('copyToast');
+
+      // Direction Buttons for Market TP/SL Form
+      const dirLongBtn = document.getElementById('dirLongBtn');
+      const dirShortBtn = document.getElementById('dirShortBtn');
+      const simBuyLongBtn = document.getElementById('simBuyLongBtn');
+      const simSellShortBtn = document.getElementById('simSellShortBtn');
+      const activeDirLabel = document.getElementById('activeDirLabel');
+      const tpBoxPctHint = document.getElementById('tpBoxPctHint');
+      const slBoxPctHint = document.getElementById('slBoxPctHint');
+      const orderPanelTpInputBox = document.getElementById('orderPanelTpInputBox');
+      const orderPanelSlInputBox = document.getElementById('orderPanelSlInputBox');
+
+      // Main Outputs
+      const positionSizeDisplay = document.getElementById('positionSizeDisplay');
+      const bulletPositionSize = document.getElementById('bulletPositionSize');
+      const bulletBtcSize = document.getElementById('bulletBtcSize');
+      const bulletRemainingChances = document.getElementById('bulletRemainingChances');
+
+      // Exchange Order Panel Outputs
+      const orderPanelLeverageBadge = document.getElementById('orderPanelLeverageBadge');
+      const orderPanelAvbl = document.getElementById('orderPanelAvbl');
+      const entryPriceInput = document.getElementById('entryPriceInput');
+      const orderPanelSizeBtc = document.getElementById('orderPanelSizeBtc');
+      const orderPanelSizeUsdt = document.getElementById('orderPanelSizeUsdt');
+      const orderPanelSliderFill = document.getElementById('orderPanelSliderFill');
+      const orderPanelPctUsed = document.getElementById('orderPanelPctUsed');
+      const orderPanelMaxBtcTop = document.getElementById('orderPanelMaxBtcTop');
+      const tpLongPctLabel = document.getElementById('tpLongPctLabel');
+      const tpLongPriceDisplay = document.getElementById('tpLongPriceDisplay');
+      const slLongPctLabel = document.getElementById('slLongPctLabel');
+      const slLongPriceDisplay = document.getElementById('slLongPriceDisplay');
+      const tpShortPctLabel = document.getElementById('tpShortPctLabel');
+      const tpShortPriceDisplay = document.getElementById('tpShortPriceDisplay');
+      const slShortPctLabel = document.getElementById('slShortPctLabel');
+      const slShortPriceDisplay = document.getElementById('slShortPriceDisplay');
+      const liqPriceLongDisplay = document.getElementById('liqPriceLongDisplay');
+      const costLongDisplay = document.getElementById('costLongDisplay');
+      const maxBtcLongDisplay = document.getElementById('maxBtcLongDisplay');
+      const liqPriceShortDisplay = document.getElementById('liqPriceShortDisplay');
+      const costShortDisplay = document.getElementById('costShortDisplay');
+      const maxBtcShortDisplay = document.getElementById('maxBtcShortDisplay');
+
+      // Quick Preset Table
+      const tablePortLabel = document.getElementById('tablePortLabel');
+      const tableLevLabel = document.getElementById('tableLevLabel');
+      const tablePriceLabel = document.getElementById('tablePriceLabel');
+      const quickPresetTableBody = document.getElementById('quickPresetTableBody');
+
+      // Detailed Outputs
+      const metricRiskAmount = document.getElementById('metricRiskAmount');
+      const formulaRiskPct = document.getElementById('formulaRiskPct');
+      const metricMarginUsed = document.getElementById('metricMarginUsed');
+      const metricMarginPctOfPort = document.getElementById('metricMarginPctOfPort');
+      const metricTotalNotional = document.getElementById('metricTotalNotional');
+      const formulaLev = document.getElementById('formulaLev');
+      const metricTotalChances = document.getElementById('metricTotalChances');
+      const metricRemainingInline = document.getElementById('metricRemainingInline');
+      const metricBalanceAfterLoss = document.getElementById('metricBalanceAfterLoss');
+      const liveFormulaStep1 = document.getElementById('liveFormulaStep1');
+      const liveFormulaStep2 = document.getElementById('liveFormulaStep2');
+      const rrTableBody = document.getElementById('rrTableBody');
+
+      // SL Price Helper Controls
+      const toggleSlHelperBtn = document.getElementById('toggleSlHelperBtn');
+      const slHelperPanel = document.getElementById('slHelperPanel');
+      const slPriceInput = document.getElementById('slPriceInput');
+      const previewSlPercent = document.getElementById('previewSlPercent');
+      const slDirectionBadge = document.getElementById('slDirectionBadge');
+      const applySlPercentBtn = document.getElementById('applySlPercentBtn');
+      const useCurrentPriceBtn = document.getElementById('useCurrentPriceBtn');
+
+      // TradingView & Market Controls
+      const symbolSelect = document.getElementById('symbolSelect');
+      const intervalSelect = document.getElementById('intervalSelect');
+      const fetchLivePriceTopBtn = document.getElementById('fetchLivePriceTopBtn');
+      const liveTickerPriceDisplay = document.getElementById('liveTickerPriceDisplay');
+      const chartHeaderSymbol = document.getElementById('chartHeaderSymbol');
+      const techSymbolLabel = document.getElementById('techSymbolLabel');
+      const liveSignalBiasBadge = document.getElementById('liveSignalBiasBadge');
+      const liveRsiValue = document.getElementById('liveRsiValue');
+      const liveEma20Value = document.getElementById('liveEma20Value');
+      const liveEma50Value = document.getElementById('liveEma50Value');
+      const liveRange24hValue = document.getElementById('liveRange24hValue');
+      const refreshMarketDataBtn = document.getElementById('refreshMarketDataBtn');
+
+      // Gemini AI Controls
+      const geminiApiKeyInput = document.getElementById('geminiApiKeyInput');
+      const toggleApiKeyVisBtn = document.getElementById('toggleApiKeyVisBtn');
+      const saveApiKeyBtn = document.getElementById('saveApiKeyBtn');
+      const chartImageInput = document.getElementById('chartImageInput');
+      const imageUploadStatusText = document.getElementById('imageUploadStatusText');
+      const clearImageBtn = document.getElementById('clearImageBtn');
+      const imagePreviewContainer = document.getElementById('imagePreviewContainer');
+      const chartImagePreview = document.getElementById('chartImagePreview');
+      const runGeminiAnalysisBtn = document.getElementById('runGeminiAnalysisBtn');
+      const aiAnalysisResultBox = document.getElementById('aiAnalysisResultBox');
+
+      let selectedOrderDirection = 'LONG'; // 'LONG' or 'SHORT'
+      let calculatedSlFromPrice = 3.0;
+      let latestMarketStats = {
+        symbol: 'BTCUSDT',
+        binanceInterval: '1h',
+        lastPrice: 77815.0,
+        high24h: 78600,
+        low24h: 76300,
+        priceChangePct24h: 1.45,
+        rsi14: 56.4,
+        ema20: 77420.0,
+        ema50: 76890.0,
+        recentSwingHigh: 78450.0,
+        recentSwingLow: 76350.0
+      };
+      let attachedChartBase64 = null;
+
+      try {
+        const savedKey = localStorage.getItem('gemini_trading_api_key');
+        if (savedKey) {
+          geminiApiKeyInput.value = savedKey;
+        }
+      } catch (e) {}
+
+      function formatNum(num, decimals = 2) {
+        if (!isFinite(num) || isNaN(num)) return '0.00';
+        return Number(num).toLocaleString('en-US', {
+          minimumFractionDigits: decimals,
+          maximumFractionDigits: decimals
+        });
+      }
+
+      function formatPlainFixed(num, decimals = 2) {
+        if (!isFinite(num) || isNaN(num)) return '0.00';
+        return Number(num).toFixed(decimals);
+      }
+
+      function setOrderDirection(dir) {
+        selectedOrderDirection = dir;
+        if (dir === 'LONG') {
+          dirLongBtn.className = 'px-2 py-0.5 rounded bg-[#0ecb81] text-white font-semibold transition';
+          dirShortBtn.className = 'px-2 py-0.5 rounded text-[#848e9c] hover:text-white font-semibold transition';
+          activeDirLabel.textContent = '(โหมด Buy/Long)';
+          activeDirLabel.className = 'text-[11px] text-[#0ecb81] font-semibold';
+        } else {
+          dirShortBtn.className = 'px-2 py-0.5 rounded bg-[#f6465d] text-white font-semibold transition';
+          dirLongBtn.className = 'px-2 py-0.5 rounded text-[#848e9c] hover:text-white font-semibold transition';
+          activeDirLabel.textContent = '(โหมด Sell/Short)';
+          activeDirLabel.className = 'text-[11px] text-[#f6465d] font-semibold';
+        }
+        calculateAll();
+      }
+
+      function calculateAll() {
+        const balance = Math.max(0, parseFloat(balanceInput.value) || 0);
+        const riskPct = Math.max(0, parseFloat(riskInput.value) || 0);
+        const slPct = Math.max(0, parseFloat(stopLossInput.value) || 0);
+        const leverage = Math.max(0, parseFloat(leverageInput.value) || 0);
+        const entryPrice = Math.max(0, parseFloat(entryPriceInput.value) || 77815.0);
+
+        const riskAmount = balance * (riskPct / 100);
+
+        let positionSize = 0; // Margin / Cost in USDT
+        let totalNotional = 0; // Leveraged Notional Size in USDT
+
+        if (slPct > 0 && leverage > 0) {
+          totalNotional = riskAmount / (slPct / 100);
+          positionSize = totalNotional / leverage;
+        }
+
+        const btcSize = entryPrice > 0 ? totalNotional / entryPrice : 0;
+        const maxNotional = balance * leverage;
+        // Match screenshot's Max 0.1925 BTC (Long with Market slippage buffer) and 0.1930 BTC (Short)
+        const maxBtcLong = entryPrice > 0 ? (maxNotional / entryPrice) * 0.9986 : 0;
+        const maxBtcShort = entryPrice > 0 ? (maxNotional / entryPrice) * 1.0012 : 0;
+
+        let totalChances = 0;
+        let remainingChances = 0;
+        if (riskPct > 0) {
+          totalChances = Math.floor(100 / riskPct);
+          remainingChances = Math.max(0, totalChances - 1);
+        }
+
+        const posText = formatPlainFixed(positionSize, 2);
+        const btcSizeText = formatPlainFixed(btcSize, 4);
+
+        positionSizeDisplay.textContent = posText;
+        bulletPositionSize.textContent = posText;
+        bulletBtcSize.textContent = btcSizeText;
+        bulletRemainingChances.textContent = remainingChances.toString();
+
+        // Update Exchange Order Panel (Matching user's new Market screenshot)
+        orderPanelLeverageBadge.textContent = leverage.toString();
+        orderPanelAvbl.textContent = `${formatNum(balance, 2)} USDT`;
+        orderPanelSizeBtc.textContent = btcSizeText;
+        orderPanelSizeUsdt.textContent = formatNum(totalNotional, 2);
+
+        const marginPct = balance > 0 ? (positionSize / balance) * 100 : 0;
+        const clampedPct = Math.min(100, Math.max(0, marginPct));
+        orderPanelSliderFill.style.width = `${clampedPct}%`;
+        orderPanelPctUsed.textContent = `${formatPlainFixed(marginPct, 2)}%`;
+        orderPanelMaxBtcTop.textContent = formatPlainFixed(maxBtcLong, 4);
+
+        // TP & SL Prices (for RR 1:2)
+        const tpPct = slPct * 2;
+        const priceDecimals = entryPrice < 10 ? 4 : 1;
+        const tpLongPrice = entryPrice * (1 + tpPct / 100);
+        const slLongPrice = entryPrice * (1 - slPct / 100);
+        const tpShortPrice = entryPrice * (1 - tpPct / 100);
+        const slShortPrice = entryPrice * (1 + slPct / 100);
+
+        tpLongPctLabel.textContent = formatPlainFixed(tpPct, 2);
+        slLongPctLabel.textContent = formatPlainFixed(slPct, 2);
+        tpLongPriceDisplay.textContent = formatNum(tpLongPrice, priceDecimals);
+        slLongPriceDisplay.textContent = formatNum(slLongPrice, priceDecimals);
+
+        tpShortPctLabel.textContent = formatPlainFixed(tpPct, 2);
+        slShortPctLabel.textContent = formatPlainFixed(slPct, 2);
+        tpShortPriceDisplay.textContent = formatNum(tpShortPrice, priceDecimals);
+        slShortPriceDisplay.textContent = formatNum(slShortPrice, priceDecimals);
+
+        // Fill the main Take Profit & Stop Loss Price inputs according to selected direction
+        if (selectedOrderDirection === 'LONG') {
+          tpBoxPctHint.textContent = `+${formatPlainFixed(tpPct, 2)}% | RR 1:2 (+${formatNum(riskAmount * 2, 0)} USDT)`;
+          slBoxPctHint.textContent = `-${formatPlainFixed(slPct, 2)}% | เสีย ${formatNum(riskAmount, 0)} USDT`;
+          orderPanelTpInputBox.textContent = formatNum(tpLongPrice, priceDecimals);
+          orderPanelSlInputBox.textContent = formatNum(slLongPrice, priceDecimals);
+        } else {
+          tpBoxPctHint.textContent = `-${formatPlainFixed(tpPct, 2)}% | RR 1:2 (+${formatNum(riskAmount * 2, 0)} USDT)`;
+          slBoxPctHint.textContent = `+${formatPlainFixed(slPct, 2)}% | เสีย ${formatNum(riskAmount, 0)} USDT`;
+          orderPanelTpInputBox.textContent = formatNum(tpShortPrice, priceDecimals);
+          orderPanelSlInputBox.textContent = formatNum(slShortPrice, priceDecimals);
+        }
+
+        // Approx Isolated Liquidation Price (maintenance margin ~0.4%)
+        const mmr = 0.004;
+        const liqLong = leverage > 0 ? Math.max(0, entryPrice * (1 - (1 / leverage) + mmr)) : 0;
+        const liqShort = leverage > 0 ? entryPrice * (1 + (1 / leverage) - mmr) : 0;
+
+        liqPriceLongDisplay.textContent = `${formatNum(liqLong, priceDecimals)} USDT`;
+        liqPriceShortDisplay.textContent = `${formatNum(liqShort, priceDecimals)} USDT`;
+        costLongDisplay.textContent = `${formatNum(positionSize, 2)} USDT`;
+        costShortDisplay.textContent = `${formatNum(positionSize, 2)} USDT`;
+        maxBtcLongDisplay.textContent = `${formatPlainFixed(maxBtcLong, 4)} BTC`;
+        maxBtcShortDisplay.textContent = `${formatPlainFixed(maxBtcShort, 4)} BTC`;
+
+        // Update Money Management Metrics
+        metricRiskAmount.textContent = formatNum(riskAmount, 2);
+        formulaRiskPct.textContent = riskPct.toString();
+        metricMarginUsed.textContent = formatNum(positionSize, 2);
+        metricMarginPctOfPort.textContent = formatNum(marginPct, 2);
+        metricTotalNotional.textContent = formatNum(totalNotional, 2);
+        formulaLev.textContent = leverage.toString();
+        metricTotalChances.textContent = totalChances.toString();
+        metricRemainingInline.textContent = remainingChances.toString();
+        metricBalanceAfterLoss.textContent = formatNum(Math.max(0, balance - riskAmount), 2);
+
+        liveFormulaStep1.textContent = `(${formatNum(balance, 0)} × ${riskPct}%) ÷ (${slPct}% × ${leverage}) = ${posText} USDT (คิดเป็น Size = ${btcSizeText} BTC)`;
+        liveFormulaStep2.textContent = riskPct > 0
+          ? `(100 ÷ ${riskPct}) - 1 = เหลือโอกาสอีก ${remainingChances} ครั้ง`
+          : `กรุณาระบุ % Risk มากกว่า 0`;
+
+        // Populate Quick Preset Scenarios Table
+        tablePortLabel.textContent = formatNum(balance, 0);
+        tableLevLabel.textContent = leverage.toString();
+        tablePriceLabel.textContent = formatNum(entryPrice, priceDecimals);
+
+        const presets = [
+          { name: 'ความเสี่ยงต่ำ (ปลอดภัยสูง)', rPct: 1, sPct: 2 },
+          { name: 'มาตรฐาน (ตามค่าเริ่มต้น 2% / SL 3%)', rPct: 2, sPct: 3 },
+          { name: 'จุดตัดขาดทุนแคบ (เทรดสั้น)', rPct: 1, sPct: 1 },
+          { name: 'เต็มแม็กซ์ตามตาราง (Max 0.1925 BTC)', rPct: 3 * leverage, sPct: 3, isMax: true }
+        ];
+
+        quickPresetTableBody.innerHTML = presets.map((p) => {
+          let pMargin = 0;
+          let pNotional = 0;
+          let pRiskUsdt = balance * (p.rPct / 100);
+          if (p.isMax) {
+            pMargin = balance;
+            pNotional = balance * leverage * 0.9986;
+            pRiskUsdt = pNotional * (p.sPct / 100);
+          } else if (p.sPct > 0 && leverage > 0) {
+            pNotional = pRiskUsdt / (p.sPct / 100);
+            pMargin = pNotional / leverage;
+          }
+          const pBtc = entryPrice > 0 ? pNotional / entryPrice : 0;
+          const isCurrent = Math.abs(riskPct - p.rPct) < 0.01 && Math.abs(slPct - p.sPct) < 0.01 && !p.isMax;
+
+          return `
+            <tr class="${isCurrent ? 'bg-amber-500/10' : 'hover:bg-[#222222]'} transition">
+              <td class="py-2 px-3 font-medium text-white">${p.name} (${p.rPct}%)</td>
+              <td class="py-2 px-3 text-rose-400">${formatNum(pRiskUsdt, 2)} USDT</td>
+              <td class="py-2 px-3 text-[#d4d4d4]">${p.sPct}%</td>
+              <td class="py-2 px-3 font-bold text-amber-400">${formatPlainFixed(pBtc, 4)} BTC</td>
+              <td class="py-2 px-3 text-emerald-300">${formatNum(pMargin, 2)} USDT</td>
+              <td class="py-2 px-3 text-right">
+                <button type="button" data-risk="${p.rPct}" data-sl="${p.sPct}" class="preset-apply-btn text-xs bg-[#2c2c2c] hover:bg-amber-500 hover:text-black text-white px-2.5 py-1 rounded transition font-medium">
+                  เลือกใช้
+                </button>
+              </td>
+            </tr>
+          `;
+        }).join('');
+
+        document.querySelectorAll('.preset-apply-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            riskInput.value = btn.getAttribute('data-risk');
+            stopLossInput.value = btn.getAttribute('data-sl');
+            calculateAll();
+          });
+        });
+
+        // Populate RR Table
+        const rrList = [
+          { ratio: 1, label: '1 : 1' },
+          { ratio: 1.5, label: '1 : 1.5' },
+          { ratio: 2, label: '1 : 2' },
+          { ratio: 3, label: '1 : 3' },
+          { ratio: 5, label: '1 : 5' }
+        ];
+
+        rrTableBody.innerHTML = rrList.map(item => {
+          const itemTpPct = slPct * item.ratio;
+          const profitUsdt = riskAmount * item.ratio;
+          const portGrowthPct = riskPct * item.ratio;
+          const breakEvenWinRate = (1 / (1 + item.ratio)) * 100;
+
+          return `
+            <tr class="hover:bg-[#222222] transition">
+              <td class="py-2 px-3 font-semibold text-white">${item.label}</td>
+              <td class="py-2 px-3 text-sky-300">+${formatPlainFixed(itemTpPct, 2)}%</td>
+              <td class="py-2 px-3 font-medium text-emerald-400">+${formatNum(profitUsdt, 2)} USDT</td>
+              <td class="py-2 px-3 text-emerald-300">+${formatPlainFixed(portGrowthPct, 2)}%</td>
+              <td class="py-2 px-3 text-[#b0b0b0]">${formatPlainFixed(breakEvenWinRate, 1)}%</td>
+            </tr>
+          `;
+        }).join('');
+      }
+
+      function updateSlHelper() {
+        const entry = parseFloat(entryPriceInput.value) || 0;
+        const sl = parseFloat(slPriceInput.value) || 0;
+        if (entry > 0 && sl > 0 && entry !== sl) {
+          const diffPct = (Math.abs(entry - sl) / entry) * 100;
+          calculatedSlFromPrice = diffPct;
+          previewSlPercent.textContent = formatPlainFixed(diffPct, 2);
+          if (sl < entry) {
+            slDirectionBadge.textContent = 'ฝั่ง LONG (SL ต่ำกว่าราคาเข้า)';
+            slDirectionBadge.className = 'text-[11px] px-2 py-0.5 rounded bg-emerald-950/60 text-emerald-300 border border-emerald-800/50';
+          } else {
+            slDirectionBadge.textContent = 'ฝั่ง SHORT (SL สูงกว่าราคาเข้า)';
+            slDirectionBadge.className = 'text-[11px] px-2 py-0.5 rounded bg-rose-950/60 text-rose-300 border border-rose-800/50';
+          }
+        } else {
+          previewSlPercent.textContent = '0.00';
+          slDirectionBadge.textContent = 'กรอกราคา Entry & SL';
+          slDirectionBadge.className = 'text-[11px] px-2 py-0.5 rounded bg-[#262626] text-[#9ca3af] border border-[#383838]';
+        }
+      }
+
+      function loadTradingViewWidget() {
+        const symbol = symbolSelect.value;
+        const tvInterval = intervalSelect.value;
+        chartHeaderSymbol.textContent = `BINANCE:${symbol}`;
+
+        const container = document.getElementById('tv_chart_container');
+        container.innerHTML = '';
+
+        if (typeof TradingView !== 'undefined' && TradingView.widget) {
+          new TradingView.widget({
+            "autosize": true,
+            "symbol": `BINANCE:${symbol}`,
+            "interval": tvInterval,
+            "timezone": "Asia/Bangkok",
+            "theme": "dark",
+            "style": "1",
+            "locale": "th_TH",
+            "toolbar_bg": "#1e1e1e",
+            "enable_publishing": false,
+            "hide_side_toolbar": false,
+            "allow_symbol_change": true,
+            "studies": [
+              "RSI@tv-basicstudies"
+            ],
+            "container_id": "tv_chart_container"
+          });
+        }
+      }
+
+      function computeEMA(values, period) {
+        if (!values || values.length < period) return null;
+        const k = 2 / (period + 1);
+        let ema = values.slice(0, period).reduce((a, b) => a + b, 0) / period;
+        for (let i = period; i < values.length; i++) {
+          ema = values[i] * k + ema * (1 - k);
+        }
+        return ema;
+      }
+
+      function computeRSI(closes, period = 14) {
+        if (!closes || closes.length <= period) return null;
+        let gains = 0;
+        let losses = 0;
+        for (let i = 1; i <= period; i++) {
+          const diff = closes[i] - closes[i - 1];
+          if (diff >= 0) gains += diff;
+          else losses -= diff;
+        }
+        let avgGain = gains / period;
+        let avgLoss = losses / period;
+        for (let i = period + 1; i < closes.length; i++) {
+          const diff = closes[i] - closes[i - 1];
+          const gain = diff > 0 ? diff : 0;
+          const loss = diff < 0 ? -diff : 0;
+          avgGain = (avgGain * (period - 1) + gain) / period;
+          avgLoss = (avgLoss * (period - 1) + loss) / period;
+        }
+        if (avgLoss === 0) return 100;
+        const rs = avgGain / avgLoss;
+        return 100 - (100 / (1 + rs));
+      }
+
+      function updateSignalBadge() {
+        const s = latestMarketStats;
+        if (s.ema20 && s.ema50) {
+          if (s.lastPrice >= s.ema20 && s.ema20 >= s.ema50) {
+            liveSignalBiasBadge.textContent = 'ได้เปรียบฝั่ง BUY / LONG (Bullish)';
+            liveSignalBiasBadge.className = 'text-emerald-400 font-semibold';
+          } else if (s.lastPrice < s.ema20 && s.ema20 < s.ema50) {
+            liveSignalBiasBadge.textContent = 'ได้เปรียบฝั่ง SELL / SHORT (Bearish)';
+            liveSignalBiasBadge.className = 'text-rose-400 font-semibold';
+          } else {
+            liveSignalBiasBadge.textContent = 'พักฐาน/รอเลือกทาง (Neutral)';
+            liveSignalBiasBadge.className = 'text-amber-300 font-semibold';
+          }
+        }
+      }
+
+      async function fetchMarketIndicators(overwriteEntry = false) {
+        const symbol = symbolSelect.value;
+        const selectedOption = intervalSelect.options[intervalSelect.selectedIndex];
+        const binanceInterval = selectedOption.getAttribute('data-binance') || '1h';
+
+        techSymbolLabel.textContent = `${symbol} (${binanceInterval})`;
+
+        try {
+          const [klinesRes, tickerRes] = await Promise.all([
+            fetch(`https://api.binance.com/api/v3/klines?symbol=${symbol}&interval=${binanceInterval}&limit=100`),
+            fetch(`https://api.binance.com/api/v3/ticker/24hr?symbol=${symbol}`)
+          ]);
+
+          if (!klinesRes.ok || !tickerRes.ok) throw new Error('Market API unavailable');
+
+          const klines = await klinesRes.json();
+          const ticker = await tickerRes.json();
+
+          const closes = klines.map(k => parseFloat(k[4]));
+          const highs = klines.map(k => parseFloat(k[2]));
+          const lows = klines.map(k => parseFloat(k[3]));
+          const lastPrice = parseFloat(ticker.lastPrice);
+
+          const rsi14 = computeRSI(closes, 14);
+          const ema20 = computeEMA(closes, 20);
+          const ema50 = computeEMA(closes, 50);
+          const recentHighs = highs.slice(-25);
+          const recentLows = lows.slice(-25);
+          const swingHigh = Math.max(...recentHighs);
+          const swingLow = Math.min(...recentLows);
+
+          latestMarketStats = {
+            symbol,
+            binanceInterval,
+            lastPrice,
+            high24h: parseFloat(ticker.highPrice),
+            low24h: parseFloat(ticker.lowPrice),
+            priceChangePct24h: parseFloat(ticker.priceChangePercent),
+            rsi14,
+            ema20,
+            ema50,
+            recentSwingHigh: swingHigh,
+            recentSwingLow: swingLow
+          };
+
+          const priceDecimals = lastPrice < 10 ? 4 : 2;
+          liveTickerPriceDisplay.textContent = `${formatNum(lastPrice, priceDecimals)} USDT`;
+          liveRsiValue.textContent = rsi14 !== null ? formatPlainFixed(rsi14, 1) : '-';
+          liveEma20Value.textContent = ema20 !== null ? formatNum(ema20, priceDecimals) : '-';
+          liveEma50Value.textContent = ema50 !== null ? formatNum(ema50, priceDecimals) : '-';
+          liveRange24hValue.textContent = `${formatNum(latestMarketStats.low24h, priceDecimals)} - ${formatNum(latestMarketStats.high24h, priceDecimals)}`;
+          updateSignalBadge();
+
+          if (overwriteEntry) {
+            entryPriceInput.value = lastPrice;
+            const defaultSl = Number((lastPrice * 0.97).toFixed(priceDecimals));
+            slPriceInput.value = defaultSl;
+            updateSlHelper();
+            calculateAll();
+          }
+          aiAnalysisResultBox.innerHTML = generateBuiltInQuantAnalysis();
+        } catch (err) {
+          const priceDecimals = latestMarketStats.lastPrice < 10 ? 4 : 2;
+          liveTickerPriceDisplay.textContent = `${formatNum(latestMarketStats.lastPrice, priceDecimals)} USDT`;
+          liveRsiValue.textContent = formatPlainFixed(latestMarketStats.rsi14, 1);
+          liveEma20Value.textContent = formatNum(latestMarketStats.ema20, priceDecimals);
+          liveEma50Value.textContent = formatNum(latestMarketStats.ema50, priceDecimals);
+          liveRange24hValue.textContent = `${formatNum(latestMarketStats.low24h, priceDecimals)} - ${formatNum(latestMarketStats.high24h, priceDecimals)}`;
+          updateSignalBadge();
+          aiAnalysisResultBox.innerHTML = generateBuiltInQuantAnalysis();
+        }
+      }
+
+      function handleImageFile(file) {
+        if (!file || !file.type.startsWith('image/')) return;
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          attachedChartBase64 = e.target.result;
+          chartImagePreview.src = attachedChartBase64;
+          imagePreviewContainer.classList.remove('hidden');
+          clearImageBtn.classList.remove('hidden');
+          imageUploadStatusText.textContent = `แนบภาพ: ${file.name || 'ภาพจากคลิปบอร์ด'}`;
+        };
+        reader.readAsDataURL(file);
+      }
+
+      chartImageInput.addEventListener('change', (e) => {
+        if (e.target.files && e.target.files[0]) {
+          handleImageFile(e.target.files[0]);
+        }
+      });
+
+      window.addEventListener('paste', (e) => {
+        if (e.clipboardData && e.clipboardData.items) {
+          for (let i = 0; i < e.clipboardData.items.length; i++) {
+            const item = e.clipboardData.items[i];
+            if (item.type.indexOf('image') !== -1) {
+              const file = item.getAsFile();
+              handleImageFile(file);
+              break;
+            }
+          }
+        }
+      });
+
+      clearImageBtn.addEventListener('click', () => {
+        attachedChartBase64 = null;
+        chartImageInput.value = '';
+        imagePreviewContainer.classList.add('hidden');
+        clearImageBtn.classList.add('hidden');
+        imageUploadStatusText.innerHTML = 'แนบรูปกราฟ หรือกด <strong>Ctrl+V</strong> เพื่อวางภาพแคปกราฟ (ไม่บังคับ)';
+      });
+
+      function generateBuiltInQuantAnalysis() {
+        const balance = parseFloat(balanceInput.value) || 0;
+        const riskPct = parseFloat(riskInput.value) || 0;
+        const slPct = parseFloat(stopLossInput.value) || 0;
+        const leverage = parseFloat(leverageInput.value) || 0;
+        const entryPrice = parseFloat(entryPriceInput.value) || 77815.0;
+        const posSize = positionSizeDisplay.textContent;
+        const btcSize = orderPanelSizeBtc.textContent;
+        const s = latestMarketStats;
+        const decimals = entryPrice < 10 ? 4 : 1;
+
+        let biasVerdict = 'แนะนำฝั่ง BUY / LONG (ตามแนวโน้มหลัก)';
+        let biasColor = 'text-emerald-400';
+        let trendReason = 'ราคาเคลื่อนไหวปรับตัวขึ้นจากฐาน 77,527.6 USDT มาที่โซน ~77,815 USDT (สังเกตจากค่า Max ซื้อได้ลดลงจาก 0.1932 เป็น 0.1925 BTC และ Max Short สูงกว่า Max Long) สะท้อนแรงซื้อ (Bid/Mark Price) ที่ยกตัวสูงขึ้นเหนือเส้นค่าเฉลี่ย EMA(20) และ EMA(50)';
+
+        if (s.ema20 && s.ema50) {
+          if (s.lastPrice < s.ema20 && s.ema20 < s.ema50) {
+            biasVerdict = 'แนะนำฝั่ง SELL / SHORT (ตามแนวโน้มขาลง)';
+            biasColor = 'text-rose-400';
+            trendReason = 'ราคาเคลื่อนไหวอยู่ใต้เส้นค่าเฉลี่ย EMA(20) และ EMA(50) สะท้อนแรงขายที่คุมตลาดในไทม์เฟรมนี้';
+          } else if (s.rsi14 && s.rsi14 > 72) {
+            biasVerdict = 'ระวังไล่ราคา Long บนยอด (รอพักตัวค่อย Long หรือดัก Short สั้นที่แนวต้าน)';
+            biasColor = 'text-amber-300';
+          }
+        }
+
+        const tpLong = formatNum(entryPrice * (1 + (slPct * 2) / 100), decimals);
+        const slLong = formatNum(entryPrice * (1 - slPct / 100), decimals);
+        const tpShort = formatNum(entryPrice * (1 - (slPct * 2) / 100), decimals);
+        const slShort = formatNum(entryPrice * (1 + slPct / 100), decimals);
+
+        return `
+          <div class="space-y-3">
+            <div class="flex items-center justify-between border-b border-[#2e2e2e] pb-2">
+              <span class="font-semibold text-indigo-300">ผลวิเคราะห์ทิศทาง Long vs Short (${s.symbol} - ${s.binanceInterval})</span>
+              <span class="text-xs font-bold ${biasColor}">${biasVerdict}</span>
+            </div>
+            <div>
+              <strong class="text-white">1. วิเคราะห์ว่าจะ Long หรือ Short ดี?:</strong>
+              <ul class="list-disc list-inside mt-1 text-[#cccccc] space-y-1">
+                <li><strong>สัญญาณจากโครงสร้างราคาและใบคำสั่ง:</strong> ${trendReason}</li>
+                <li><strong>แผนหลัก (ให้น้ำหนักฝั่ง Buy/Long):</strong> เหมาะกับการเข้าสะสมเมื่อราคายืนเหนือแนวรับ EMA20 (~${s.ema20 ? formatNum(s.ema20, decimals) : '77,420'} USDT) โดยตั้ง <strong>Take Profit = ${tpLong} USDT</strong> และ <strong>Stop Loss = ${slLong} USDT</strong></li>
+                <li><strong>แผนสำรอง (กรณีเลือก Sell/Short):</strong> ควรเข้า Short เฉพาะเมื่อราคาขึ้นไปทดสอบแนวต้าน Swing High (~${s.recentSwingHigh ? formatNum(s.recentSwingHigh, decimals) : '78,450'} USDT) แล้วไม่ผ่าน หรือหลุดแนวรับ 77,000 USDT ลงมา โดยตั้ง <strong>Take Profit = ${tpShort} USDT</strong> และ <strong>Stop Loss = ${slShort} USDT</strong></li>
+              </ul>
+            </div>
+            <div>
+              <strong class="text-white">2. สรุปค่าที่ต้องกรอกในตาราง Market ของคุณ:</strong>
+              <ul class="list-disc list-inside mt-1 text-[#cccccc] space-y-1">
+                <li>ช่อง <strong>Size:</strong> กรอก <strong class="text-amber-400">${btcSize} BTC</strong> (ใช้ Margin Cost = <strong class="text-emerald-400">${posSize} USDT</strong> จากพอร์ต ${formatNum(balance, 0)} USDT)</li>
+                <li>ช่อง <strong>Slippage Tolerance:</strong> กรอก <strong>0.2%</strong> (ป้องกันการได้ราคาคลาดเคลื่อนเกินไปเมื่อกดคำสั่ง Market)</li>
+                <li>ช่อง <strong>Reduce-Only:</strong> <strong>เว้นว่างไว้ (ไม่ต้องติ๊ก)</strong> เพราะเป็นการเปิด Position ใหม่</li>
+              </ul>
+            </div>
+          </div>
+        `;
+      }
+
+      async function runGeminiAnalysis() {
+        const apiKey = geminiApiKeyInput.value.trim();
+        await fetchMarketIndicators(false);
+
+        if (!apiKey) {
+          aiAnalysisResultBox.innerHTML = generateBuiltInQuantAnalysis();
+          return;
+        }
+
+        runGeminiAnalysisBtn.disabled = true;
+        runGeminiAnalysisBtn.innerHTML = `<span>กำลังให้ Gemini วิเคราะห์กราฟ...</span>`;
+        aiAnalysisResultBox.innerHTML = `<div class="text-indigo-300 animate-pulse">กำลังส่งข้อมูลแท่งเทียน ${latestMarketStats.symbol} และแผน Money Management ไปยัง Gemini API...</div>`;
+
+        const balance = parseFloat(balanceInput.value) || 0;
+        const riskPct = parseFloat(riskInput.value) || 0;
+        const slPct = parseFloat(stopLossInput.value) || 0;
+        const leverage = parseFloat(leverageInput.value) || 0;
+        const entryPrice = parseFloat(entryPriceInput.value) || 77815.0;
+        const posSize = positionSizeDisplay.textContent;
+        const btcSize = orderPanelSizeBtc.textContent;
+
+        const promptText = `คุณคือนักวิเคราะห์กราฟเทคนิค (Technical Analyst) และผู้เชี่ยวชาญด้าน Money Management
+กรุณาวิเคราะห์ข้อมูลกราฟจริงและฟันธงเปรียบเทียบแผน Buy/Long กับ Sell/Short เป็นภาษาไทยที่กระชับ ชัดเจน:
+
+[ข้อมูลตลาดและใบคำสั่ง Market]
+- คู่เหรียญ: ${latestMarketStats.symbol} (Timeframe: ${latestMarketStats.binanceInterval})
+- ราคาตลาดอ้างอิง: ${entryPrice} USDT
+- ค่า RSI(14): ${latestMarketStats.rsi14 ? latestMarketStats.rsi14.toFixed(2) : 'N/A'} | EMA(20): ${latestMarketStats.ema20 ? latestMarketStats.ema20.toFixed(2) : 'N/A'} | EMA(50): ${latestMarketStats.ema50 ? latestMarketStats.ema50.toFixed(2) : 'N/A'}
+- เงินพอร์ต (Avbl): ${balance} USDT | ความเสี่ยงต่อไม้: ${riskPct}% | Stop Loss: ${slPct}% | Leverage: ${leverage}X (Isolated)
+- ขนาด Size ที่คำนวณได้: ${btcSize} BTC (ใช้ Margin Cost = ${posSize} USDT)
+
+กรุณาสรุป 3 หัวข้อ:
+1. ฟันธงเปรียบเทียบว่าจังหวะนี้ได้เปรียบฝั่ง Buy/Long หรือ Sell/Short มากกว่ากัน เพราะเหตุใด
+2. ค่าที่ต้องกรอกในช่อง Size (BTC), Slippage Tolerance (%), Take Profit Price และ Stop Loss Price
+3. จุดเฝ้าระวังสำคัญและแนวรับ-แนวต้าน`;
+
+        const parts = [{ text: promptText }];
+        if (attachedChartBase64) {
+          const mimeMatch = attachedChartBase64.match(/^data:(image\/[a-zA-Z0-9+.-]+);base64,/);
+          const mimeType = mimeMatch ? mimeMatch[1] : 'image/png';
+          const base64Data = attachedChartBase64.split(',')[1];
+          parts.push({
+            inline_data: {
+              mime_type: mimeType,
+              data: base64Data
+            }
+          });
+        }
+
+        try {
+          const response = await fetch(
+            `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${encodeURIComponent(apiKey)}`,
+            {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                contents: [{ parts }]
+              })
+            }
+          );
+
+          const data = await response.json();
+          if (data.error) {
+            throw new Error(data.error.message || 'Gemini API Error');
+          }
+
+          const rawReply = data.candidates?.[0]?.content?.parts?.[0]?.text || 'ไม่พบข้อความตอบกลับจาก Gemini';
+          const formattedHtml = rawReply
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/\*\*(.*?)\*\*/g, '<strong class="text-white">$1</strong>')
+            .replace(/\n/g, '<br/>');
+
+          aiAnalysisResultBox.innerHTML = `
+            <div class="space-y-2">
+              <div class="text-xs font-semibold text-emerald-400 border-b border-[#2e2e2e] pb-1.5">
+                ผลการวิเคราะห์จาก Gemini 2.5 Flash (${latestMarketStats.symbol})
+              </div>
+              <div class="text-[#e5e5e5] leading-relaxed">${formattedHtml}</div>
+            </div>
+          `;
+        } catch (err) {
+          aiAnalysisResultBox.innerHTML = `
+            <div class="text-rose-400 font-medium mb-2">เกิดข้อผิดพลาดในการเชื่อมต่อ Gemini API: ${err.message}</div>
+            ${generateBuiltInQuantAnalysis()}
+          `;
+        } finally {
+          runGeminiAnalysisBtn.disabled = false;
+          runGeminiAnalysisBtn.innerHTML = `
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+            </svg>
+            <span>วิเคราะห์กราฟ & แผนเทรดด้วย Gemini</span>
+          `;
+        }
+      }
+
+      function copyTextHelper(textToCopy) {
+        const fallbackCopy = (str) => {
+          const ta = document.createElement('textarea');
+          ta.value = str;
+          ta.style.position = 'fixed';
+          ta.style.opacity = '0';
+          document.body.appendChild(ta);
+          ta.select();
+          try { document.execCommand('copy'); } catch (e) {}
+          document.body.removeChild(ta);
+        };
+
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(textToCopy).catch(() => fallbackCopy(textToCopy));
+        } else {
+          fallbackCopy(textToCopy);
+        }
+
+        copyToast.classList.remove('hidden');
+        setTimeout(() => {
+          copyToast.classList.add('hidden');
+        }, 2000);
+      }
+
+      // Event Listeners
+      [balanceInput, riskInput, stopLossInput, leverageInput, entryPriceInput].forEach(input => {
+        input.addEventListener('input', () => {
+          updateSlHelper();
+          calculateAll();
+        });
+      });
+
+      dirLongBtn.addEventListener('click', () => setOrderDirection('LONG'));
+      dirShortBtn.addEventListener('click', () => setOrderDirection('SHORT'));
+      simBuyLongBtn.addEventListener('click', () => setOrderDirection('LONG'));
+      simSellShortBtn.addEventListener('click', () => setOrderDirection('SHORT'));
+
+      resetBtn.addEventListener('click', () => {
+        balanceInput.value = '5000';
+        riskInput.value = '2';
+        stopLossInput.value = '3';
+        leverageInput.value = '3';
+        entryPriceInput.value = '77815.0';
+        slPriceInput.value = '75480.6';
+        updateSlHelper();
+        calculateAll();
+      });
+
+      copyPosBtn.addEventListener('click', () => {
+        copyTextHelper(positionSizeDisplay.textContent.trim());
+      });
+
+      copyBtcSizeBtn.addEventListener('click', () => {
+        copyTextHelper(orderPanelSizeBtc.textContent.trim());
+      });
+
+      copyTpPriceBtn.addEventListener('click', () => {
+        copyTextHelper(orderPanelTpInputBox.textContent.replace(/,/g, '').trim());
+      });
+
+      copySlPriceBtn.addEventListener('click', () => {
+        copyTextHelper(orderPanelSlInputBox.textContent.replace(/,/g, '').trim());
+      });
+
+      toggleSlHelperBtn.addEventListener('click', () => {
+        slHelperPanel.classList.toggle('hidden');
+      });
+
+      slPriceInput.addEventListener('input', updateSlHelper);
+
+      useCurrentPriceBtn.addEventListener('click', () => {
+        if (latestMarketStats.lastPrice > 0) {
+          const decimals = latestMarketStats.lastPrice < 10 ? 4 : 1;
+          entryPriceInput.value = Number(latestMarketStats.lastPrice.toFixed(decimals));
+          slPriceInput.value = Number((latestMarketStats.lastPrice * 0.97).toFixed(decimals));
+          updateSlHelper();
+          calculateAll();
+        }
+      });
+
+      applySlPercentBtn.addEventListener('click', () => {
+        if (calculatedSlFromPrice > 0) {
+          stopLossInput.value = Number(calculatedSlFromPrice.toFixed(2));
+          calculateAll();
+        }
+      });
+
+      symbolSelect.addEventListener('change', () => {
+        loadTradingViewWidget();
+        fetchMarketIndicators(true);
+      });
+
+      intervalSelect.addEventListener('change', () => {
+        loadTradingViewWidget();
+        fetchMarketIndicators(false);
+      });
+
+      fetchLivePriceTopBtn.addEventListener('click', () => fetchMarketIndicators(true));
+      refreshMarketDataBtn.addEventListener('click', () => fetchMarketIndicators(false));
+
+      toggleApiKeyVisBtn.addEventListener('click', () => {
+        if (geminiApiKeyInput.type === 'password') {
+          geminiApiKeyInput.type = 'text';
+          toggleApiKeyVisBtn.textContent = 'ซ่อน';
+        } else {
+          geminiApiKeyInput.type = 'password';
+          toggleApiKeyVisBtn.textContent = 'แสดง';
+        }
+      });
+
+      saveApiKeyBtn.addEventListener('click', () => {
+        try {
+          localStorage.setItem('gemini_trading_api_key', geminiApiKeyInput.value.trim());
+          saveApiKeyBtn.textContent = 'บันทึกแล้ว!';
+          setTimeout(() => { saveApiKeyBtn.textContent = 'บันทึกคีย์'; }, 1500);
+        } catch (e) {}
+      });
+
+      runGeminiAnalysisBtn.addEventListener('click', runGeminiAnalysis);
+
+      // Initialize everything on load
+      updateSlHelper();
+      calculateAll();
+      loadTradingViewWidget();
+      fetchMarketIndicators(false);
+    })();
+  </script>
+</body>
+</html>
