@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Position Size Calculator & TradingView Gemini AI Analyzer</title>
+  <title>Position Size Calculator + Elliott Wave & RSI/MACD Divergence Terminal</title>
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -88,11 +88,11 @@
           </svg>
         </div>
         <div>
-          <div class="flex items-center gap-2">
-            <span class="font-semibold text-white text-sm sm:text-base">TradingView + Position Size & Gemini AI Terminal</span>
-            <span class="text-[11px] bg-emerald-950/80 text-emerald-300 border border-emerald-700/50 px-2 py-0.5 rounded font-medium">All-in-One</span>
+          <div class="flex items-center gap-2 flex-wrap">
+            <span class="font-semibold text-white text-sm sm:text-base">TradingView + CDC ActionZone V3 2020 + Elliott Wave & Position Size</span>
+            <span class="text-[11px] bg-emerald-950/80 text-emerald-300 border border-emerald-700/50 px-2 py-0.5 rounded font-medium">Pro Quant Edition</span>
           </div>
-          <p class="text-xs text-[#9ca3af]">วิเคราะห์กราฟเรียลไทม์ คำนวณขนาด Position Size (USDT & BTC) และประเมินแผนเทรดด้วย Gemini AI</p>
+          <p class="text-xs text-[#9ca3af]">วิเคราะห์สัญญาณ CDC ActionZone V3 2020 + เส้น OBV (On-Balance Volume) + คลื่น Elliott Wave & RSI/MACD/OBV Divergence พร้อมคำนวณ Position Size</p>
         </div>
       </div>
 
@@ -131,10 +131,10 @@
       </div>
     </div>
 
-    <!-- Main 2-Column Workspace: Left = Position Size Calculator + Market Order Form | Right = TradingView Chart & Gemini AI -->
+    <!-- Main 2-Column Workspace -->
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
 
-      <!-- LEFT COLUMN (5 cols on lg): Position Size Calculator + Exact Market Order Panel from Screenshot -->
+      <!-- LEFT COLUMN (5 cols on lg): Position Size Calculator + Market Order Panel -->
       <div class="lg:col-span-5 space-y-5">
 
         <!-- Main Position Size Calculator Card -->
@@ -248,7 +248,7 @@
                     <line x1="12" y1="8" x2="12.01" y2="8" />
                   </svg>
                   <div class="tooltip-box absolute left-0 bottom-full mb-2 w-60 p-2.5 bg-[#111111] border border-[#3f3f3f] rounded text-[12px] normal-case font-normal text-[#e0e0e0] shadow-xl">
-                    ระยะตัดขาดทุน (% การเคลื่อนที่ของราคาจากจุดเข้า ไปยังจุด Stop Loss ที่วัดได้จากกราฟ)
+                    ระยะตัดขาดทุน (% การเคลื่อนที่ของราคาจากจุดเข้า ไปยังจุด Stop Loss หรือจุด Invalidation ของ Elliott Wave)
                   </div>
                 </div>
               </div>
@@ -350,11 +350,10 @@
 
         </div>
 
-        <!-- UPDATED: Exact Market Order Panel Simulator (Matching New Screenshot with Market, Slippage Tolerance, TP/SL Inputs) -->
+        <!-- Market Order Panel Simulator -->
         <div class="bg-[#161a1e] border border-[#2b3139] rounded-lg p-4 sm:p-5 shadow-2xl space-y-3.5 text-[#eaecef]">
           <div class="flex items-center justify-between border-b border-[#2b3139] pb-2.5">
-            <span class="text-xs font-semibold text-amber-400 uppercase tracking-wider">ตารางคำสั่ง Market ตามภาพที่แนบ (กรอกค่าให้ครบแล้ว)</span>
-            <!-- Direction Switcher for TP/SL inputs -->
+            <span class="text-xs font-semibold text-amber-400 uppercase tracking-wider">ตารางคำสั่ง Market (ซิงค์กับ Elliott Wave & Money Management)</span>
             <div class="flex items-center gap-1 bg-[#2b3139] p-0.5 rounded text-[11px]">
               <button id="dirLongBtn" type="button" class="px-2 py-0.5 rounded bg-[#0ecb81] text-white font-semibold transition">ฝั่ง Long</button>
               <button id="dirShortBtn" type="button" class="px-2 py-0.5 rounded text-[#848e9c] hover:text-white font-semibold transition">ฝั่ง Short</button>
@@ -394,7 +393,7 @@
               <strong id="orderPanelAvbl" class="text-[#eaecef]">5,000.00 USDT</strong>
             </div>
             <div class="flex items-center gap-2">
-              <span class="text-[11px] text-[#848e9c]">ราคาตลาดอ้างอิง:</span>
+              <span class="text-[11px] text-[#848e9c]">ราคาเข้าอ้างอิง:</span>
               <input
                 id="entryPriceInput"
                 type="number"
@@ -439,7 +438,7 @@
             </div>
           </div>
 
-          <!-- Slippage Tolerance Checked Box (Matching New Screenshot) -->
+          <!-- Slippage Tolerance Checked Box -->
           <div class="space-y-2 pt-1 border-t border-[#2b3139]">
             <label class="flex items-center gap-2 text-xs">
               <input type="checkbox" checked disabled class="accent-[#eaecef] rounded" />
@@ -454,7 +453,7 @@
             </div>
           </div>
 
-          <!-- TP/SL Checked Section with Exact Take Profit & Stop Loss Boxes -->
+          <!-- TP/SL Checked Section -->
           <div class="pt-1 space-y-2.5">
             <div class="flex items-center justify-between text-xs">
               <label class="flex items-center gap-2">
@@ -498,12 +497,12 @@
             <!-- Dual Reference Summary (Long vs Short) -->
             <div class="grid grid-cols-2 gap-2 text-[11px] pt-1">
               <div class="bg-[#1e2329] border border-[#2b3139] rounded p-2">
-                <div class="text-[#0ecb81] font-semibold">ฝั่ง Buy/Long (RR 1:2)</div>
+                <div class="text-[#0ecb81] font-semibold">ฝั่ง Buy/Long</div>
                 <div class="text-[#848e9c]">TP (+<span id="tpLongPctLabel">6.00</span>%): <strong id="tpLongPriceDisplay" class="text-[#eaecef]">82,483.9</strong></div>
                 <div class="text-[#848e9c]">SL (-<span id="slLongPctLabel">3.00</span>%): <strong id="slLongPriceDisplay" class="text-[#eaecef]">75,480.6</strong></div>
               </div>
               <div class="bg-[#1e2329] border border-[#2b3139] rounded p-2">
-                <div class="text-[#f6465d] font-semibold">ฝั่ง Sell/Short (RR 1:2)</div>
+                <div class="text-[#f6465d] font-semibold">ฝั่ง Sell/Short</div>
                 <div class="text-[#848e9c]">TP (-<span id="tpShortPctLabel">6.00</span>%): <strong id="tpShortPriceDisplay" class="text-[#eaecef]">73,146.1</strong></div>
                 <div class="text-[#848e9c]">SL (+<span id="slShortPctLabel">3.00</span>%): <strong id="slShortPriceDisplay" class="text-[#eaecef]">80,149.5</strong></div>
               </div>
@@ -526,7 +525,7 @@
             </button>
           </div>
 
-          <!-- Bottom Summary Footer: Liq Price | Cost | Max (Exact Match to Screenshot: Max 0.1925 / 0.1930 BTC) -->
+          <!-- Bottom Summary Footer: Liq Price | Cost | Max -->
           <div class="grid grid-cols-2 gap-3 pt-1 text-xs border-t border-[#2b3139]">
             <div class="space-y-1">
               <div class="flex justify-between">
@@ -591,8 +590,313 @@
 
       </div>
 
-      <!-- RIGHT COLUMN (7 cols on lg): Live TradingView Widget + Quick Presets Table + Gemini AI Analyzer + RR Table -->
+      <!-- RIGHT COLUMN (7 cols on lg): Elliott Wave & RSI/MACD Divergence Scanner + Live TradingView + Presets + Gemini AI -->
       <div class="lg:col-span-7 space-y-5">
+
+                <!-- NEW FEATURE: CDC ActionZone V3 2020 Real-Time Scanner & Interactive Chart -->
+        <div class="calc-card rounded-md p-4 sm:p-6 space-y-4 border-2 border-lime-500/40">
+          <div class="flex items-start justify-between flex-wrap gap-3 border-b border-[#2e2e2e] pb-3.5">
+            <div class="flex items-center gap-2.5">
+              <div class="w-9 h-9 rounded-lg bg-lime-500/20 border border-lime-500/40 flex items-center justify-center text-lime-300 shrink-0">
+                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M3 3v18h18"/><path d="M7 16l4-8 4 4 5-9"/>
+                </svg>
+              </div>
+              <div>
+                <div class="flex items-center gap-2 flex-wrap">
+                  <h2 class="text-sm sm:text-base font-semibold text-white">CDC ActionZone V3 2020 (Official Formula by piriya33)</h2>
+                  <span id="cdcZoneBadge" class="text-[11px] bg-emerald-950/90 text-emerald-300 border border-emerald-500/50 px-2.5 py-0.5 rounded font-bold">GREEN ZONE (BUY / BULLISH)</span>
+                </div>
+                <p class="text-xs text-[#9ca3af]">คำนวณโซนสีแท่งเทียน 6 โซน (Green, Blue, Aqua, Red, Orange, Yellow) จาก Fast EMA(12) & Slow EMA(26) พร้อมจุด Trailing Stop Loss</p>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <button id="toggleCdcPineModalBtn" type="button" class="text-xs bg-[#262626] hover:bg-[#333333] text-amber-300 border border-amber-500/30 px-2.5 py-1.5 rounded transition font-medium">
+                ดูโค้ด Pine Script V3 2020
+              </button>
+              <button id="syncCdcStopLossBtn" type="button" class="text-xs bg-lime-600 hover:bg-lime-500 text-black font-semibold px-3 py-1.5 rounded shadow transition">
+                ใช้เส้น CDC Slow EMA(26) เป็นจุด Stop Loss
+              </button>
+            </div>
+          </div>
+
+          <!-- 4 Key CDC ActionZone V3 2020 Status Cards -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <div class="bg-[#161616] border border-[#2d2d2d] rounded-md p-3">
+              <div class="text-[11px] text-[#9ca3af]">โซนสีปัจจุบัน (ActionZone)</div>
+              <div id="cdcCurrentColorName" class="text-sm font-bold text-emerald-400 mt-1">สีเขียว (Green - Buy)</div>
+              <div id="cdcCurrentActionNote" class="text-[10px] text-[#a3a3a3] mt-0.5">ขาขึ้นแข็งแกร่ง รันเทรนด์ Long</div>
+            </div>
+
+            <div class="bg-[#161616] border border-[#2d2d2d] rounded-md p-3">
+              <div class="text-[11px] text-[#9ca3af]">เส้น Fast EMA (12)</div>
+              <div id="cdcFastEmaDisplay" class="text-sm font-bold text-rose-400 mt-1">77,510.0 USDT</div>
+              <div id="cdcFastDistNote" class="text-[10px] text-[#a3a3a3] mt-0.5">แนวรับย่อตัวระยะสั้น (Fast Line)</div>
+            </div>
+
+            <div class="bg-[#161616] border border-[#2d2d2d] rounded-md p-3">
+              <div class="text-[11px] text-[#9ca3af]">เส้น Slow EMA (26) / Trailing SL</div>
+              <div id="cdcSlowEmaDisplay" class="text-sm font-bold text-sky-400 mt-1">76,980.0 USDT</div>
+              <div id="cdcSlowDistNote" class="text-[10px] text-[#a3a3a3] mt-0.5">ห่างราคาปัจจุบัน 1.07%</div>
+            </div>
+
+            <div class="bg-[#161616] border border-[#2d2d2d] rounded-md p-3">
+              <div class="text-[11px] text-[#9ca3af]">สัญญาณ เขียวแรก / แดงแรก ล่าสุด</div>
+              <div id="cdcLastCrossSignal" class="text-sm font-bold text-lime-300 mt-1">เขียวแรก @ 76,420.0</div>
+              <div id="cdcBarsSinceCross" class="text-[10px] text-[#a3a3a3] mt-0.5">ผ่านมาแล้ว 14 แท่งเทียน</div>
+            </div>
+          </div>
+
+          <!-- Interactive CDC ActionZone V3 2020 Canvas Chart + TP/SL Overlay Lines -->
+          <div class="bg-[#141414] border border-[#2b2b2b] rounded-md p-3 space-y-2.5">
+            <div class="flex items-center justify-between flex-wrap gap-2 text-xs">
+              <div class="flex items-center gap-2 flex-wrap">
+                <span class="font-semibold text-white">กราฟสีแท่งเทียน CDC ActionZone V3 2020 + เส้น Entry / TP / SL</span>
+                <label class="inline-flex items-center gap-1.5 bg-[#202020] border border-[#363636] px-2 py-0.5 rounded cursor-pointer text-[11px] text-emerald-300">
+                  <input id="showTpSlLinesToggle" type="checkbox" checked class="accent-emerald-500 rounded" />
+                  <span>แสดงเส้น TP / Entry / SL บนกราฟ</span>
+                </label>
+              </div>
+              <div class="flex flex-wrap items-center gap-2 text-[10px]">
+                <span class="inline-flex items-center gap-1 text-emerald-400 font-semibold"><span class="w-3 h-0.5 bg-[#10b981] inline-block"></span>TP Line</span>
+                <span class="inline-flex items-center gap-1 text-amber-300 font-semibold"><span class="w-3 h-0.5 bg-[#f59e0b] inline-block"></span>Entry Line</span>
+                <span class="inline-flex items-center gap-1 text-rose-400 font-semibold"><span class="w-3 h-0.5 bg-[#f43f5e] inline-block"></span>SL Line</span>
+                <span class="inline-flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-sm bg-[#00FF00] inline-block"></span>Green</span>
+                <span class="inline-flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-sm bg-[#3b82f6] inline-block"></span>Blue</span>
+                <span class="inline-flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-sm bg-[#00FFFF] inline-block"></span>Aqua</span>
+                <span class="inline-flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-sm bg-[#FF0000] inline-block"></span>Red</span>
+                <span class="inline-flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-sm bg-[#FFA500] inline-block"></span>Orange</span>
+                <span class="inline-flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-sm bg-[#FFFF00] inline-block"></span>Yellow</span>
+              </div>
+            </div>
+            <div class="relative w-full h-72">
+              <canvas id="cdcCanvasChart" class="w-full h-full block"></canvas>
+            </div>
+            <!-- OBV (On-Balance Volume) + OBV EMA(20) Sub-Chart -->
+            <div class="pt-2 border-t border-[#262626] space-y-1.5">
+              <div class="flex items-center justify-between flex-wrap gap-2 text-[11px]">
+                <div class="flex items-center gap-2">
+                  <span class="font-semibold text-cyan-300">กราฟเส้น OBV (On-Balance Volume) & OBV EMA(20)</span>
+                  <span id="obvTrendBadge" class="px-2 py-0.5 rounded bg-emerald-950/80 border border-emerald-500/40 text-emerald-300 font-semibold">Volume สะสมขาขึ้น (Accumulation)</span>
+                </div>
+                <div class="flex items-center gap-3 text-[10px]">
+                  <span class="inline-flex items-center gap-1 text-cyan-300 font-semibold"><span class="w-3 h-0.5 bg-[#22d3ee] inline-block"></span>เส้น OBV</span>
+                  <span class="inline-flex items-center gap-1 text-amber-300 font-semibold"><span class="w-3 h-0.5 bg-[#f59e0b] inline-block"></span>OBV EMA(20)</span>
+                </div>
+              </div>
+              <div class="relative w-full h-28">
+                <canvas id="obvCanvasChart" class="w-full h-full block"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <!-- Collapsible Pine Script Box for CDC ActionZone V3 2020 -->
+          <div id="cdcPineModalBox" class="hidden bg-[#121212] border border-amber-500/40 rounded-md p-3.5 space-y-2 text-xs">
+            <div class="flex items-center justify-between">
+              <span class="font-semibold text-amber-300">โค้ด Pine Script: CDC ActionZone V3 2020 สำหรับนำไปวางใน TradingView</span>
+              <button id="copyCdcPineBtn" type="button" class="bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 px-2.5 py-1 rounded text-[11px] font-medium">
+                คัดลอกโค้ด Pine Script
+              </button>
+            </div>
+            <pre id="cdcPineCodeBlock" class="bg-[#1a1a1a] p-3 rounded border border-[#2e2e2e] text-[11px] text-[#d4d4d4] overflow-x-auto leading-relaxed select-all">//@version=5
+indicator("CDC ActionZone V3 2020", overlay=true)
+xsrc = input.source(close, "Source")
+xprd1 = input.int(12, "Fast EMA Period")
+xprd2 = input.int(26, "Slow EMA Period")
+xsmooth = input.int(1, "Smoothing Period")
+
+xPrice = ta.ema(xsrc, xsmooth)
+FastMA = ta.ema(xPrice, xprd1)
+SlowMA = ta.ema(xPrice, xprd2)
+
+Bull = FastMA > SlowMA
+Bear = FastMA < SlowMA
+
+Green  = Bull and xPrice > FastMA
+Blue   = Bear and xPrice > FastMA and xPrice > SlowMA
+LBlue  = Bear and xPrice > FastMA and xPrice < SlowMA
+Red    = Bear and xPrice < FastMA
+Orange = Bull and xPrice < FastMA and xPrice < SlowMA
+Yellow = Bull and xPrice < FastMA and xPrice > SlowMA
+
+bColor = Green ? color.lime : Blue ? color.blue : LBlue ? color.aqua : Red ? color.red : Orange ? color.orange : Yellow ? color.yellow : color.black
+barcolor(bColor)
+slPct = input.float(3.0, "% Stop Loss")
+rrRatio = input.float(2.0, "Risk:Reward Ratio (TP)")
+isLong = input.bool(true, "Direction: true=Long, false=Short")
+
+tpPrice = isLong ? close * (1 + (slPct * rrRatio) / 100) : close * (1 - (slPct * rrRatio) / 100)
+slPrice = isLong ? close * (1 - slPct / 100) : close * (1 + slPct / 100)
+
+plot(FastMA, "Fast EMA(12)", color=color.red, linewidth=1)
+plot(SlowMA, "Slow EMA(26)", color=color.blue, linewidth=2)
+plot(tpPrice, "Take Profit Line", color=color.new(color.lime, 20), style=plot.style_linebr, linewidth=2)
+plot(slPrice, "Stop Loss Line", color=color.new(color.red, 20), style=plot.style_linebr, linewidth=2)
+plotshape(Bull and Bear[1], "Buy (เขียวแรก)", shape.labelup, location.belowbar, color.lime, text="BUY", textcolor=color.black)
+plotshape(Bear and Bull[1], "Sell (แดงแรก)", shape.labeldown, location.abovebar, color.red, text="SELL", textcolor=color.white)</pre>
+          </div>
+        </div>
+
+<!-- NEW FEATURE: Elliott Wave + RSI & MACD Divergence Scanner & Fibonacci Target Calculator -->
+        <div class="calc-card rounded-md p-4 sm:p-6 space-y-4 border-2 border-emerald-500/40">
+          <div class="flex items-start justify-between flex-wrap gap-3 border-b border-[#2e2e2e] pb-3.5">
+            <div class="flex items-center gap-2.5">
+              <div class="w-9 h-9 rounded-lg bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-300 shrink-0">
+                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+                </svg>
+              </div>
+              <div>
+                <div class="flex items-center gap-2 flex-wrap">
+                  <h2 class="text-sm sm:text-base font-semibold text-white">Elliott Wave + RSI & MACD Divergence Scanner</h2>
+                  <span id="ewWavePositionBadge" class="text-[11px] bg-emerald-950/90 text-emerald-300 border border-emerald-600/50 px-2 py-0.5 rounded font-semibold">กำลังสแกนคลื่น...</span>
+                </div>
+                <p class="text-xs text-[#9ca3af]">ตรวจจับสถานะคลื่น Elliott Wave (1-2-3-4-5 / A-B-C) ร่วมกับสัญญาณ Divergence ของ RSI(14) และ MACD(12,26,9) เพื่อหาจุดเข้าและราคาเป้าหมาย Fibonacci</p>
+              </div>
+            </div>
+            <button id="rescanElliottBtn" type="button" class="text-xs bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/40 px-3 py-1.5 rounded transition font-medium flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/>
+              </svg>
+              <span>สแกนคลื่น & Divergence ใหม่</span>
+            </button>
+          </div>
+
+          <!-- 4 Real-Time Detection Cards: Elliott Wave Phase | RSI Divergence | MACD Divergence | OBV Volume Flow -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+            <div class="bg-[#161616] border border-[#2d2d2d] rounded-md p-3 space-y-1">
+              <div class="text-[11px] text-[#9ca3af] flex items-center justify-between">
+                <span>โครงสร้างคลื่น Elliott Wave</span>
+                <span class="text-[10px] text-sky-400">Swing Pivots</span>
+              </div>
+              <div id="ewCurrentWaveTitle" class="text-sm font-bold text-white">Wave 3 (Impulse ขาขึ้น)</div>
+              <div id="ewCurrentWaveSub" class="text-[11px] text-emerald-400">ย่อจบ Wave 2 ที่ Fibo 61.8% กำลังวิ่งขึ้น Wave 3</div>
+            </div>
+
+            <div class="bg-[#161616] border border-[#2d2d2d] rounded-md p-3 space-y-1">
+              <div class="text-[11px] text-[#9ca3af] flex items-center justify-between">
+                <span>สัญญาณ RSI(14) Divergence</span>
+                <span id="ewRsiNumericBadge" class="text-[10px] font-semibold text-amber-300">RSI: 56.4</span>
+              </div>
+              <div id="ewRsiDivTitle" class="text-sm font-bold text-emerald-400">Hidden Bullish Divergence</div>
+              <div id="ewRsiDivSub" class="text-[11px] text-[#b0b0b0]">ราคาทำ Higher Low แต่ RSI ย่อลึกกว่า ยืนยันการไปต่อของ Wave 3</div>
+            </div>
+
+            <div class="bg-[#161616] border border-[#2d2d2d] rounded-md p-3 space-y-1">
+              <div class="text-[11px] text-[#9ca3af] flex items-center justify-between">
+                <span>สัญญาณ MACD(12,26,9)</span>
+                <span id="ewMacdHistBadge" class="text-[10px] font-semibold text-emerald-400">Hist: +145.2</span>
+              </div>
+              <div id="ewMacdDivTitle" class="text-sm font-bold text-sky-300">Bullish Momentum (ไร้ Bearish Div)</div>
+              <div id="ewMacdDivSub" class="text-[11px] text-[#b0b0b0]">MACD อยู่เหนือเส้น Signal และเพิ่งตัดผ่าน 0 ขึ้นไป (หนุนคลื่น 3)</div>
+            </div>
+
+            <div class="bg-[#161616] border border-cyan-500/30 rounded-md p-3 space-y-1">
+              <div class="text-[11px] text-[#9ca3af] flex items-center justify-between">
+                <span>สัญญาณเส้น OBV (Volume)</span>
+                <span id="ewObvSlopeBadge" class="text-[10px] font-semibold text-cyan-300">OBV > EMA20</span>
+              </div>
+              <div id="ewObvDivTitle" class="text-sm font-bold text-cyan-300">OBV Bullish Confirmation</div>
+              <div id="ewObvDivSub" class="text-[11px] text-[#b0b0b0]">เส้น OBV ยก High/Low สอดคล้องกับราคา ยืนยันแรงซื้อจริงไหลเข้า</div>
+            </div>
+          </div>
+
+          <!-- Interactive Wave Pivot Anchor Controls (Auto-detected from Binance Klines, or customizable by user) -->
+          <div class="bg-[#161616] border border-[#2b2b2b] rounded-md p-3.5 space-y-3">
+            <div class="flex items-center justify-between flex-wrap gap-2">
+              <span class="text-xs font-semibold text-amber-400">จุดอ้างอิงคลื่น Elliott Wave (คำนวณอัตโนมัติจากจุด Swing บนกราฟ หรือปรับตัวเลขเองได้)</span>
+              <div class="flex items-center gap-2">
+                <label for="ewSetupSelect" class="text-[11px] text-[#9ca3af]">เลือกโครงสร้างคลื่น:</label>
+                <select id="ewSetupSelect" class="bg-[#242424] border border-[#3a3a3a] rounded px-2 py-1 text-xs font-semibold text-white focus:outline-none">
+                  <option value="BULL_W3" selected>ขาขึ้น: จบ Wave 2 เข้าซื้อรันเทรนด์ Wave 3 (Bullish Impulse)</option>
+                  <option value="BULL_W5">ขาขึ้น: จบ Wave 4 เข้าซื้อเป้า Wave 5 (ระวัง Bearish Divergence ปลายคลื่น)</option>
+                  <option value="BEAR_ABC">ขาลง/กลับตัว: จบ Wave 5 (เกิด Bearish Div) ดัก Short คลื่นปรับฐาน A-B-C</option>
+                  <option value="BULL_END_C">ขาขึ้นสวนกลับ: จบคลื่น C (เกิด Bullish Div ใน RSI & MACD) ดัก Long ต้นคลื่น 1 ใหม่</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+              <div>
+                <label for="ewPivot0Input" id="ewPivot0Label" class="block text-[11px] text-[#9ca3af] mb-1">จุดเริ่มต้น Wave 0 (Swing Low)</label>
+                <input id="ewPivot0Input" type="number" step="any" value="75200.0" class="w-full calc-input-box rounded px-2.5 py-1.5 text-sm font-semibold text-white focus:outline-none" />
+              </div>
+              <div>
+                <label for="ewPivot1Input" id="ewPivot1Label" class="block text-[11px] text-[#9ca3af] mb-1">ยอดคลื่น Wave 1 (Swing High)</label>
+                <input id="ewPivot1Input" type="number" step="any" value="78600.0" class="w-full calc-input-box rounded px-2.5 py-1.5 text-sm font-semibold text-white focus:outline-none" />
+              </div>
+              <div>
+                <label for="ewPivot2Input" id="ewPivot2Label" class="block text-[11px] text-[#9ca3af] mb-1">จุดพักตัว Wave 2 (Fibo Retracement)</label>
+                <input id="ewPivot2Input" type="number" step="any" value="76500.0" class="w-full calc-input-box rounded px-2.5 py-1.5 text-sm font-semibold text-white focus:outline-none" />
+              </div>
+            </div>
+
+            <!-- Actionable Entry, Stop Loss (Invalidation) & Fibonacci Target Prices -->
+            <div class="grid grid-cols-1 sm:grid-cols-4 gap-2.5 pt-1">
+              <div class="bg-[#1e2329] border border-sky-500/40 rounded p-2.5">
+                <div class="text-[11px] text-[#9ca3af]">โซนจุดเข้า (Optimal Entry)</div>
+                <div id="ewRecommendedEntry" class="text-sm font-bold text-sky-300 mt-0.5">77,815.0 USDT</div>
+                <div id="ewEntryRuleNote" class="text-[10px] text-[#848e9c] mt-0.5">ย่อทดสอบ Fibo / เบรกเอาต์</div>
+              </div>
+
+              <div class="bg-[#1e2329] border border-rose-500/40 rounded p-2.5">
+                <div class="text-[11px] text-[#9ca3af]">จุด Stop Loss (Wave Invalidation)</div>
+                <div id="ewRecommendedSl" class="text-sm font-bold text-rose-400 mt-0.5">75,480.6 USDT</div>
+                <div id="ewSlRuleNote" class="text-[10px] text-[#848e9c] mt-0.5">ห้ามหลุดฐานคลื่น (-3.00%)</div>
+              </div>
+
+              <div class="bg-[#1e2329] border border-emerald-500/40 rounded p-2.5">
+                <div class="text-[11px] text-[#9ca3af]">เป้าหมายที่ 1 (Fibo 100% / 127.2%)</div>
+                <div id="ewTarget1Price" class="text-sm font-bold text-emerald-300 mt-0.5">80,824.5 USDT</div>
+                <div id="ewTarget1Note" class="text-[10px] text-[#848e9c] mt-0.5">+3.87% (แบ่งปิดทำกำไรครึ่งแรก)</div>
+              </div>
+
+              <div class="bg-[#1e2329] border border-amber-500/50 rounded p-2.5">
+                <div class="text-[11px] text-[#9ca3af]">เป้าหมายหลัก (Wave 3 Fibo 161.8%)</div>
+                <div id="ewTarget2Price" class="text-sm font-bold text-amber-300 mt-0.5">82,483.9 USDT</div>
+                <div id="ewTarget2Note" class="text-[10px] text-[#848e9c] mt-0.5">+6.00% (เป้าหมายหลักคลื่น 3)</div>
+              </div>
+            </div>
+
+            <!-- One-Click Sync Button to Position Size & Market Order Panel -->
+            <div class="flex flex-wrap items-center justify-between gap-2 pt-1">
+              <span id="ewConfluenceSummaryText" class="text-xs text-[#d4d4d4]">
+                สรุปสัญญาณ: <strong class="text-emerald-400">BUY / LONG ได้เปรียบ</strong> (Wave 3 Impulse + ไม่มี Bearish Divergence ขัดขวาง)
+              </span>
+              <div class="flex items-center gap-2">
+                <button id="applyEwTarget1Btn" type="button" class="text-xs bg-[#2b3139] hover:bg-[#373f4a] text-emerald-300 border border-emerald-500/40 px-3 py-1.5 rounded transition font-medium">
+                  ใช้เป้า TP1 + คำนวณ Size
+                </button>
+                <button id="applyEwMainSetupBtn" type="button" class="text-xs bg-emerald-600 hover:bg-emerald-500 text-white px-3.5 py-1.5 rounded shadow transition font-semibold">
+                  นำจุดเข้า + SL + เป้าหลัก Wave (Fibo 161.8%) ไปกรอกในตารางเทรด
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Live TradingView Advanced Chart Card + Live Entry/TP/SL Level Strip -->
+        <div class="calc-card rounded-md overflow-hidden">
+          <div class="px-4 sm:px-5 py-3 border-b border-[#2e2e2e] flex items-center justify-between flex-wrap gap-2">
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+              <h2 class="text-sm sm:text-base font-semibold text-white">กราฟ TradingView เรียลไทม์ พร้อมอินดิเคเตอร์ RSI & MACD (<span id="chartHeaderSymbol">BINANCE:BTCUSDT</span>)</h2>
+            </div>
+            <div class="flex items-center gap-3 text-xs flex-wrap">
+              <span class="px-2 py-0.5 rounded bg-emerald-950/80 border border-emerald-500/40 text-emerald-300 font-semibold">
+                เส้น TP: <strong id="tvHeaderTpBadge">82,483.9</strong>
+              </span>
+              <span class="px-2 py-0.5 rounded bg-amber-950/80 border border-amber-500/40 text-amber-300 font-semibold">
+                เส้น Entry: <strong id="tvHeaderEntryBadge">77,815.0</strong>
+              </span>
+              <span class="px-2 py-0.5 rounded bg-rose-950/80 border border-rose-500/40 text-rose-300 font-semibold">
+                เส้น SL: <strong id="tvHeaderSlBadge">75,480.6</strong>
+              </span>
+            </div>
+          </div>
+          <div class="w-full h-[440px] sm:h-[480px] bg-[#141414]" id="tv_chart_container"></div>
+        </div>
 
         <!-- Quick Presets Table for the Attached Order Screenshot -->
         <div class="calc-card rounded-md p-4 sm:p-5 space-y-3 border border-amber-500/30">
@@ -622,18 +926,6 @@
           </div>
         </div>
 
-        <!-- Live TradingView Advanced Chart Card -->
-        <div class="calc-card rounded-md overflow-hidden">
-          <div class="px-4 sm:px-5 py-3 border-b border-[#2e2e2e] flex items-center justify-between flex-wrap gap-2">
-            <div class="flex items-center gap-2">
-              <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
-              <h2 class="text-sm sm:text-base font-semibold text-white">กราฟ TradingView เรียลไทม์ (<span id="chartHeaderSymbol">BINANCE:BTCUSDT</span>)</h2>
-            </div>
-            <span class="text-[11px] text-[#9ca3af]">ใช้แถบเครื่องมือซ้ายมือบนกราฟเพื่อตีเส้นและวัดระยะ % SL ได้เลย</span>
-          </div>
-          <div class="w-full h-[400px] sm:h-[430px] bg-[#141414]" id="tv_chart_container"></div>
-        </div>
-
         <!-- Gemini AI Chart & Trade Setup Analyzer Card -->
         <div class="calc-card rounded-md p-4 sm:p-6 space-y-4 border border-indigo-500/30">
           <div class="flex items-start justify-between flex-wrap gap-3 border-b border-[#2e2e2e] pb-3.5">
@@ -644,8 +936,8 @@
                 </svg>
               </div>
               <div>
-                <h2 class="text-sm sm:text-base font-semibold text-white">Gemini AI วิเคราะห์กราฟ & ฟันธงแผน Long / Short</h2>
-                <p class="text-xs text-[#9ca3af]">ดึงข้อมูลแท่งเทียน RSI/EMA ล่าสุดจากตลาดจริง หรือวางภาพแคปหน้าจอกราฟเพื่อให้ Gemini วิเคราะห์</p>
+                <h2 class="text-sm sm:text-base font-semibold text-white">Gemini AI วิเคราะห์คลื่น Elliott Wave + RSI/MACD Divergence</h2>
+                <p class="text-xs text-[#9ca3af]">วิเคราะห์การนับคลื่น สัญญาณ Divergence และคำนวณเป้าหมายราคา Fibonacci ร่วมกับขนาด Position Size</p>
               </div>
             </div>
             <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer" class="text-xs text-indigo-400 hover:text-indigo-300 underline flex items-center gap-1">
@@ -679,6 +971,8 @@
               <span class="text-[#9ca3af]">ข้อมูลเทคนิคเรียลไทม์ (<strong id="techSymbolLabel" class="text-white">BTCUSDT 1h</strong>):</span>
               <span>สัญญาณเทรนด์: <strong id="liveSignalBiasBadge" class="text-emerald-400">กำลังประมวลผล...</strong></span>
               <span>RSI(14): <strong id="liveRsiValue" class="text-amber-300">-</strong></span>
+              <span>MACD Hist: <strong id="liveMacdValue" class="text-emerald-300">-</strong></span>
+              <span>OBV: <strong id="liveObvValue" class="text-cyan-300">ขาขึ้น (Above EMA20)</strong></span>
               <span>EMA(20): <strong id="liveEma20Value" class="text-sky-300">-</strong></span>
               <span>EMA(50): <strong id="liveEma50Value" class="text-indigo-300">-</strong></span>
               <span>กรอบ 24ชม.: <strong id="liveRange24hValue" class="text-[#d4d4d4]">-</strong></span>
@@ -724,13 +1018,13 @@
               <img id="chartImagePreview" src="" alt="Chart Preview" class="h-14 w-auto rounded border border-[#383838] object-cover" />
               <div class="text-xs text-[#b0b0b0]">
                 <div class="text-white font-medium">แนบภาพกราฟสำหรับส่งให้ Gemini Vision เรียบร้อย</div>
-                <div>ระบบจะวิเคราะห์จากทั้งภาพกราฟของคุณ + ข้อมูลแท่งเทียน + ค่า Position Size</div>
+                <div>ระบบจะวิเคราะห์ Elliott Wave + RSI/MACD Divergence จากภาพกราฟของคุณ + ข้อมูลแท่งเทียน + ค่า Position Size</div>
               </div>
             </div>
           </div>
 
           <!-- Analysis Output Area -->
-          <div id="aiAnalysisResultBox" class="bg-[#151515] border border-[#2c2c2c] rounded-md p-4 text-xs sm:text-sm text-[#e0e0e0] leading-relaxed max-h-[360px] overflow-y-auto space-y-2">
+          <div id="aiAnalysisResultBox" class="bg-[#151515] border border-[#2c2c2c] rounded-md p-4 text-xs sm:text-sm text-[#e0e0e0] leading-relaxed max-h-[380px] overflow-y-auto space-y-2">
             <!-- Auto-populated on load -->
           </div>
         </div>
@@ -864,6 +1158,36 @@
       const costShortDisplay = document.getElementById('costShortDisplay');
       const maxBtcShortDisplay = document.getElementById('maxBtcShortDisplay');
 
+      // Elliott Wave & Divergence DOM Elements
+      const ewWavePositionBadge = document.getElementById('ewWavePositionBadge');
+      const rescanElliottBtn = document.getElementById('rescanElliottBtn');
+      const ewCurrentWaveTitle = document.getElementById('ewCurrentWaveTitle');
+      const ewCurrentWaveSub = document.getElementById('ewCurrentWaveSub');
+      const ewRsiNumericBadge = document.getElementById('ewRsiNumericBadge');
+      const ewRsiDivTitle = document.getElementById('ewRsiDivTitle');
+      const ewRsiDivSub = document.getElementById('ewRsiDivSub');
+      const ewMacdHistBadge = document.getElementById('ewMacdHistBadge');
+      const ewMacdDivTitle = document.getElementById('ewMacdDivTitle');
+      const ewMacdDivSub = document.getElementById('ewMacdDivSub');
+      const ewSetupSelect = document.getElementById('ewSetupSelect');
+      const ewPivot0Label = document.getElementById('ewPivot0Label');
+      const ewPivot1Label = document.getElementById('ewPivot1Label');
+      const ewPivot2Label = document.getElementById('ewPivot2Label');
+      const ewPivot0Input = document.getElementById('ewPivot0Input');
+      const ewPivot1Input = document.getElementById('ewPivot1Input');
+      const ewPivot2Input = document.getElementById('ewPivot2Input');
+      const ewRecommendedEntry = document.getElementById('ewRecommendedEntry');
+      const ewEntryRuleNote = document.getElementById('ewEntryRuleNote');
+      const ewRecommendedSl = document.getElementById('ewRecommendedSl');
+      const ewSlRuleNote = document.getElementById('ewSlRuleNote');
+      const ewTarget1Price = document.getElementById('ewTarget1Price');
+      const ewTarget1Note = document.getElementById('ewTarget1Note');
+      const ewTarget2Price = document.getElementById('ewTarget2Price');
+      const ewTarget2Note = document.getElementById('ewTarget2Note');
+      const ewConfluenceSummaryText = document.getElementById('ewConfluenceSummaryText');
+      const applyEwTarget1Btn = document.getElementById('applyEwTarget1Btn');
+      const applyEwMainSetupBtn = document.getElementById('applyEwMainSetupBtn');
+
       // Quick Preset Table
       const tablePortLabel = document.getElementById('tablePortLabel');
       const tableLevLabel = document.getElementById('tableLevLabel');
@@ -902,6 +1226,7 @@
       const techSymbolLabel = document.getElementById('techSymbolLabel');
       const liveSignalBiasBadge = document.getElementById('liveSignalBiasBadge');
       const liveRsiValue = document.getElementById('liveRsiValue');
+      const liveMacdValue = document.getElementById('liveMacdValue');
       const liveEma20Value = document.getElementById('liveEma20Value');
       const liveEma50Value = document.getElementById('liveEma50Value');
       const liveRange24hValue = document.getElementById('liveRange24hValue');
@@ -919,8 +1244,10 @@
       const runGeminiAnalysisBtn = document.getElementById('runGeminiAnalysisBtn');
       const aiAnalysisResultBox = document.getElementById('aiAnalysisResultBox');
 
-      let selectedOrderDirection = 'LONG'; // 'LONG' or 'SHORT'
+      let selectedOrderDirection = 'LONG';
+      let customTpOverridePrice = null;
       let calculatedSlFromPrice = 3.0;
+
       let latestMarketStats = {
         symbol: 'BTCUSDT',
         binanceInterval: '1h',
@@ -929,12 +1256,410 @@
         low24h: 76300,
         priceChangePct24h: 1.45,
         rsi14: 56.4,
+        macdLine: 210.5,
+        macdSignal: 65.3,
+        macdHist: 145.2,
         ema20: 77420.0,
         ema50: 76890.0,
-        recentSwingHigh: 78450.0,
-        recentSwingLow: 76350.0
+        recentSwingHigh: 78600.0,
+        recentSwingLow: 75200.0,
+        wavePhase: 'Wave 3 (Impulse ขาขึ้น)',
+        waveDetail: 'จบการย่อตัว Wave 2 บนแนวรับ Fibo 61.8% และกำลังเร่งตัวขึ้นสู่คลื่น 3',
+        rsiDivergenceType: 'Hidden Bullish Divergence',
+        rsiDivergenceNote: 'ราคาทำฐานยกสูงขึ้น (Higher Low) ขณะที่ RSI รีเซ็ตตัวลงมาแล้วดีดกลับ หนุนการไปต่อของคลื่น 3',
+        macdDivergenceType: 'Bullish Momentum (ไร้ Bearish Divergence)',
+        macdDivergenceNote: 'MACD Histogram ขยายตัวฝั่งบวกต่อเนื่อง ยืนยันโมเมนตัมคลื่นลูกที่ 3'
       };
+
+      let currentEwComputed = {
+        direction: 'LONG',
+        entryPrice: 77815.0,
+        slPrice: 75480.6,
+        tp1Price: 80824.5,
+        tp2Price: 82483.9,
+        slPct: 3.0
+      };
+
       let attachedChartBase64 = null;
+      let latestCdcBars = [];
+      const cdcZoneBadge = document.getElementById('cdcZoneBadge');
+      const toggleCdcPineModalBtn = document.getElementById('toggleCdcPineModalBtn');
+      const cdcPineModalBox = document.getElementById('cdcPineModalBox');
+      const copyCdcPineBtn = document.getElementById('copyCdcPineBtn');
+      const cdcPineCodeBlock = document.getElementById('cdcPineCodeBlock');
+      const syncCdcStopLossBtn = document.getElementById('syncCdcStopLossBtn');
+      const cdcCurrentColorName = document.getElementById('cdcCurrentColorName');
+      const cdcCurrentActionNote = document.getElementById('cdcCurrentActionNote');
+      const cdcFastEmaDisplay = document.getElementById('cdcFastEmaDisplay');
+      const cdcSlowEmaDisplay = document.getElementById('cdcSlowEmaDisplay');
+      const cdcSlowDistNote = document.getElementById('cdcSlowDistNote');
+      const cdcLastCrossSignal = document.getElementById('cdcLastCrossSignal');
+      const cdcBarsSinceCross = document.getElementById('cdcBarsSinceCross');
+      const cdcCanvasChart = document.getElementById('cdcCanvasChart');
+      const obvCanvasChart = document.getElementById('obvCanvasChart');
+      const obvTrendBadge = document.getElementById('obvTrendBadge');
+      const ewObvSlopeBadge = document.getElementById('ewObvSlopeBadge');
+      const ewObvDivTitle = document.getElementById('ewObvDivTitle');
+      const ewObvDivSub = document.getElementById('ewObvDivSub');
+      const liveObvValue = document.getElementById('liveObvValue');
+      let latestObvPoints = [];
+
+      latestMarketStats.ema12 = 77510.0;
+      latestMarketStats.ema26 = 76980.0;
+      latestMarketStats.cdcZoneCode = 'GREEN';
+      latestMarketStats.cdcZoneLabel = 'สีเขียว (Green - Buy / Bullish)';
+      latestMarketStats.cdcActionAdvice = 'ขาขึ้นแข็งแกร่ง ถือสถานะ Buy/Long รันเทรนด์โดยใช้เส้น Slow EMA(26) เป็นจุด Trailing Stop';
+      latestMarketStats.cdcLastCrossText = 'BUY (เขียวแรก) @ 76,420.0';
+      latestMarketStats.cdcBarsSinceCross = 14;
+      latestMarketStats.obvCurrent = 128450;
+      latestMarketStats.obvEma20 = 121300;
+      latestMarketStats.obvTrendText = 'Volume สะสมขาขึ้น (OBV > EMA20)';
+      latestMarketStats.obvDivergenceType = 'OBV Bullish Confirmation (แรงซื้อหนุนคลื่น)';
+      latestMarketStats.obvDivergenceNote = 'เส้น OBV ยกตัวเหนือค่าเฉลี่ย OBV EMA(20) ยืนยันเม็ดเงินไหลเข้าสอดคล้องกับราคา';
+
+      function computeAndRenderCdcActionZone(opens, highs, lows, closes, ema12Arr, ema26Arr) {
+        const n = closes.length;
+        if (n < 30) return;
+        const bars = [];
+        let lastCrossType = 'BUY (เขียวแรก)';
+        let lastCrossPrice = closes[n - 1];
+        let lastCrossIdx = Math.max(0, n - 14);
+
+        for (let i = 0; i < n; i++) {
+          const xPrice = closes[i];
+          const fast = ema12Arr[i];
+          const slow = ema26Arr[i];
+          if (fast === null || slow === null) continue;
+
+          const bull = fast > slow;
+          const bear = fast < slow;
+
+          let zone = 'GRAY';
+          let hex = '#888888';
+          let label = 'Neutral';
+          let advice = 'รอดูทิศทาง';
+
+          if (bull && xPrice > fast) {
+            zone = 'GREEN';
+            hex = '#00FF00';
+            label = 'สีเขียว (Green - Buy)';
+            advice = 'ขาขึ้นแข็งแกร่ง ถือสถานะ Buy/Long รันเทรนด์';
+          } else if (bear && xPrice > fast && xPrice > slow) {
+            zone = 'BLUE';
+            hex = '#3b82f6';
+            label = 'สีน้ำเงิน (Blue - Pre-Buy 2)';
+            advice = 'ราคายืนเหนือเส้น EMA ทั้งสอง เตรียมเปลี่ยนเป็นขาขึ้น';
+          } else if (bear && xPrice > fast && xPrice < slow) {
+            zone = 'AQUA';
+            hex = '#00FFFF';
+            label = 'สีฟ้า (Aqua - Pre-Buy 1)';
+            advice = 'เริ่มฟื้นตัวระยะสั้น (ลุ้นกลับตัว/ปิด Short ทำกำไร)';
+          } else if (bear && xPrice < fast) {
+            zone = 'RED';
+            hex = '#FF0000';
+            label = 'สีแดง (Red - Sell)';
+            advice = 'ขาลงชัดเจน อยู่ฝั่ง Sell/Short หรือถือเงินสด';
+          } else if (bull && xPrice < fast && xPrice < slow) {
+            zone = 'ORANGE';
+            hex = '#FFA500';
+            label = 'สีส้ม (Orange - Pre-Sell 2)';
+            advice = 'ราคาหลุดเส้น Slow EMA(26) ระวังเปลี่ยนเป็นขาลง';
+          } else if (bull && xPrice < fast && xPrice > slow) {
+            zone = 'YELLOW';
+            hex = '#FFFF00';
+            label = 'สีเหลือง (Yellow - Pre-Sell 1)';
+            advice = 'ย่อพักฐานในขาขึ้น (แนวรับสำคัญคือเส้น Slow EMA 26)';
+          }
+
+          let buySignal = false;
+          let sellSignal = false;
+          if (i > 0 && ema12Arr[i - 1] !== null && ema26Arr[i - 1] !== null) {
+            const prevBull = ema12Arr[i - 1] > ema26Arr[i - 1];
+            const prevBear = ema12Arr[i - 1] < ema26Arr[i - 1];
+            if (bull && prevBear) {
+              buySignal = true;
+              lastCrossType = 'BUY (เขียวแรก)';
+              lastCrossPrice = closes[i];
+              lastCrossIdx = i;
+            } else if (bear && prevBull) {
+              sellSignal = true;
+              lastCrossType = 'SELL (แดงแรก)';
+              lastCrossPrice = closes[i];
+              lastCrossIdx = i;
+            }
+          }
+
+          bars.push({
+            idx: i, open: opens[i], high: highs[i], low: lows[i], close: closes[i],
+            fast, slow, zone, hex, label, advice, buySignal, sellSignal
+          });
+        }
+
+        latestCdcBars = bars.slice(-60);
+        const latestBar = bars[bars.length - 1];
+        if (!latestBar) return;
+
+        const decimals = latestBar.close < 10 ? 4 : 1;
+        const barsAgo = (n - 1) - lastCrossIdx;
+        const slowDistPct = latestBar.close > 0 ? (Math.abs(latestBar.close - latestBar.slow) / latestBar.close) * 100 : 0;
+
+        latestMarketStats.ema12 = latestBar.fast;
+        latestMarketStats.ema26 = latestBar.slow;
+        latestMarketStats.cdcZoneCode = latestBar.zone;
+        latestMarketStats.cdcZoneLabel = latestBar.label;
+        latestMarketStats.cdcActionAdvice = latestBar.advice;
+        latestMarketStats.cdcLastCrossText = `${lastCrossType} @ ${formatNum(lastCrossPrice, decimals)}`;
+        latestMarketStats.cdcBarsSinceCross = barsAgo;
+
+        cdcCurrentColorName.textContent = latestBar.label;
+        cdcCurrentActionNote.textContent = latestBar.advice;
+        cdcFastEmaDisplay.textContent = `${formatNum(latestBar.fast, decimals)} USDT`;
+        cdcSlowEmaDisplay.textContent = `${formatNum(latestBar.slow, decimals)} USDT`;
+        cdcSlowDistNote.textContent = `ห่างราคาปัจจุบัน ${formatPlainFixed(slowDistPct, 2)}%`;
+        cdcLastCrossSignal.textContent = `${lastCrossType} @ ${formatNum(lastCrossPrice, decimals)}`;
+        cdcBarsSinceCross.textContent = `ผ่านมาแล้ว ${barsAgo} แท่งเทียน`;
+
+        if (latestBar.zone === 'GREEN') {
+          cdcZoneBadge.textContent = 'GREEN ZONE (BUY / BULLISH)';
+          cdcZoneBadge.className = 'text-[11px] bg-emerald-950/90 text-emerald-300 border border-emerald-500/50 px-2.5 py-0.5 rounded font-bold';
+          cdcCurrentColorName.className = 'text-sm font-bold text-emerald-400 mt-1';
+        } else if (latestBar.zone === 'RED') {
+          cdcZoneBadge.textContent = 'RED ZONE (SELL / BEARISH)';
+          cdcZoneBadge.className = 'text-[11px] bg-rose-950/90 text-rose-300 border border-rose-500/50 px-2.5 py-0.5 rounded font-bold';
+          cdcCurrentColorName.className = 'text-sm font-bold text-rose-400 mt-1';
+        } else if (latestBar.zone === 'YELLOW' || latestBar.zone === 'ORANGE') {
+          cdcZoneBadge.textContent = `${latestBar.zone} ZONE (PULLBACK / CAUTION)`;
+          cdcZoneBadge.className = 'text-[11px] bg-amber-950/90 text-amber-300 border border-amber-500/50 px-2.5 py-0.5 rounded font-bold';
+          cdcCurrentColorName.className = 'text-sm font-bold text-amber-300 mt-1';
+        } else {
+          cdcZoneBadge.textContent = `${latestBar.zone} ZONE (RECOVERY / PRE-BUY)`;
+          cdcZoneBadge.className = 'text-[11px] bg-sky-950/90 text-sky-300 border border-sky-500/50 px-2.5 py-0.5 rounded font-bold';
+          cdcCurrentColorName.className = 'text-sm font-bold text-sky-300 mt-1';
+        }
+
+        drawCdcCanvas();
+      }
+
+      const showTpSlLinesToggle = document.getElementById('showTpSlLinesToggle');
+      const tvHeaderTpBadge = document.getElementById('tvHeaderTpBadge');
+      const tvHeaderEntryBadge = document.getElementById('tvHeaderEntryBadge');
+      const tvHeaderSlBadge = document.getElementById('tvHeaderSlBadge');
+
+      function drawCdcCanvas() {
+        if (!cdcCanvasChart || latestCdcBars.length === 0) return;
+        const rect = cdcCanvasChart.parentElement.getBoundingClientRect();
+        const dpr = window.devicePixelRatio || 1;
+        const width = Math.max(300, rect.width);
+        const height = Math.max(220, rect.height);
+
+        cdcCanvasChart.width = width * dpr;
+        cdcCanvasChart.height = height * dpr;
+        const ctx = cdcCanvasChart.getContext('2d');
+        ctx.scale(dpr, dpr);
+        ctx.clearRect(0, 0, width, height);
+
+        const padTop = 18, padBottom = 18, padLeft = 10, padRight = 92;
+        const plotW = width - padLeft - padRight;
+        const plotH = height - padTop - padBottom;
+
+        // Read active Entry, TP, and SL prices
+        const entryVal = parseFloat(entryPriceInput.value) || latestMarketStats.lastPrice || 77815.0;
+        const slPct = Math.max(0.1, parseFloat(stopLossInput.value) || 3.0);
+        const tpPct = slPct * 2;
+        const isLong = selectedOrderDirection === 'LONG';
+
+        const tpVal = customTpOverridePrice
+          ? customTpOverridePrice
+          : (isLong ? entryVal * (1 + tpPct / 100) : entryVal * (1 - tpPct / 100));
+        const slVal = isLong
+          ? entryVal * (1 - slPct / 100)
+          : entryVal * (1 + slPct / 100);
+
+        const showLevels = !showTpSlLinesToggle || showTpSlLinesToggle.checked;
+
+        let minP = Infinity, maxP = -Infinity;
+        latestCdcBars.forEach(b => {
+          if (b.low < minP) minP = b.low;
+          if (b.high > maxP) maxP = b.high;
+          if (b.fast < minP) minP = b.fast;
+          if (b.fast > maxP) maxP = b.fast;
+          if (b.slow < minP) minP = b.slow;
+          if (b.slow > maxP) maxP = b.slow;
+        });
+
+        if (showLevels && entryVal > 0) {
+          minP = Math.min(minP, entryVal, tpVal, slVal);
+          maxP = Math.max(maxP, entryVal, tpVal, slVal);
+        }
+
+        const marginBuffer = (maxP - minP) * 0.06 || 1;
+        minP -= marginBuffer;
+        maxP += marginBuffer;
+
+        const range = maxP - minP || 1;
+        const yOf = (p) => padTop + plotH - ((p - minP) / range) * plotH;
+
+        // Draw subtle background grid
+        ctx.strokeStyle = '#222222';
+        ctx.lineWidth = 1;
+        ctx.fillStyle = '#777777';
+        ctx.font = '10px Inter, sans-serif';
+        for (let g = 0; g <= 4; g++) {
+          const gy = padTop + (plotH / 4) * g;
+          const gp = maxP - (range / 4) * g;
+          ctx.beginPath();
+          ctx.moveTo(padLeft, gy);
+          ctx.lineTo(width - padRight, gy);
+          ctx.stroke();
+          const dec = gp < 10 ? 3 : 0;
+          ctx.fillText(gp.toFixed(dec), width - padRight + 6, gy + 3);
+        }
+
+        // Draw Shaded Risk/Reward Zones + TP / Entry / SL Horizontal Lines
+        if (showLevels && entryVal > 0) {
+          const yEntry = yOf(entryVal);
+          const yTp = yOf(tpVal);
+          const ySl = yOf(slVal);
+
+          // Shaded Profit Zone (between Entry and TP)
+          ctx.fillStyle = 'rgba(16, 185, 129, 0.09)';
+          const topProfit = Math.min(yEntry, yTp);
+          const hProfit = Math.abs(yTp - yEntry);
+          ctx.fillRect(padLeft, topProfit, plotW, hProfit);
+
+          // Shaded Stop Loss Zone (between Entry and SL)
+          ctx.fillStyle = 'rgba(244, 63, 94, 0.10)';
+          const topLoss = Math.min(yEntry, ySl);
+          const hLoss = Math.abs(ySl - yEntry);
+          ctx.fillRect(padLeft, topLoss, plotW, hLoss);
+        }
+
+        const count = latestCdcBars.length;
+        const stepX = plotW / count;
+        const bodyW = Math.max(2.5, stepX * 0.62);
+
+        // Draw Candlesticks
+        latestCdcBars.forEach((b, idx) => {
+          const cx = padLeft + idx * stepX + stepX / 2;
+          const yHigh = yOf(b.high);
+          const yLow = yOf(b.low);
+          const yOpen = yOf(b.open);
+          const yClose = yOf(b.close);
+
+          ctx.strokeStyle = b.hex;
+          ctx.lineWidth = 1.2;
+          ctx.beginPath();
+          ctx.moveTo(cx, yHigh);
+          ctx.lineTo(cx, yLow);
+          ctx.stroke();
+
+          ctx.fillStyle = b.hex;
+          const topY = Math.min(yOpen, yClose);
+          const bh = Math.max(2, Math.abs(yClose - yOpen));
+          ctx.fillRect(cx - bodyW / 2, topY, bodyW, bh);
+
+          if (b.buySignal) {
+            ctx.fillStyle = '#00FF00';
+            ctx.font = 'bold 9px Inter, sans-serif';
+            ctx.fillText('▲BUY', cx - 12, Math.min(height - 4, yLow + 12));
+          } else if (b.sellSignal) {
+            ctx.fillStyle = '#FF4444';
+            ctx.font = 'bold 9px Inter, sans-serif';
+            ctx.fillText('▼SELL', cx - 14, Math.max(10, yHigh - 6));
+          }
+        });
+
+        // Slow EMA(26) Line (Solid Blue)
+        ctx.strokeStyle = '#38bdf8';
+        ctx.lineWidth = 1.8;
+        ctx.beginPath();
+        latestCdcBars.forEach((b, idx) => {
+          const cx = padLeft + idx * stepX + stepX / 2;
+          const cy = yOf(b.slow);
+          if (idx === 0) ctx.moveTo(cx, cy);
+          else ctx.lineTo(cx, cy);
+        });
+        ctx.stroke();
+
+        // Fast EMA(12) Line (Dashed Red)
+        ctx.strokeStyle = '#fb7185';
+        ctx.lineWidth = 1.4;
+        ctx.setLineDash([4, 3]);
+        ctx.beginPath();
+        latestCdcBars.forEach((b, idx) => {
+          const cx = padLeft + idx * stepX + stepX / 2;
+          const cy = yOf(b.fast);
+          if (idx === 0) ctx.moveTo(cx, cy);
+          else ctx.lineTo(cx, cy);
+        });
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        // Draw Foreground Horizontal Lines & Price Badges for TP, Entry, and SL
+        if (showLevels && entryVal > 0) {
+          const dec = entryVal < 10 ? 3 : 1;
+          const drawLevelLine = (price, colorHex, bgHex, labelPrefix) => {
+            const y = yOf(price);
+            ctx.save();
+            ctx.strokeStyle = colorHex;
+            ctx.lineWidth = 1.6;
+            ctx.setLineDash([6, 4]);
+            ctx.beginPath();
+            ctx.moveTo(padLeft, y);
+            ctx.lineTo(width - padRight, y);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Left label tag on chart
+            const leftTagText = `${labelPrefix}: ${formatNum(price, dec)}`;
+            ctx.font = 'bold 10px Inter, sans-serif';
+            const textW = ctx.measureText(leftTagText).width + 10;
+            ctx.fillStyle = bgHex;
+            ctx.fillRect(padLeft + 4, y - 9, textW, 16);
+            ctx.strokeStyle = colorHex;
+            ctx.lineWidth = 1;
+            ctx.strokeRect(padLeft + 4, y - 9, textW, 16);
+            ctx.fillStyle = '#ffffff';
+            ctx.fillText(leftTagText, padLeft + 9, y + 2.5);
+
+            // Right axis price pill
+            ctx.fillStyle = colorHex;
+            ctx.fillRect(width - padRight + 2, y - 8, padRight - 4, 16);
+            ctx.fillStyle = '#000000';
+            ctx.font = 'bold 9.5px Inter, sans-serif';
+            ctx.fillText(`${labelPrefix} ${price.toFixed(dec)}`, width - padRight + 5, y + 3);
+            ctx.restore();
+          };
+
+          drawLevelLine(tpVal, '#10b981', 'rgba(6, 78, 59, 0.9)', 'TP');
+          drawLevelLine(entryVal, '#f59e0b', 'rgba(120, 53, 15, 0.9)', 'ENTRY');
+          drawLevelLine(slVal, '#f43f5e', 'rgba(136, 19, 55, 0.9)', 'SL');
+        }
+      }
+
+      function buildFallbackSyntheticBars() {
+        const opens = [], highs = [], lows = [], closes = [];
+        let p = 75800;
+        for (let i = 0; i < 90; i++) {
+          const wave = Math.sin(i / 5) * 280 + (i * 24);
+          const open = p;
+          const close = 75800 + wave;
+          const high = Math.max(open, close) + 180;
+          const low = Math.min(open, close) - 160;
+          opens.push(open); highs.push(high); lows.push(low); closes.push(close);
+          p = close;
+        }
+        closes[closes.length - 1] = 77815.0;
+        highs[highs.length - 1] = 78100.0;
+        lows[lows.length - 1] = 77600.0;
+        const volumes = closes.map((c, i) => 1200 + Math.sin(i / 3) * 400 + (i * 15));
+        const obvObj = computeOBVArray(closes, volumes);
+        latestObvPoints = closes.map((_, i) => ({ obv: obvObj.obv[i], ema: obvObj.obvEma20[i] })).slice(-60);
+        const e12 = computeEMAArray(closes, 12);
+        const e26 = computeEMAArray(closes, 26);
+        computeAndRenderCdcActionZone(opens, highs, lows, closes, e12, e26);
+        drawObvCanvas();
+      }
 
       try {
         const savedKey = localStorage.getItem('gemini_trading_api_key');
@@ -956,6 +1681,102 @@
         return Number(num).toFixed(decimals);
       }
 
+      // Compute Elliott Wave Targets & Invalidation from the 3 Wave Pivot Anchors
+      function computeElliottWaveTargets() {
+        const mode = ewSetupSelect.value;
+        const p0 = parseFloat(ewPivot0Input.value) || 75200;
+        const p1 = parseFloat(ewPivot1Input.value) || 78600;
+        const p2 = parseFloat(ewPivot2Input.value) || 76500;
+        const liveEntry = parseFloat(entryPriceInput.value) || latestMarketStats.lastPrice || 77815.0;
+        const decimals = liveEntry < 10 ? 4 : 1;
+
+        let dir = 'LONG';
+        let waveLength = Math.abs(p1 - p0);
+        if (waveLength === 0) waveLength = liveEntry * 0.04;
+
+        let entry = liveEntry;
+        let sl = p0;
+        let tp1 = p2 + waveLength * 1.0;
+        let tp2 = p2 + waveLength * 1.618;
+
+        if (mode === 'BULL_W3') {
+          dir = 'LONG';
+          ewPivot0Label.textContent = 'จุดเริ่มต้น Wave 0 (Swing Low)';
+          ewPivot1Label.textContent = 'ยอดคลื่น Wave 1 (Swing High)';
+          ewPivot2Label.textContent = 'จุดจบคลื่นพักตัว Wave 2 (Higher Low)';
+          entry = liveEntry;
+          // Invalidation rule of Wave 2: cannot break below Wave 0 (or below Wave 2 pivot for tight stop)
+          sl = Math.min(p2 * 0.995, entry * 0.97);
+          tp1 = p2 + waveLength * 1.272;
+          tp2 = p2 + waveLength * 1.618;
+          ewEntryRuleNote.textContent = 'เข้าซื้อเมื่อเบรกยืนเหนือ EMA20 / ย่อจบคลื่น 2';
+          ewSlRuleNote.textContent = `กฎ Elliott: ห้ามหลุดฐานคลื่น (${formatPlainFixed((Math.abs(entry - sl) / entry) * 100, 2)}%)`;
+          ewTarget1Note.textContent = `Fibo 127.2% (+${formatPlainFixed((Math.abs(tp1 - entry) / entry) * 100, 2)}%)`;
+          ewTarget2Note.textContent = `เป้าหลัก Wave 3 Fibo 161.8% (+${formatPlainFixed((Math.abs(tp2 - entry) / entry) * 100, 2)}%)`;
+        } else if (mode === 'BULL_W5') {
+          dir = 'LONG';
+          ewPivot0Label.textContent = 'ฐานคลื่น Wave 2 (Low)';
+          ewPivot1Label.textContent = 'ยอดคลื่น Wave 3 (Peak)';
+          ewPivot2Label.textContent = 'จุดพักตัว Wave 4 (Fibo 38.2%)';
+          entry = liveEntry;
+          sl = Math.min(p2 * 0.992, entry * 0.975);
+          tp1 = p2 + waveLength * 0.618;
+          tp2 = p2 + waveLength * 1.0;
+          ewEntryRuleNote.textContent = 'เข้า Long ต้นคลื่น 5 (หลังย่อจบ Wave 4)';
+          ewSlRuleNote.textContent = `ห้ามหลุดฐาน Wave 4 / ห้ามทับหัว Wave 1`;
+          ewTarget1Note.textContent = `เป้า Wave 5 มาตรฐาน Fibo 61.8%`;
+          ewTarget2Note.textContent = `เป้าคลื่น 5 ขยาย Fibo 100% (ระวัง Bearish Div)`;
+        } else if (mode === 'BEAR_ABC') {
+          dir = 'SHORT';
+          ewPivot0Label.textContent = 'ยอดคลื่น Wave 5 (Top + Bearish Div)';
+          ewPivot1Label.textContent = 'จุดจบคลื่นปรับฐาน Wave A (Low)';
+          ewPivot2Label.textContent = 'ยอดรีบาวด์ Wave B (Lower High)';
+          entry = liveEntry;
+          sl = Math.max(p0 * 1.004, entry * 1.03);
+          tp1 = p2 - waveLength * 1.0;
+          tp2 = p2 - waveLength * 1.618;
+          ewEntryRuleNote.textContent = 'ดัก Short เมื่อเกิด Bearish Div ใน RSI & MACD';
+          ewSlRuleNote.textContent = `ตั้ง SL เหนือยอดคลื่น 5 / ยอดคลื่น B`;
+          ewTarget1Note.textContent = `เป้า Wave C = 100% ของ Wave A`;
+          ewTarget2Note.textContent = `เป้า Wave C ขยาย = 161.8% ของ Wave A`;
+        } else if (mode === 'BULL_END_C') {
+          dir = 'LONG';
+          ewPivot0Label.textContent = 'ยอดคลื่น B (Swing High ก่อนลง C)';
+          ewPivot1Label.textContent = 'ก้นคลื่น C (Bullish Div ใน RSI/MACD)';
+          ewPivot2Label.textContent = 'ฐานยกตัวต้นคลื่น 1 ใหม่';
+          entry = liveEntry;
+          sl = Math.min(p1 * 0.992, entry * 0.97);
+          tp1 = Math.min(p0, entry + waveLength * 0.618);
+          tp2 = entry + waveLength * 1.0;
+          ewEntryRuleNote.textContent = 'เข้า Long เมื่อเกิด Bullish Divergence ก้นคลื่น C';
+          ewSlRuleNote.textContent = `ห้ามหลุดจุดต่ำสุดของคลื่น C`;
+          ewTarget1Note.textContent = `แนวต้าน Fibo 61.8% ของคลื่นที่ลงมา`;
+          ewTarget2Note.textContent = `ทดสอบยอดคลื่น B เดิม (Fibo 100%)`;
+        }
+
+        const slPct = entry > 0 ? (Math.abs(entry - sl) / entry) * 100 : 3.0;
+
+        currentEwComputed = {
+          direction: dir,
+          entryPrice: entry,
+          slPrice: sl,
+          tp1Price: tp1,
+          tp2Price: tp2,
+          slPct: Math.max(0.2, slPct)
+        };
+
+        ewRecommendedEntry.textContent = `${formatNum(entry, decimals)} USDT`;
+        ewRecommendedSl.textContent = `${formatNum(sl, decimals)} USDT`;
+        ewTarget1Price.textContent = `${formatNum(tp1, decimals)} USDT`;
+        ewTarget2Price.textContent = `${formatNum(tp2, decimals)} USDT`;
+
+        if (dir === 'LONG') {
+          ewConfluenceSummaryText.innerHTML = `สรุปสัญญาณ: <strong class="text-emerald-400">ได้เปรียบฝั่ง BUY / LONG</strong> | จุดเข้า <strong>${formatNum(entry, decimals)}</strong> | SL <strong>${formatNum(sl, decimals)}</strong> | เป้าหมายราคา <strong>${formatNum(tp1, decimals)} - ${formatNum(tp2, decimals)} USDT</strong>`;
+        } else {
+          ewConfluenceSummaryText.innerHTML = `สรุปสัญญาณ: <strong class="text-rose-400">ได้เปรียบฝั่ง SELL / SHORT</strong> | จุดเข้า <strong>${formatNum(entry, decimals)}</strong> | SL <strong>${formatNum(sl, decimals)}</strong> | เป้าหมายราคา <strong>${formatNum(tp1, decimals)} - ${formatNum(tp2, decimals)} USDT</strong>`;
+        }
+      }
+
       function setOrderDirection(dir) {
         selectedOrderDirection = dir;
         if (dir === 'LONG') {
@@ -973,6 +1794,8 @@
       }
 
       function calculateAll() {
+        computeElliottWaveTargets();
+
         const balance = Math.max(0, parseFloat(balanceInput.value) || 0);
         const riskPct = Math.max(0, parseFloat(riskInput.value) || 0);
         const slPct = Math.max(0, parseFloat(stopLossInput.value) || 0);
@@ -981,8 +1804,8 @@
 
         const riskAmount = balance * (riskPct / 100);
 
-        let positionSize = 0; // Margin / Cost in USDT
-        let totalNotional = 0; // Leveraged Notional Size in USDT
+        let positionSize = 0;
+        let totalNotional = 0;
 
         if (slPct > 0 && leverage > 0) {
           totalNotional = riskAmount / (slPct / 100);
@@ -991,7 +1814,6 @@
 
         const btcSize = entryPrice > 0 ? totalNotional / entryPrice : 0;
         const maxNotional = balance * leverage;
-        // Match screenshot's Max 0.1925 BTC (Long with Market slippage buffer) and 0.1930 BTC (Short)
         const maxBtcLong = entryPrice > 0 ? (maxNotional / entryPrice) * 0.9986 : 0;
         const maxBtcShort = entryPrice > 0 ? (maxNotional / entryPrice) * 1.0012 : 0;
 
@@ -1010,7 +1832,7 @@
         bulletBtcSize.textContent = btcSizeText;
         bulletRemainingChances.textContent = remainingChances.toString();
 
-        // Update Exchange Order Panel (Matching user's new Market screenshot)
+        // Update Exchange Order Panel
         orderPanelLeverageBadge.textContent = leverage.toString();
         orderPanelAvbl.textContent = `${formatNum(balance, 2)} USDT`;
         orderPanelSizeBtc.textContent = btcSizeText;
@@ -1022,38 +1844,52 @@
         orderPanelPctUsed.textContent = `${formatPlainFixed(marginPct, 2)}%`;
         orderPanelMaxBtcTop.textContent = formatPlainFixed(maxBtcLong, 4);
 
-        // TP & SL Prices (for RR 1:2)
+        // TP & SL Prices
         const tpPct = slPct * 2;
         const priceDecimals = entryPrice < 10 ? 4 : 1;
-        const tpLongPrice = entryPrice * (1 + tpPct / 100);
+        const tpLongPrice = customTpOverridePrice && selectedOrderDirection === 'LONG'
+          ? customTpOverridePrice
+          : entryPrice * (1 + tpPct / 100);
         const slLongPrice = entryPrice * (1 - slPct / 100);
-        const tpShortPrice = entryPrice * (1 - tpPct / 100);
+        const tpShortPrice = customTpOverridePrice && selectedOrderDirection === 'SHORT'
+          ? customTpOverridePrice
+          : entryPrice * (1 - tpPct / 100);
         const slShortPrice = entryPrice * (1 + slPct / 100);
 
-        tpLongPctLabel.textContent = formatPlainFixed(tpPct, 2);
+        const effectiveTpLongPct = entryPrice > 0 ? (Math.abs(tpLongPrice - entryPrice) / entryPrice) * 100 : tpPct;
+        const effectiveTpShortPct = entryPrice > 0 ? (Math.abs(tpShortPrice - entryPrice) / entryPrice) * 100 : tpPct;
+
+        tpLongPctLabel.textContent = formatPlainFixed(effectiveTpLongPct, 2);
         slLongPctLabel.textContent = formatPlainFixed(slPct, 2);
         tpLongPriceDisplay.textContent = formatNum(tpLongPrice, priceDecimals);
         slLongPriceDisplay.textContent = formatNum(slLongPrice, priceDecimals);
 
-        tpShortPctLabel.textContent = formatPlainFixed(tpPct, 2);
+        tpShortPctLabel.textContent = formatPlainFixed(effectiveTpShortPct, 2);
         slShortPctLabel.textContent = formatPlainFixed(slPct, 2);
         tpShortPriceDisplay.textContent = formatNum(tpShortPrice, priceDecimals);
         slShortPriceDisplay.textContent = formatNum(slShortPrice, priceDecimals);
 
-        // Fill the main Take Profit & Stop Loss Price inputs according to selected direction
         if (selectedOrderDirection === 'LONG') {
-          tpBoxPctHint.textContent = `+${formatPlainFixed(tpPct, 2)}% | RR 1:2 (+${formatNum(riskAmount * 2, 0)} USDT)`;
+          const estProfit = totalNotional * (effectiveTpLongPct / 100);
+          tpBoxPctHint.textContent = `+${formatPlainFixed(effectiveTpLongPct, 2)}% | เป้ากำไร +${formatNum(estProfit, 0)} USDT`;
           slBoxPctHint.textContent = `-${formatPlainFixed(slPct, 2)}% | เสีย ${formatNum(riskAmount, 0)} USDT`;
           orderPanelTpInputBox.textContent = formatNum(tpLongPrice, priceDecimals);
           orderPanelSlInputBox.textContent = formatNum(slLongPrice, priceDecimals);
         } else {
-          tpBoxPctHint.textContent = `-${formatPlainFixed(tpPct, 2)}% | RR 1:2 (+${formatNum(riskAmount * 2, 0)} USDT)`;
+          const estProfit = totalNotional * (effectiveTpShortPct / 100);
+          tpBoxPctHint.textContent = `-${formatPlainFixed(effectiveTpShortPct, 2)}% | เป้ากำไร +${formatNum(estProfit, 0)} USDT`;
           slBoxPctHint.textContent = `+${formatPlainFixed(slPct, 2)}% | เสีย ${formatNum(riskAmount, 0)} USDT`;
           orderPanelTpInputBox.textContent = formatNum(tpShortPrice, priceDecimals);
           orderPanelSlInputBox.textContent = formatNum(slShortPrice, priceDecimals);
         }
 
-        // Approx Isolated Liquidation Price (maintenance margin ~0.4%)
+        if (tvHeaderEntryBadge && tvHeaderTpBadge && tvHeaderSlBadge) {
+          tvHeaderEntryBadge.textContent = formatNum(entryPrice, priceDecimals);
+          tvHeaderTpBadge.textContent = selectedOrderDirection === 'LONG' ? formatNum(tpLongPrice, priceDecimals) : formatNum(tpShortPrice, priceDecimals);
+          tvHeaderSlBadge.textContent = selectedOrderDirection === 'LONG' ? formatNum(slLongPrice, priceDecimals) : formatNum(slShortPrice, priceDecimals);
+        }
+        drawCdcCanvas();
+
         const mmr = 0.004;
         const liqLong = leverage > 0 ? Math.max(0, entryPrice * (1 - (1 / leverage) + mmr)) : 0;
         const liqShort = leverage > 0 ? entryPrice * (1 + (1 / leverage) - mmr) : 0;
@@ -1089,7 +1925,7 @@
         const presets = [
           { name: 'ความเสี่ยงต่ำ (ปลอดภัยสูง)', rPct: 1, sPct: 2 },
           { name: 'มาตรฐาน (ตามค่าเริ่มต้น 2% / SL 3%)', rPct: 2, sPct: 3 },
-          { name: 'จุดตัดขาดทุนแคบ (เทรดสั้น)', rPct: 1, sPct: 1 },
+          { name: 'จุดตัดขาดทุนตามฐานคลื่น Elliott Wave', rPct: 2, sPct: Number(currentEwComputed.slPct.toFixed(2)) },
           { name: 'เต็มแม็กซ์ตามตาราง (Max 0.1925 BTC)', rPct: 3 * leverage, sPct: 3, isMax: true }
         ];
 
@@ -1126,6 +1962,7 @@
 
         document.querySelectorAll('.preset-apply-btn').forEach(btn => {
           btn.addEventListener('click', () => {
+            customTpOverridePrice = null;
             riskInput.value = btn.getAttribute('data-risk');
             stopLossInput.value = btn.getAttribute('data-sl');
             calculateAll();
@@ -1136,9 +1973,9 @@
         const rrList = [
           { ratio: 1, label: '1 : 1' },
           { ratio: 1.5, label: '1 : 1.5' },
-          { ratio: 2, label: '1 : 2' },
-          { ratio: 3, label: '1 : 3' },
-          { ratio: 5, label: '1 : 5' }
+          { ratio: 2, label: '1 : 2 (Fibo 161.8%)' },
+          { ratio: 3, label: '1 : 3 (Wave 3 ขยาย)' },
+          { ratio: 5, label: '1 : 5 (Super Cycle)' }
         ];
 
         rrTableBody.innerHTML = rrList.map(item => {
@@ -1180,6 +2017,7 @@
         }
       }
 
+      // Load TradingView Widget with BOTH RSI and MACD enabled
       function loadTradingViewWidget() {
         const symbol = symbolSelect.value;
         const tvInterval = intervalSelect.value;
@@ -1202,25 +2040,36 @@
             "hide_side_toolbar": false,
             "allow_symbol_change": true,
             "studies": [
-              "RSI@tv-basicstudies"
+              "MAExp@tv-basicstudies",
+              "RSI@tv-basicstudies",
+              "MACD@tv-basicstudies",
+              "OBV@tv-basicstudies"
             ],
             "container_id": "tv_chart_container"
           });
         }
       }
 
-      function computeEMA(values, period) {
-        if (!values || values.length < period) return null;
+      // Compute full EMA array
+      function computeEMAArray(values, period) {
+        if (!values || values.length < period) return [];
         const k = 2 / (period + 1);
-        let ema = values.slice(0, period).reduce((a, b) => a + b, 0) / period;
+        const result = new Array(values.length).fill(null);
+        let sum = 0;
+        for (let i = 0; i < period; i++) sum += values[i];
+        let ema = sum / period;
+        result[period - 1] = ema;
         for (let i = period; i < values.length; i++) {
           ema = values[i] * k + ema * (1 - k);
+          result[i] = ema;
         }
-        return ema;
+        return result;
       }
 
-      function computeRSI(closes, period = 14) {
-        if (!closes || closes.length <= period) return null;
+      // Compute full RSI(14) array
+      function computeRSIArray(closes, period = 14) {
+        if (!closes || closes.length <= period) return [];
+        const rsiArr = new Array(closes.length).fill(null);
         let gains = 0;
         let losses = 0;
         for (let i = 1; i <= period; i++) {
@@ -1230,29 +2079,360 @@
         }
         let avgGain = gains / period;
         let avgLoss = losses / period;
+        rsiArr[period] = avgLoss === 0 ? 100 : 100 - (100 / (1 + avgGain / avgLoss));
+
         for (let i = period + 1; i < closes.length; i++) {
           const diff = closes[i] - closes[i - 1];
           const gain = diff > 0 ? diff : 0;
           const loss = diff < 0 ? -diff : 0;
           avgGain = (avgGain * (period - 1) + gain) / period;
           avgLoss = (avgLoss * (period - 1) + loss) / period;
+          rsiArr[i] = avgLoss === 0 ? 100 : 100 - (100 / (1 + avgGain / avgLoss));
         }
-        if (avgLoss === 0) return 100;
-        const rs = avgGain / avgLoss;
-        return 100 - (100 / (1 + rs));
+        return rsiArr;
+      }
+
+      // Compute On-Balance Volume (OBV) and its EMA(20)
+      function computeOBVArray(closes, volumes) {
+        if (!closes || closes.length === 0) return { obv: [], obvEma20: [] };
+        const obv = new Array(closes.length).fill(0);
+        let acc = 0;
+        for (let i = 1; i < closes.length; i++) {
+          const vol = (volumes && volumes[i] !== undefined) ? volumes[i] : 1000;
+          if (closes[i] > closes[i - 1]) acc += vol;
+          else if (closes[i] < closes[i - 1]) acc -= vol;
+          obv[i] = acc;
+        }
+        const obvEma20 = computeEMAArray(obv, 20);
+        return { obv, obvEma20 };
+      }
+
+      function formatCompactVol(val) {
+        if (!isFinite(val) || isNaN(val)) return '0';
+        const absVal = Math.abs(val);
+        if (absVal >= 1e6) return (val / 1e6).toFixed(2) + 'M';
+        if (absVal >= 1e3) return (val / 1e3).toFixed(1) + 'K';
+        return val.toFixed(0);
+      }
+
+      function drawObvCanvas() {
+        if (!obvCanvasChart || latestObvPoints.length === 0) return;
+        const rect = obvCanvasChart.parentElement.getBoundingClientRect();
+        const dpr = window.devicePixelRatio || 1;
+        const width = Math.max(300, rect.width);
+        const height = Math.max(95, rect.height);
+
+        obvCanvasChart.width = width * dpr;
+        obvCanvasChart.height = height * dpr;
+        const ctx = obvCanvasChart.getContext('2d');
+        ctx.scale(dpr, dpr);
+        ctx.clearRect(0, 0, width, height);
+
+        const padTop = 10, padBottom = 10, padLeft = 10, padRight = 92;
+        const plotW = width - padLeft - padRight;
+        const plotH = height - padTop - padBottom;
+
+        let minV = Infinity, maxV = -Infinity;
+        latestObvPoints.forEach(pt => {
+          if (pt.obv < minV) minV = pt.obv;
+          if (pt.obv > maxV) maxV = pt.obv;
+          if (pt.ema !== null) {
+            if (pt.ema < minV) minV = pt.ema;
+            if (pt.ema > maxV) maxV = pt.ema;
+          }
+        });
+
+        const range = (maxV - minV) || 1;
+        const yOf = (v) => padTop + plotH - ((v - minV) / range) * plotH;
+        const count = latestObvPoints.length;
+        const stepX = plotW / count;
+
+        // Grid lines
+        ctx.strokeStyle = '#222222';
+        ctx.lineWidth = 1;
+        ctx.fillStyle = '#777777';
+        ctx.font = '9.5px Inter, sans-serif';
+        for (let g = 0; g <= 2; g++) {
+          const gy = padTop + (plotH / 2) * g;
+          const gv = maxV - (range / 2) * g;
+          ctx.beginPath();
+          ctx.moveTo(padLeft, gy);
+          ctx.lineTo(width - padRight, gy);
+          ctx.stroke();
+          ctx.fillText(formatCompactVol(gv), width - padRight + 6, gy + 3);
+        }
+
+        // Fill subtle cyan area under OBV line
+        ctx.beginPath();
+        latestObvPoints.forEach((pt, idx) => {
+          const cx = padLeft + idx * stepX + stepX / 2;
+          const cy = yOf(pt.obv);
+          if (idx === 0) ctx.moveTo(cx, cy);
+          else ctx.lineTo(cx, cy);
+        });
+        const lastX = padLeft + (count - 1) * stepX + stepX / 2;
+        const firstX = padLeft + stepX / 2;
+        ctx.lineTo(lastX, padTop + plotH);
+        ctx.lineTo(firstX, padTop + plotH);
+        ctx.closePath();
+        ctx.fillStyle = 'rgba(34, 211, 238, 0.08)';
+        ctx.fill();
+
+        // Draw OBV EMA(20) Line (Orange/Amber)
+        ctx.strokeStyle = '#f59e0b';
+        ctx.lineWidth = 1.5;
+        ctx.setLineDash([4, 3]);
+        ctx.beginPath();
+        let startedEma = false;
+        latestObvPoints.forEach((pt, idx) => {
+          if (pt.ema === null) return;
+          const cx = padLeft + idx * stepX + stepX / 2;
+          const cy = yOf(pt.ema);
+          if (!startedEma) {
+            ctx.moveTo(cx, cy);
+            startedEma = true;
+          } else {
+            ctx.lineTo(cx, cy);
+          }
+        });
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        // Draw Main OBV Line (Cyan)
+        ctx.strokeStyle = '#22d3ee';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        latestObvPoints.forEach((pt, idx) => {
+          const cx = padLeft + idx * stepX + stepX / 2;
+          const cy = yOf(pt.obv);
+          if (idx === 0) ctx.moveTo(cx, cy);
+          else ctx.lineTo(cx, cy);
+        });
+        ctx.stroke();
+
+        // Right-side current OBV pill
+        const lastPt = latestObvPoints[latestObvPoints.length - 1];
+        if (lastPt) {
+          const yLast = yOf(lastPt.obv);
+          ctx.fillStyle = '#06b6d4';
+          ctx.fillRect(width - padRight + 2, yLast - 7, padRight - 4, 14);
+          ctx.fillStyle = '#000000';
+          ctx.font = 'bold 9px Inter, sans-serif';
+          ctx.fillText(`OBV ${formatCompactVol(lastPt.obv)}`, width - padRight + 5, yLast + 3);
+        }
+      }
+
+      // Compute MACD(12, 26, 9) arrays
+      function computeMACDArray(closes) {
+        const ema12 = computeEMAArray(closes, 12);
+        const ema26 = computeEMAArray(closes, 26);
+        const macdLine = closes.map((_, i) => (ema12[i] !== null && ema26[i] !== null) ? ema12[i] - ema26[i] : null);
+        const validMacd = macdLine.filter(v => v !== null);
+        const sigValid = computeEMAArray(validMacd, 9);
+        const signalLine = new Array(closes.length).fill(null);
+        const hist = new Array(closes.length).fill(null);
+        let vIdx = 0;
+        for (let i = 0; i < closes.length; i++) {
+          if (macdLine[i] !== null) {
+            signalLine[i] = sigValid[vIdx];
+            if (signalLine[i] !== null) {
+              hist[i] = macdLine[i] - signalLine[i];
+            }
+            vIdx++;
+          }
+        }
+        return { macdLine, signalLine, hist };
+      }
+
+      // Algorithmic Elliott Wave & RSI/MACD Divergence Detector from Klines
+      function analyzeElliottAndDivergenceFromKlines(highs, lows, closes, rsiArr, macdObj, obvObj) {
+        const n = closes.length;
+        if (n < 40) return;
+
+        const obvArr = obvObj && obvObj.obv ? obvObj.obv : new Array(n).fill(0);
+        const obvEmaArr = obvObj && obvObj.obvEma20 ? obvObj.obvEma20 : new Array(n).fill(0);
+
+        const swingHighs = [];
+        const swingLows = [];
+        for (let i = 3; i < n - 2; i++) {
+          const isHigh = highs[i] >= highs[i - 1] && highs[i] >= highs[i - 2] && highs[i] >= highs[i + 1] && highs[i] >= highs[i + 2];
+          const isLow = lows[i] <= lows[i - 1] && lows[i] <= lows[i - 2] && lows[i] <= lows[i + 1] && lows[i] <= lows[i + 2];
+          if (isHigh) swingHighs.push({ idx: i, price: highs[i], rsi: rsiArr[i], macdHist: macdObj.hist[i], obv: obvArr[i] });
+          if (isLow) swingLows.push({ idx: i, price: lows[i], rsi: rsiArr[i], macdHist: macdObj.hist[i], obv: obvArr[i] });
+        }
+
+        const lastClose = closes[n - 1];
+        const ema20Arr = computeEMAArray(closes, 20);
+        const ema50Arr = computeEMAArray(closes, 50);
+        const ema20 = ema20Arr[n - 1];
+        const ema50 = ema50Arr[n - 1];
+
+        // Detect RSI & MACD Divergence across last 2 Swing Highs and last 2 Swing Lows
+        let rsiDivType = 'ไม่พบสัญญาณขัดแย้ง (Normal Convergence)';
+        let rsiDivNote = 'RSI เคลื่อนที่สอดคล้องกับทิศทางราคาปกติ';
+        let rsiColor = 'text-sky-300';
+
+        let macdDivType = 'โมเมนตัมสอดคล้องกับเทรนด์';
+        let macdDivNote = 'MACD เคลื่อนที่ไปในทิศทางเดียวกับโครงสร้างราคา';
+        let macdColor = 'text-sky-300';
+
+        if (swingLows.length >= 2) {
+          const prevLow = swingLows[swingLows.length - 2];
+          const currLow = swingLows[swingLows.length - 1];
+          // Regular Bullish Divergence: Lower Low in price, Higher Low in RSI/MACD
+          if (currLow.price < prevLow.price && currLow.rsi && prevLow.rsi && currLow.rsi > prevLow.rsi + 1.2) {
+            rsiDivType = 'Regular Bullish Divergence (สัญญาณกลับตัวขาขึ้น)';
+            rsiDivNote = `ราคาทำ Lower Low (${formatNum(currLow.price, 1)}) แต่ RSI ยกตัวสูงขึ้น (${prevLow.rsi.toFixed(1)} → ${currLow.rsi.toFixed(1)}) บ่งชี้การจบ Wave 5 ขาลง หรือจบ Wave C`;
+            rsiColor = 'text-emerald-400';
+          } else if (currLow.price > prevLow.price && currLow.rsi && prevLow.rsi && currLow.rsi < prevLow.rsi - 1.2) {
+            rsiDivType = 'Hidden Bullish Divergence (สัญญาณไปต่อขาขึ้น)';
+            rsiDivNote = `ราคาทำ Higher Low (${formatNum(currLow.price, 1)}) แต่ RSI ย่อลึกเพื่อสะสมพลัง หนุนการวิ่งขึ้นต่อในคลื่น Wave 3 หรือ Wave 5`;
+            rsiColor = 'text-emerald-400';
+          }
+
+          if (currLow.price < prevLow.price && currLow.macdHist !== null && prevLow.macdHist !== null && currLow.macdHist > prevLow.macdHist) {
+            macdDivType = 'MACD Bullish Divergence (แรงขายอ่อนกำลัง)';
+            macdDivNote = `ราคาทำจุดต่ำใหม่แต่ MACD Histogram ยกฐานสูงขึ้น ยืนยันโอกาสกลับตัวขึ้นต้นคลื่นใหม่`;
+            macdColor = 'text-emerald-400';
+          }
+        }
+
+        if (swingHighs.length >= 2) {
+          const prevHigh = swingHighs[swingHighs.length - 2];
+          const currHigh = swingHighs[swingHighs.length - 1];
+          // Regular Bearish Divergence: Higher High in price, Lower High in RSI/MACD (Classic Wave 5 vs Wave 3 signature)
+          if (currHigh.price > prevHigh.price && currHigh.rsi && prevHigh.rsi && currHigh.rsi < prevHigh.rsi - 1.2) {
+            rsiDivType = 'Regular Bearish Divergence (ระวังจบ Wave 5)';
+            rsiDivNote = `ราคาทำ Higher High (${formatNum(currHigh.price, 1)}) แต่ RSI ทำ Lower High (${prevHigh.rsi.toFixed(1)} → ${currHigh.rsi.toFixed(1)}) สัญญาณเตือนปลายคลื่น 5 เตรียมพักฐาน A-B-C`;
+            rsiColor = 'text-rose-400';
+          }
+
+          if (currHigh.price > prevHigh.price && currHigh.macdHist !== null && prevHigh.macdHist !== null && currHigh.macdHist < prevHigh.macdHist) {
+            macdDivType = 'MACD Bearish Divergence (โมเมนตัมคลื่น 5 แผ่วลง)';
+            macdDivNote = `ยอดราคาสูงขึ้นแต่ MACD Histogram เตี้ยลงกว่ายอด Wave 3 เป็นสัญญาณคลาสสิกของปลายคลื่น 5`;
+            macdColor = 'text-amber-300';
+          }
+        }
+
+        // Determine Elliott Wave Phase & Update Anchors
+        const recentLow = swingLows.length >= 2 ? swingLows[swingLows.length - 2].price : Math.min(...lows.slice(-40));
+        const recentHigh = swingHighs.length >= 1 ? swingHighs[swingHighs.length - 1].price : Math.max(...highs.slice(-40));
+        const pullbackLow = swingLows.length >= 1 ? swingLows[swingLows.length - 1].price : lastClose * 0.985;
+
+        let waveTitle = 'Wave 3 (Impulse ขาขึ้น)';
+        let waveSub = 'ราคายืนเหนือ EMA20/EMA50 หลังย่อพักตัว Wave 2 กำลังมุ่งหน้าสู่เป้า Fibo 161.8%';
+
+        if (rsiDivType.includes('Regular Bearish')) {
+          waveTitle = 'ปลายคลื่น Wave 5 → เตรียมเข้าสู่คลื่นปรับฐาน A-B-C';
+          waveSub = 'ตรวจพบ Bearish Divergence ระหว่างยอด Wave 3 และ Wave 5 ระวังการย่อตัวหรือดัก Short';
+          ewSetupSelect.value = 'BEAR_ABC';
+        } else if (rsiDivType.includes('Regular Bullish')) {
+          waveTitle = 'จบคลื่นปรับฐาน C → ต้นคลื่น Impulse Wave 1 ใหม่';
+          waveSub = 'ตรวจพบ Bullish Divergence ที่ก้นคลื่น C เป็นจุดเข้าซื้อต้นรอบที่ได้เปรียบ Risk:Reward สูง';
+          ewSetupSelect.value = 'BULL_END_C';
+        } else if (lastClose > ema20 && ema20 >= ema50) {
+          waveTitle = 'กำลังวิ่งในคลื่น Wave 3 (Bullish Impulse)';
+          waveSub = 'โครงสร้างยก Higher High & Higher Low พร้อมโมเมนตัม MACD ฝั่งบวกหนุนคลื่น 3';
+          ewSetupSelect.value = 'BULL_W3';
+        } else if (lastClose < ema20 && lastClose >= ema50) {
+          waveTitle = 'กำลังย่อพักตัวในคลื่น Wave 2 หรือ Wave 4';
+          waveSub = 'ราคาย่อตัวสร้างฐานรับ Fibonacci เพื่อสะสมพลังขึ้นคลื่นถัดไป';
+          ewSetupSelect.value = 'BULL_W5';
+        } else {
+          waveTitle = 'คลื่นปรับฐานขาลง (Corrective Wave A-B-C)';
+          waveSub = 'ราคาเคลื่อนที่ใต้เส้นค่าเฉลี่ย EMA20 และ EMA50 แรงขายยังคุมจังหวะระยะสั้น';
+          ewSetupSelect.value = 'BEAR_ABC';
+        }
+
+        const priceDecimals = lastClose < 10 ? 4 : 1;
+        ewPivot0Input.value = Number(Math.min(recentLow, pullbackLow * 0.985).toFixed(priceDecimals));
+        ewPivot1Input.value = Number(recentHigh.toFixed(priceDecimals));
+        ewPivot2Input.value = Number(pullbackLow.toFixed(priceDecimals));
+
+        ewWavePositionBadge.textContent = waveTitle;
+        ewCurrentWaveTitle.textContent = waveTitle;
+        ewCurrentWaveSub.textContent = waveSub;
+
+        ewRsiDivTitle.textContent = rsiDivType;
+        ewRsiDivTitle.className = `text-sm font-bold ${rsiColor}`;
+        ewRsiDivSub.textContent = rsiDivNote;
+
+        ewMacdDivTitle.textContent = macdDivType;
+        ewMacdDivTitle.className = `text-sm font-bold ${macdColor}`;
+        ewMacdDivSub.textContent = macdDivNote;
+
+        // Evaluate OBV Trend & OBV Divergence
+        const curObv = obvArr[n - 1] || 0;
+        const curObvEma = obvEmaArr[n - 1] || 0;
+        const isObvBull = curObv >= curObvEma;
+        let obvDivTitle = isObvBull ? 'OBV Bullish (แรงซื้อสะสม)' : 'OBV Bearish (แรงขายกดดัน)';
+        let obvDivSub = isObvBull
+          ? 'เส้น OBV ยืนเหนือ OBV EMA(20) ยืนยันปริมาณการซื้อขายจริงหนุนการปรับตัวขึ้น'
+          : 'เส้น OBV อยู่ใต้ OBV EMA(20) สะท้อนแรงเทขายออกมากกว่าแรงซื้อสะสม';
+        let obvColor = isObvBull ? 'text-cyan-300' : 'text-rose-400';
+
+        if (swingLows.length >= 2) {
+          const prevLow = swingLows[swingLows.length - 2];
+          const currLow = swingLows[swingLows.length - 1];
+          if (currLow.price < prevLow.price && currLow.obv > prevLow.obv) {
+            obvDivTitle = 'OBV Bullish Divergence (รายใหญ่แอบเก็บของ)';
+            obvDivSub = 'ราคาทำจุดต่ำใหม่แต่เส้น OBV ยกฐานสูงขึ้น สะท้อนการดูดซับแรงขายเพื่อเตรียมกลับตัวขึ้น';
+            obvColor = 'text-emerald-400';
+          }
+        }
+        if (swingHighs.length >= 2) {
+          const prevHigh = swingHighs[swingHighs.length - 2];
+          const currHigh = swingHighs[swingHighs.length - 1];
+          if (currHigh.price > prevHigh.price && currHigh.obv < prevHigh.obv) {
+            obvDivTitle = 'OBV Bearish Divergence (ขึ้นแต่ไร้ Volume หนุน)';
+            obvDivSub = 'ราคาทำจุดสูงสุดใหม่แต่ OBV ทำยอดต่ำลง เตือนระวังการกระจายของ (Distribution) ที่ปลายคลื่น';
+            obvColor = 'text-amber-300';
+          }
+        }
+
+        if (ewObvSlopeBadge && ewObvDivTitle && ewObvDivSub) {
+          ewObvSlopeBadge.textContent = isObvBull ? 'OBV > EMA20' : 'OBV < EMA20';
+          ewObvSlopeBadge.className = `text-[10px] font-semibold ${isObvBull ? 'text-emerald-400' : 'text-rose-400'}`;
+          ewObvDivTitle.textContent = obvDivTitle;
+          ewObvDivTitle.className = `text-sm font-bold ${obvColor}`;
+          ewObvDivSub.textContent = obvDivSub;
+        }
+        if (obvTrendBadge) {
+          obvTrendBadge.textContent = isObvBull ? 'Volume สะสมขาขึ้น (Accumulation)' : 'Volume กระจายขาลง (Distribution)';
+          obvTrendBadge.className = isObvBull
+            ? 'px-2 py-0.5 rounded bg-emerald-950/80 border border-emerald-500/40 text-emerald-300 font-semibold'
+            : 'px-2 py-0.5 rounded bg-rose-950/80 border border-rose-500/40 text-rose-300 font-semibold';
+        }
+        if (liveObvValue) {
+          liveObvValue.textContent = `${formatCompactVol(curObv)} (${isObvBull ? 'Above EMA20' : 'Below EMA20'})`;
+          liveObvValue.className = isObvBull ? 'text-cyan-300' : 'text-rose-400';
+        }
+
+        latestMarketStats.obvCurrent = curObv;
+        latestMarketStats.obvEma20 = curObvEma;
+        latestMarketStats.obvTrendText = isObvBull ? 'Volume สะสมขาขึ้น (OBV > EMA20)' : 'Volume กระจายขาลง (OBV < EMA20)';
+        latestMarketStats.obvDivergenceType = obvDivTitle;
+        latestMarketStats.obvDivergenceNote = obvDivSub;
+
+        latestMarketStats.wavePhase = waveTitle;
+        latestMarketStats.waveDetail = waveSub;
+        latestMarketStats.rsiDivergenceType = rsiDivType;
+        latestMarketStats.rsiDivergenceNote = rsiDivNote;
+        latestMarketStats.macdDivergenceType = macdDivType;
+        latestMarketStats.macdDivergenceNote = macdDivNote;
       }
 
       function updateSignalBadge() {
         const s = latestMarketStats;
         if (s.ema20 && s.ema50) {
           if (s.lastPrice >= s.ema20 && s.ema20 >= s.ema50) {
-            liveSignalBiasBadge.textContent = 'ได้เปรียบฝั่ง BUY / LONG (Bullish)';
+            liveSignalBiasBadge.textContent = 'ได้เปรียบฝั่ง BUY / LONG (Bullish Wave)';
             liveSignalBiasBadge.className = 'text-emerald-400 font-semibold';
           } else if (s.lastPrice < s.ema20 && s.ema20 < s.ema50) {
-            liveSignalBiasBadge.textContent = 'ได้เปรียบฝั่ง SELL / SHORT (Bearish)';
+            liveSignalBiasBadge.textContent = 'ได้เปรียบฝั่ง SELL / SHORT (Bearish Wave)';
             liveSignalBiasBadge.className = 'text-rose-400 font-semibold';
           } else {
-            liveSignalBiasBadge.textContent = 'พักฐาน/รอเลือกทาง (Neutral)';
+            liveSignalBiasBadge.textContent = 'ย่อสร้างฐาน Wave 2/4 (Neutral)';
             liveSignalBiasBadge.className = 'text-amber-300 font-semibold';
           }
         }
@@ -1276,20 +2456,32 @@
           const klines = await klinesRes.json();
           const ticker = await tickerRes.json();
 
+          const opens = klines.map(k => parseFloat(k[1]));
           const closes = klines.map(k => parseFloat(k[4]));
           const highs = klines.map(k => parseFloat(k[2]));
           const lows = klines.map(k => parseFloat(k[3]));
+          const volumes = klines.map(k => parseFloat(k[5]));
           const lastPrice = parseFloat(ticker.lastPrice);
 
-          const rsi14 = computeRSI(closes, 14);
-          const ema20 = computeEMA(closes, 20);
-          const ema50 = computeEMA(closes, 50);
-          const recentHighs = highs.slice(-25);
-          const recentLows = lows.slice(-25);
+          const rsiArr = computeRSIArray(closes, 14);
+          const macdObj = computeMACDArray(closes);
+          const ema20Arr = computeEMAArray(closes, 20);
+          const ema50Arr = computeEMAArray(closes, 50);
+
+          const rsi14 = rsiArr[rsiArr.length - 1];
+          const macdLine = macdObj.macdLine[macdObj.macdLine.length - 1];
+          const macdSignal = macdObj.signalLine[macdObj.signalLine.length - 1];
+          const macdHist = macdObj.hist[macdObj.hist.length - 1];
+          const ema20 = ema20Arr[ema20Arr.length - 1];
+          const ema50 = ema50Arr[ema50Arr.length - 1];
+
+          const recentHighs = highs.slice(-30);
+          const recentLows = lows.slice(-30);
           const swingHigh = Math.max(...recentHighs);
           const swingLow = Math.min(...recentLows);
 
           latestMarketStats = {
+            ...latestMarketStats,
             symbol,
             binanceInterval,
             lastPrice,
@@ -1297,15 +2489,33 @@
             low24h: parseFloat(ticker.lowPrice),
             priceChangePct24h: parseFloat(ticker.priceChangePercent),
             rsi14,
+            macdLine,
+            macdSignal,
+            macdHist,
             ema20,
             ema50,
             recentSwingHigh: swingHigh,
             recentSwingLow: swingLow
           };
 
+          const obvObj = computeOBVArray(closes, volumes);
+          latestObvPoints = closes.map((_, i) => ({ obv: obvObj.obv[i], ema: obvObj.obvEma20[i] })).slice(-60);
+          const ema12Arr = computeEMAArray(closes, 12);
+          const ema26Arr = computeEMAArray(closes, 26);
+          computeAndRenderCdcActionZone(opens, highs, lows, closes, ema12Arr, ema26Arr);
+          drawObvCanvas();
+          analyzeElliottAndDivergenceFromKlines(highs, lows, closes, rsiArr, macdObj, obvObj);
+
           const priceDecimals = lastPrice < 10 ? 4 : 2;
           liveTickerPriceDisplay.textContent = `${formatNum(lastPrice, priceDecimals)} USDT`;
           liveRsiValue.textContent = rsi14 !== null ? formatPlainFixed(rsi14, 1) : '-';
+          ewRsiNumericBadge.textContent = `RSI: ${rsi14 !== null ? formatPlainFixed(rsi14, 1) : '-'}`;
+
+          const histFormatted = macdHist !== null ? (macdHist >= 0 ? `+${formatPlainFixed(macdHist, 2)}` : formatPlainFixed(macdHist, 2)) : '-';
+          liveMacdValue.textContent = histFormatted;
+          ewMacdHistBadge.textContent = `Hist: ${histFormatted}`;
+          ewMacdHistBadge.className = `text-[10px] font-semibold ${macdHist >= 0 ? 'text-emerald-400' : 'text-rose-400'}`;
+
           liveEma20Value.textContent = ema20 !== null ? formatNum(ema20, priceDecimals) : '-';
           liveEma50Value.textContent = ema50 !== null ? formatNum(ema50, priceDecimals) : '-';
           liveRange24hValue.textContent = `${formatNum(latestMarketStats.low24h, priceDecimals)} - ${formatNum(latestMarketStats.high24h, priceDecimals)}`;
@@ -1315,18 +2525,20 @@
             entryPriceInput.value = lastPrice;
             const defaultSl = Number((lastPrice * 0.97).toFixed(priceDecimals));
             slPriceInput.value = defaultSl;
-            updateSlHelper();
-            calculateAll();
           }
+          updateSlHelper();
+          calculateAll();
           aiAnalysisResultBox.innerHTML = generateBuiltInQuantAnalysis();
         } catch (err) {
           const priceDecimals = latestMarketStats.lastPrice < 10 ? 4 : 2;
           liveTickerPriceDisplay.textContent = `${formatNum(latestMarketStats.lastPrice, priceDecimals)} USDT`;
           liveRsiValue.textContent = formatPlainFixed(latestMarketStats.rsi14, 1);
+          liveMacdValue.textContent = `+${formatPlainFixed(latestMarketStats.macdHist, 1)}`;
           liveEma20Value.textContent = formatNum(latestMarketStats.ema20, priceDecimals);
           liveEma50Value.textContent = formatNum(latestMarketStats.ema50, priceDecimals);
           liveRange24hValue.textContent = `${formatNum(latestMarketStats.low24h, priceDecimals)} - ${formatNum(latestMarketStats.high24h, priceDecimals)}`;
           updateSignalBadge();
+          calculateAll();
           aiAnalysisResultBox.innerHTML = generateBuiltInQuantAnalysis();
         }
       }
@@ -1380,48 +2592,44 @@
         const posSize = positionSizeDisplay.textContent;
         const btcSize = orderPanelSizeBtc.textContent;
         const s = latestMarketStats;
+        const ew = currentEwComputed;
         const decimals = entryPrice < 10 ? 4 : 1;
 
-        let biasVerdict = 'แนะนำฝั่ง BUY / LONG (ตามแนวโน้มหลัก)';
-        let biasColor = 'text-emerald-400';
-        let trendReason = 'ราคาเคลื่อนไหวปรับตัวขึ้นจากฐาน 77,527.6 USDT มาที่โซน ~77,815 USDT (สังเกตจากค่า Max ซื้อได้ลดลงจาก 0.1932 เป็น 0.1925 BTC และ Max Short สูงกว่า Max Long) สะท้อนแรงซื้อ (Bid/Mark Price) ที่ยกตัวสูงขึ้นเหนือเส้นค่าเฉลี่ย EMA(20) และ EMA(50)';
-
-        if (s.ema20 && s.ema50) {
-          if (s.lastPrice < s.ema20 && s.ema20 < s.ema50) {
-            biasVerdict = 'แนะนำฝั่ง SELL / SHORT (ตามแนวโน้มขาลง)';
-            biasColor = 'text-rose-400';
-            trendReason = 'ราคาเคลื่อนไหวอยู่ใต้เส้นค่าเฉลี่ย EMA(20) และ EMA(50) สะท้อนแรงขายที่คุมตลาดในไทม์เฟรมนี้';
-          } else if (s.rsi14 && s.rsi14 > 72) {
-            biasVerdict = 'ระวังไล่ราคา Long บนยอด (รอพักตัวค่อย Long หรือดัก Short สั้นที่แนวต้าน)';
-            biasColor = 'text-amber-300';
-          }
-        }
-
-        const tpLong = formatNum(entryPrice * (1 + (slPct * 2) / 100), decimals);
-        const slLong = formatNum(entryPrice * (1 - slPct / 100), decimals);
-        const tpShort = formatNum(entryPrice * (1 - (slPct * 2) / 100), decimals);
-        const slShort = formatNum(entryPrice * (1 + slPct / 100), decimals);
+        const isLongFavored = ew.direction === 'LONG';
+        const biasVerdict = isLongFavored
+          ? 'แนะนำฝั่ง BUY / LONG (ตามโครงสร้าง Elliott Wave + โมเมนตัม)'
+          : 'แนะนำฝั่ง SELL / SHORT (เกิดสัญญาณเตือนปลายคลื่น / ปรับฐาน A-B-C)';
+        const biasColor = isLongFavored ? 'text-emerald-400' : 'text-rose-400';
 
         return `
           <div class="space-y-3">
-            <div class="flex items-center justify-between border-b border-[#2e2e2e] pb-2">
-              <span class="font-semibold text-indigo-300">ผลวิเคราะห์ทิศทาง Long vs Short (${s.symbol} - ${s.binanceInterval})</span>
+            <div class="flex items-center justify-between border-b border-[#2e2e2e] pb-2 flex-wrap gap-2">
+              <span class="font-semibold text-indigo-300">ผลวิเคราะห์ Elliott Wave + RSI/MACD Divergence (${s.symbol} - ${s.binanceInterval})</span>
               <span class="text-xs font-bold ${biasColor}">${biasVerdict}</span>
             </div>
             <div>
-              <strong class="text-white">1. วิเคราะห์ว่าจะ Long หรือ Short ดี?:</strong>
+              <strong class="text-white">1. การนับคลื่น Elliott Wave & สัญญาณ Divergence:</strong>
               <ul class="list-disc list-inside mt-1 text-[#cccccc] space-y-1">
-                <li><strong>สัญญาณจากโครงสร้างราคาและใบคำสั่ง:</strong> ${trendReason}</li>
-                <li><strong>แผนหลัก (ให้น้ำหนักฝั่ง Buy/Long):</strong> เหมาะกับการเข้าสะสมเมื่อราคายืนเหนือแนวรับ EMA20 (~${s.ema20 ? formatNum(s.ema20, decimals) : '77,420'} USDT) โดยตั้ง <strong>Take Profit = ${tpLong} USDT</strong> และ <strong>Stop Loss = ${slLong} USDT</strong></li>
-                <li><strong>แผนสำรอง (กรณีเลือก Sell/Short):</strong> ควรเข้า Short เฉพาะเมื่อราคาขึ้นไปทดสอบแนวต้าน Swing High (~${s.recentSwingHigh ? formatNum(s.recentSwingHigh, decimals) : '78,450'} USDT) แล้วไม่ผ่าน หรือหลุดแนวรับ 77,000 USDT ลงมา โดยตั้ง <strong>Take Profit = ${tpShort} USDT</strong> และ <strong>Stop Loss = ${slShort} USDT</strong></li>
+                <li><strong>สถานะคลื่นปัจจุบัน:</strong> <span class="text-emerald-300 font-medium">${s.wavePhase}</span> — ${s.waveDetail}</li>
+                <li><strong>RSI(14) Divergence (${s.rsi14 ? s.rsi14.toFixed(1) : '-'}):</strong> <span class="text-amber-300 font-medium">${s.rsiDivergenceType}</span> (${s.rsiDivergenceNote})</li>
+                <li><strong>MACD(12,26,9) Histogram:</strong> <span class="text-sky-300 font-medium">${s.macdDivergenceType}</span> (${s.macdDivergenceNote})</li>
+                <li><strong>เส้น OBV (On-Balance Volume):</strong> <span class="text-cyan-300 font-medium">${s.obvDivergenceType}</span> — ${s.obvDivergenceNote}</li>
               </ul>
             </div>
             <div>
-              <strong class="text-white">2. สรุปค่าที่ต้องกรอกในตาราง Market ของคุณ:</strong>
+              <strong class="text-white">2. จุดเข้า (Entry), จุดตัดขาดทุน (Invalidation SL) และราคาเป้าหมาย (Fibonacci Targets):</strong>
               <ul class="list-disc list-inside mt-1 text-[#cccccc] space-y-1">
-                <li>ช่อง <strong>Size:</strong> กรอก <strong class="text-amber-400">${btcSize} BTC</strong> (ใช้ Margin Cost = <strong class="text-emerald-400">${posSize} USDT</strong> จากพอร์ต ${formatNum(balance, 0)} USDT)</li>
-                <li>ช่อง <strong>Slippage Tolerance:</strong> กรอก <strong>0.2%</strong> (ป้องกันการได้ราคาคลาดเคลื่อนเกินไปเมื่อกดคำสั่ง Market)</li>
-                <li>ช่อง <strong>Reduce-Only:</strong> <strong>เว้นว่างไว้ (ไม่ต้องติ๊ก)</strong> เพราะเป็นการเปิด Position ใหม่</li>
+                <li><strong>จุดเข้า Position (Optimal Entry):</strong> <strong>${formatNum(ew.entryPrice, decimals)} USDT</strong></li>
+                <li><strong>จุด Stop Loss ตามกฎ Elliott Wave:</strong> <strong class="text-rose-400">${formatNum(ew.slPrice, decimals)} USDT</strong> (คิดเป็นระยะห่าง <strong>${formatPlainFixed(ew.slPct, 2)}%</strong>)</li>
+                <li><strong>ราคาเป้าหมายที่ 1 (TP1 - Fibo 100%/127.2%):</strong> <strong class="text-emerald-300">${formatNum(ew.tp1Price, decimals)} USDT</strong></li>
+                <li><strong>ราคาเป้าหมายหลัก (TP2 - Fibo 161.8% Wave Target):</strong> <strong class="text-amber-300">${formatNum(ew.tp2Price, decimals)} USDT</strong></li>
+              </ul>
+            </div>
+            <div>
+              <strong class="text-white">3. ขนาด Position Size ที่ต้องกรอก (พอร์ต ${formatNum(balance, 0)} USDT | Risk ${riskPct}% | Leverage ${leverage}X):</strong>
+              <ul class="list-disc list-inside mt-1 text-[#cccccc] space-y-1">
+                <li>กรอกช่อง <strong>Size:</strong> <strong class="text-amber-400">${btcSize} BTC</strong> (ใช้ Margin / Cost = <strong class="text-emerald-400">${posSize} USDT</strong>)</li>
+                <li>สามารถกดปุ่มสีเขียว <strong>"นำจุดเข้า + SL + เป้าหลัก Wave ไปกรอกในตารางเทรด"</strong> ด้านบนเพื่อส่งค่าทั้งหมดลงในใบคำสั่ง Market ได้ทันที</li>
               </ul>
             </div>
           </div>
@@ -1438,8 +2646,8 @@
         }
 
         runGeminiAnalysisBtn.disabled = true;
-        runGeminiAnalysisBtn.innerHTML = `<span>กำลังให้ Gemini วิเคราะห์กราฟ...</span>`;
-        aiAnalysisResultBox.innerHTML = `<div class="text-indigo-300 animate-pulse">กำลังส่งข้อมูลแท่งเทียน ${latestMarketStats.symbol} และแผน Money Management ไปยัง Gemini API...</div>`;
+        runGeminiAnalysisBtn.innerHTML = `<span>กำลังให้ Gemini วิเคราะห์ Elliott Wave...</span>`;
+        aiAnalysisResultBox.innerHTML = `<div class="text-indigo-300 animate-pulse">กำลังส่งข้อมูลคลื่น Elliott Wave, RSI/MACD Divergence และแผน Money Management ไปยัง Gemini API...</div>`;
 
         const balance = parseFloat(balanceInput.value) || 0;
         const riskPct = parseFloat(riskInput.value) || 0;
@@ -1448,21 +2656,29 @@
         const entryPrice = parseFloat(entryPriceInput.value) || 77815.0;
         const posSize = positionSizeDisplay.textContent;
         const btcSize = orderPanelSizeBtc.textContent;
+        const ew = currentEwComputed;
 
-        const promptText = `คุณคือนักวิเคราะห์กราฟเทคนิค (Technical Analyst) และผู้เชี่ยวชาญด้าน Money Management
-กรุณาวิเคราะห์ข้อมูลกราฟจริงและฟันธงเปรียบเทียบแผน Buy/Long กับ Sell/Short เป็นภาษาไทยที่กระชับ ชัดเจน:
+        const promptText = `คุณคือผู้เชี่ยวชาญการวิเคราะห์กราฟด้วยทฤษฎี Elliott Wave ร่วมกับอินดิเคเตอร์ RSI(14) และ MACD(12,26,9) เพื่อหาสัญญาณ Divergence และวางแผน Money Management
+กรุณาวิเคราะห์ข้อมูลต่อไปนี้เป็นภาษาไทยที่กระชับ ชัดเจน และนำไปเทรดจริงได้ทันที:
 
-[ข้อมูลตลาดและใบคำสั่ง Market]
+[ข้อมูลตลาดและอินดิเคเตอร์เรียลไทม์]
 - คู่เหรียญ: ${latestMarketStats.symbol} (Timeframe: ${latestMarketStats.binanceInterval})
-- ราคาตลาดอ้างอิง: ${entryPrice} USDT
-- ค่า RSI(14): ${latestMarketStats.rsi14 ? latestMarketStats.rsi14.toFixed(2) : 'N/A'} | EMA(20): ${latestMarketStats.ema20 ? latestMarketStats.ema20.toFixed(2) : 'N/A'} | EMA(50): ${latestMarketStats.ema50 ? latestMarketStats.ema50.toFixed(2) : 'N/A'}
-- เงินพอร์ต (Avbl): ${balance} USDT | ความเสี่ยงต่อไม้: ${riskPct}% | Stop Loss: ${slPct}% | Leverage: ${leverage}X (Isolated)
-- ขนาด Size ที่คำนวณได้: ${btcSize} BTC (ใช้ Margin Cost = ${posSize} USDT)
+- ราคาปัจจุบัน: ${entryPrice} USDT
+- ค่า RSI(14): ${latestMarketStats.rsi14 ? latestMarketStats.rsi14.toFixed(2) : 'N/A'} | สัญญาณที่ระบบตรวจพบ: ${latestMarketStats.rsiDivergenceType}
+- ค่า MACD Histogram: ${latestMarketStats.macdHist ? latestMarketStats.macdHist.toFixed(2) : 'N/A'} | สัญญาณ MACD: ${latestMarketStats.macdDivergenceType}
+- เส้น OBV (On-Balance Volume): ${latestMarketStats.obvTrendText} | สัญญาณ OBV: ${latestMarketStats.obvDivergenceType} (${latestMarketStats.obvDivergenceNote})
+- จุดอ้างอิงคลื่น: Wave 0 = ${ewPivot0Input.value}, Wave 1 = ${ewPivot1Input.value}, Wave 2 = ${ewPivot2Input.value}
+- เป้าหมาย Fibonacci ที่คำนวณไว้: TP1 = ${ew.tp1Price.toFixed(2)} USDT, TP2 (161.8%) = ${ew.tp2Price.toFixed(2)} USDT, จุด Invalidation SL = ${ew.slPrice.toFixed(2)} USDT
 
-กรุณาสรุป 3 หัวข้อ:
-1. ฟันธงเปรียบเทียบว่าจังหวะนี้ได้เปรียบฝั่ง Buy/Long หรือ Sell/Short มากกว่ากัน เพราะเหตุใด
-2. ค่าที่ต้องกรอกในช่อง Size (BTC), Slippage Tolerance (%), Take Profit Price และ Stop Loss Price
-3. จุดเฝ้าระวังสำคัญและแนวรับ-แนวต้าน`;
+[แผน Money Management]
+- เงินพอร์ต: ${balance} USDT | ความเสี่ยง: ${riskPct}% | Stop Loss: ${slPct}% | Leverage: ${leverage}X
+- ขนาด Size ที่คำนวณได้: ${btcSize} BTC (Margin Cost = ${posSize} USDT)
+
+กรุณาสรุป 4 หัวข้อ:
+1. วิเคราะห์สถานะคลื่น Elliott Wave ปัจจุบัน (อยู่ในคลื่นไหนของ 1-2-3-4-5 หรือ A-B-C)
+2. วิเคราะห์สัญญาณ Divergence จาก RSI และ MACD ว่าสนับสนุนการเข้า Long หรือ Short
+3. ระบุจุดเข้า (Entry Price), จุดตัดขาดทุนตามกฎ Invalidation ของ Elliott Wave (Stop Loss) และราคาเป้าหมาย (Target Price ตามสัดส่วน Fibonacci)
+4. สรุปค่าที่ต้องกรอกในใบคำสั่งซื้อขาย (Size BTC, Cost USDT, TP/SL)`;
 
         const parts = [{ text: promptText }];
         if (attachedChartBase64) {
@@ -1505,7 +2721,7 @@
           aiAnalysisResultBox.innerHTML = `
             <div class="space-y-2">
               <div class="text-xs font-semibold text-emerald-400 border-b border-[#2e2e2e] pb-1.5">
-                ผลการวิเคราะห์จาก Gemini 2.5 Flash (${latestMarketStats.symbol})
+                ผลการวิเคราะห์ Elliott Wave & Divergence จาก Gemini 2.5 Flash (${latestMarketStats.symbol})
               </div>
               <div class="text-[#e5e5e5] leading-relaxed">${formattedHtml}</div>
             </div>
@@ -1553,17 +2769,71 @@
       // Event Listeners
       [balanceInput, riskInput, stopLossInput, leverageInput, entryPriceInput].forEach(input => {
         input.addEventListener('input', () => {
+          customTpOverridePrice = null;
           updateSlHelper();
           calculateAll();
         });
       });
 
-      dirLongBtn.addEventListener('click', () => setOrderDirection('LONG'));
-      dirShortBtn.addEventListener('click', () => setOrderDirection('SHORT'));
-      simBuyLongBtn.addEventListener('click', () => setOrderDirection('LONG'));
-      simSellShortBtn.addEventListener('click', () => setOrderDirection('SHORT'));
+      [ewSetupSelect, ewPivot0Input, ewPivot1Input, ewPivot2Input].forEach(el => {
+        el.addEventListener('input', () => {
+          calculateAll();
+          aiAnalysisResultBox.innerHTML = generateBuiltInQuantAnalysis();
+        });
+        el.addEventListener('change', () => {
+          calculateAll();
+          aiAnalysisResultBox.innerHTML = generateBuiltInQuantAnalysis();
+        });
+      });
+
+      applyEwTarget1Btn.addEventListener('click', () => {
+        const decimals = currentEwComputed.entryPrice < 10 ? 4 : 1;
+        selectedOrderDirection = currentEwComputed.direction;
+        setOrderDirection(currentEwComputed.direction);
+        entryPriceInput.value = Number(currentEwComputed.entryPrice.toFixed(decimals));
+        slPriceInput.value = Number(currentEwComputed.slPrice.toFixed(decimals));
+        stopLossInput.value = Number(currentEwComputed.slPct.toFixed(2));
+        customTpOverridePrice = currentEwComputed.tp1Price;
+        updateSlHelper();
+        calculateAll();
+      });
+
+      applyEwMainSetupBtn.addEventListener('click', () => {
+        const decimals = currentEwComputed.entryPrice < 10 ? 4 : 1;
+        selectedOrderDirection = currentEwComputed.direction;
+        setOrderDirection(currentEwComputed.direction);
+        entryPriceInput.value = Number(currentEwComputed.entryPrice.toFixed(decimals));
+        slPriceInput.value = Number(currentEwComputed.slPrice.toFixed(decimals));
+        stopLossInput.value = Number(currentEwComputed.slPct.toFixed(2));
+        customTpOverridePrice = currentEwComputed.tp2Price;
+        updateSlHelper();
+        calculateAll();
+      });
+
+      rescanElliottBtn.addEventListener('click', () => {
+        customTpOverridePrice = null;
+        fetchMarketIndicators(true);
+      });
+
+      dirLongBtn.addEventListener('click', () => {
+        customTpOverridePrice = null;
+        setOrderDirection('LONG');
+      });
+      dirShortBtn.addEventListener('click', () => {
+        customTpOverridePrice = null;
+        setOrderDirection('SHORT');
+      });
+      simBuyLongBtn.addEventListener('click', () => {
+        customTpOverridePrice = null;
+        setOrderDirection('LONG');
+      });
+      simSellShortBtn.addEventListener('click', () => {
+        customTpOverridePrice = null;
+        setOrderDirection('SHORT');
+      });
 
       resetBtn.addEventListener('click', () => {
+        customTpOverridePrice = null;
         balanceInput.value = '5000';
         riskInput.value = '2';
         stopLossInput.value = '3';
@@ -1598,6 +2868,7 @@
 
       useCurrentPriceBtn.addEventListener('click', () => {
         if (latestMarketStats.lastPrice > 0) {
+          customTpOverridePrice = null;
           const decimals = latestMarketStats.lastPrice < 10 ? 4 : 1;
           entryPriceInput.value = Number(latestMarketStats.lastPrice.toFixed(decimals));
           slPriceInput.value = Number((latestMarketStats.lastPrice * 0.97).toFixed(decimals));
@@ -1608,17 +2879,20 @@
 
       applySlPercentBtn.addEventListener('click', () => {
         if (calculatedSlFromPrice > 0) {
+          customTpOverridePrice = null;
           stopLossInput.value = Number(calculatedSlFromPrice.toFixed(2));
           calculateAll();
         }
       });
 
       symbolSelect.addEventListener('change', () => {
+        customTpOverridePrice = null;
         loadTradingViewWidget();
         fetchMarketIndicators(true);
       });
 
       intervalSelect.addEventListener('change', () => {
+        customTpOverridePrice = null;
         loadTradingViewWidget();
         fetchMarketIndicators(false);
       });
@@ -1646,7 +2920,39 @@
 
       runGeminiAnalysisBtn.addEventListener('click', runGeminiAnalysis);
 
+      toggleCdcPineModalBtn.addEventListener('click', () => {
+        cdcPineModalBox.classList.toggle('hidden');
+      });
+
+      copyCdcPineBtn.addEventListener('click', () => {
+        copyTextHelper(cdcPineCodeBlock.textContent);
+        copyCdcPineBtn.textContent = 'คัดลอกโค้ดสำเร็จ!';
+        setTimeout(() => { copyCdcPineBtn.textContent = 'คัดลอกโค้ด Pine Script'; }, 1800);
+      });
+
+      syncCdcStopLossBtn.addEventListener('click', () => {
+        const entry = parseFloat(entryPriceInput.value) || latestMarketStats.lastPrice || 77815.0;
+        const slow = latestMarketStats.ema26 || entry * 0.985;
+        const decimals = entry < 10 ? 4 : 1;
+        const distPct = Math.max(0.25, (Math.abs(entry - slow) / entry) * 100);
+        slPriceInput.value = Number(slow.toFixed(decimals));
+        stopLossInput.value = Number(distPct.toFixed(2));
+        if (entry >= slow) setOrderDirection('LONG');
+        else setOrderDirection('SHORT');
+        updateSlHelper();
+        calculateAll();
+      });
+
+      if (showTpSlLinesToggle) {
+        showTpSlLinesToggle.addEventListener('change', drawCdcCanvas);
+      }
+      window.addEventListener('resize', () => {
+        drawCdcCanvas();
+        drawObvCanvas();
+      });
+
       // Initialize everything on load
+      buildFallbackSyntheticBars();
       updateSlHelper();
       calculateAll();
       loadTradingViewWidget();
