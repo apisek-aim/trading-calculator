@@ -92,7 +92,7 @@
             <span class="font-semibold text-white text-sm sm:text-base">TradingView + CDC ActionZone V3 2020 + Elliott Wave & Position Size</span>
             <span class="text-[11px] bg-emerald-950/80 text-emerald-300 border border-emerald-700/50 px-2 py-0.5 rounded font-medium">Pro Quant Edition</span>
           </div>
-          <p class="text-xs text-[#9ca3af]">วิเคราะห์สัญญาณ CDC ActionZone V3 2020 + เส้น OBV (On-Balance Volume) + คลื่น Elliott Wave & RSI/MACD/OBV Divergence พร้อมคำนวณ Position Size</p>
+          <p class="text-xs text-[#9ca3af]">วิเคราะห์กราฟตามกฎการอ่านแท่งเทียน (Candlestick Anatomy & Patterns) + CDC ActionZone V3 2020 + OBV + Elliott Wave & Divergence พร้อมคำนวณ Position Size</p>
         </div>
       </div>
 
@@ -524,6 +524,15 @@
               Sell/Short
             </button>
           </div>
+          <!-- Quick Save to Trade Journey Button -->
+          <div class="pt-1">
+            <button id="quickLogJourneyFromOrderBtn" type="button" class="w-full bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/50 text-amber-300 font-semibold text-xs py-2 px-3 rounded-md transition flex items-center justify-center gap-1.5">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/>
+              </svg>
+              <span>บันทึกแผนเทรดไม้นี้ลงสมุดบันทึก (Trade Journey)</span>
+            </button>
+          </div>
 
           <!-- Bottom Summary Footer: Liq Price | Cost | Max -->
           <div class="grid grid-cols-2 gap-3 pt-1 text-xs border-t border-[#2b3139]">
@@ -735,6 +744,133 @@ plot(tpPrice, "Take Profit Line", color=color.new(color.lime, 20), style=plot.st
 plot(slPrice, "Stop Loss Line", color=color.new(color.red, 20), style=plot.style_linebr, linewidth=2)
 plotshape(Bull and Bear[1], "Buy (เขียวแรก)", shape.labelup, location.belowbar, color.lime, text="BUY", textcolor=color.black)
 plotshape(Bear and Bull[1], "Sell (แดงแรก)", shape.labeldown, location.abovebar, color.red, text="SELL", textcolor=color.white)</pre>
+          </div>
+        </div>
+
+        <!-- NEW FEATURE: Japanese Candlestick Anatomy & Pattern Reading Engine (ตามกฎการอ่านแท่งเทียนมาตรฐาน) -->
+        <div class="calc-card rounded-md p-4 sm:p-6 space-y-4 border-2 border-amber-500/40">
+          <div class="flex items-start justify-between flex-wrap gap-3 border-b border-[#2e2e2e] pb-3.5">
+            <div class="flex items-center gap-2.5">
+              <div class="w-9 h-9 rounded-lg bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-300 shrink-0">
+                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="9" y1="2" x2="9" y2="22"/><rect x="6" y="7" width="6" height="9" rx="1" fill="currentColor" fill-opacity="0.25"/>
+                  <line x1="17" y1="4" x2="17" y2="20"/><rect x="14" y="8" width="6" height="7" rx="1"/>
+                </svg>
+              </div>
+              <div>
+                <div class="flex items-center gap-2 flex-wrap">
+                  <h2 class="text-sm sm:text-base font-semibold text-white">ระบบอ่านกราฟแท่งเทียนตามกฎ Price Action (Candlestick Pattern & Wick Scanner)</h2>
+                  <span id="candleSignalBadge" class="text-[11px] bg-emerald-950/90 text-emerald-300 border border-emerald-500/50 px-2.5 py-0.5 rounded font-bold">BULLISH CANDLE SIGNAL</span>
+                </div>
+                <p class="text-xs text-[#9ca3af]">วิเคราะห์สัดส่วนเนื้อเทียน (Body %), ไส้เทียนบน-ล่าง (Wick Rejection), ตำแหน่งเกิดสัญญาณ (Context) และตรวจจับรูปแบบแท่งเทียน 1-3 แท่งอัตโนมัติ</p>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <button id="toggleCandleRulesModalBtn" type="button" class="text-xs bg-[#262626] hover:bg-[#333333] text-amber-300 border border-amber-500/30 px-2.5 py-1.5 rounded transition font-medium">
+                คู่มือกฎการอ่านแท่งเทียน 4 ข้อ
+              </button>
+              <button id="applyCandleStopLossBtn" type="button" class="text-xs bg-amber-500 hover:bg-amber-400 text-black font-semibold px-3 py-1.5 rounded shadow transition">
+                ตั้ง SL ที่ปลายไส้แท่งเทียนสัญญาณ (Wick Stop Loss)
+              </button>
+            </div>
+          </div>
+
+          <!-- 4 Core Rules of Candlestick Reading Dashboard Cards -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+            <!-- Rule 1: Detected Pattern (1-3 Candles) -->
+            <div class="bg-[#161616] border border-[#2d2d2d] rounded-md p-3 space-y-1">
+              <div class="text-[11px] text-[#9ca3af] flex items-center justify-between">
+                <span>1. รูปแบบแท่งเทียนล่าสุด</span>
+                <span id="candleTypeCountBadge" class="text-[10px] text-amber-300 font-semibold">3-Bar Pattern</span>
+              </div>
+              <div id="candlePatternName" class="text-sm font-bold text-emerald-400">Bullish Engulfing (กลืนกินขาขึ้น)</div>
+              <div id="candlePatternDesc" class="text-[11px] text-[#b0b0b0]">แท่งเขียวใหญ่กลืนกินแท่งแดงก่อนหน้าเต็มแท่ง แรงซื้อชนะขาดลอย</div>
+            </div>
+
+            <!-- Rule 2: Body vs Range Strength (Momentum) -->
+            <div class="bg-[#161616] border border-[#2d2d2d] rounded-md p-3 space-y-1">
+              <div class="text-[11px] text-[#9ca3af] flex items-center justify-between">
+                <span>2. ขนาดเนื้อเทียน (Body Ratio)</span>
+                <span id="candleBodyPctBadge" class="text-[10px] font-semibold text-emerald-400">Body: 68.5%</span>
+              </div>
+              <div id="candleBodyStrengthTitle" class="text-sm font-bold text-white">เนื้อเทียนแน่น (Strong Body)</div>
+              <div id="candleBodyStrengthSub" class="text-[11px] text-[#b0b0b0]">ราคาปิดใกล้จุดสูงสุดของแท่ง สะท้อนแรงซื้อคุมตลาดจนจบแท่ง</div>
+            </div>
+
+            <!-- Rule 3: Upper vs Lower Wick Rejection (แรงปฏิเสธราคา) -->
+            <div class="bg-[#161616] border border-[#2d2d2d] rounded-md p-3 space-y-1">
+              <div class="text-[11px] text-[#9ca3af] flex items-center justify-between">
+                <span>3. การปฏิเสธราคา (Wick Ratio)</span>
+                <span id="candleWickRatioBadge" class="text-[10px] font-semibold text-sky-300">บน 12% | ล่าง 19%</span>
+              </div>
+              <div id="candleWickVerdictTitle" class="text-sm font-bold text-sky-300">มีแรงรับซื้อจากไส้เทียนด้านล่าง</div>
+              <div id="candleWickVerdictSub" class="text-[11px] text-[#b0b0b0]">ไส้ล่างยาวกว่าไส้บน บ่งชี้มีแรงซื้อดักรับเมื่อราคาย่อตัวลง</div>
+            </div>
+
+            <!-- Rule 4: Context + Volume Confirmation & Wick Stop Loss -->
+            <div class="bg-[#161616] border border-[#2d2d2d] rounded-md p-3 space-y-1">
+              <div class="text-[11px] text-[#9ca3af] flex items-center justify-between">
+                <span>4. ตำแหน่งเกิด & จุดคัทปลายไส้</span>
+                <span id="candleVolumeConfirmBadge" class="text-[10px] font-semibold text-emerald-300">Volume ยืนยัน</span>
+              </div>
+              <div id="candleWickSlPriceDisplay" class="text-sm font-bold text-rose-400">SL ปลายไส้: 77,380.0 USDT</div>
+              <div id="candleContextSub" class="text-[11px] text-[#b0b0b0]">เกิดใกล้โซนแนวรับ EMA / Fibo วาง SL ใต้หางแท่งเทียนปลอดภัย</div>
+            </div>
+          </div>
+
+          <!-- Visual Anatomy Breakdown of the Latest 3 Candlesticks -->
+          <div class="bg-[#141414] border border-[#2b2b2b] rounded-md p-3.5 space-y-2.5">
+            <div class="flex items-center justify-between flex-wrap gap-2 text-xs">
+              <span class="font-semibold text-amber-300">ตารางผ่าโครงสร้าง 3 แท่งเทียนล่าสุด (OHLC + สัดส่วนเนื้อเทียน & ไส้เทียน + ความหมายตามกฎแท่งเทียน)</span>
+              <span class="text-[11px] text-[#9ca3af]">อัปเดตอัตโนมัติตามคู่เหรียญและ Timeframe ที่เลือก</span>
+            </div>
+            <div class="overflow-x-auto border border-[#262626] rounded">
+              <table class="w-full text-left border-collapse text-xs">
+                <thead>
+                  <tr class="bg-[#1f1f1f] text-[#a3a3a3] border-b border-[#2e2e2e]">
+                    <th class="py-2 px-2.5 font-medium">ลำดับแท่ง</th>
+                    <th class="py-2 px-2.5 font-medium">Open → Close</th>
+                    <th class="py-2 px-2.5 font-medium">Low ↔ High</th>
+                    <th class="py-2 px-2.5 font-medium">เนื้อเทียน (Body)</th>
+                    <th class="py-2 px-2.5 font-medium">ไส้บน / ไส้ล่าง</th>
+                    <th class="py-2 px-2.5 font-medium">การอ่านค่าตามกฎแท่งเทียน</th>
+                  </tr>
+                </thead>
+                <tbody id="recent3CandlesTableBody" class="divide-y divide-[#242424] bg-[#181818]">
+                  <!-- Populated by JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Collapsible Reference Guide: 4 Golden Rules of Candlestick Reading -->
+          <div id="candleRulesModalBox" class="hidden bg-[#121212] border border-amber-500/40 rounded-md p-4 space-y-3 text-xs leading-relaxed">
+            <div class="font-semibold text-amber-300 text-sm border-b border-[#2b2b2b] pb-2">
+              สรุปกฎเหล็กการอ่านกราฟแท่งเทียน (4 เสาหลักที่ระบบใช้ประมวลผล)
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-[#d4d4d4]">
+              <div class="bg-[#1a1a1a] p-3 rounded border border-[#2a2a2a]">
+                <strong class="text-white">กฎข้อที่ 1: ขนาดและสีของเนื้อเทียน (Real Body = พลังของเทรนด์)</strong><br/>
+                • <strong>เนื้อเทียนยาวแน่น (Marubozu / Body &gt; 65%):</strong> แรงซื้อหรือแรงขายคุมเกมเบ็ดเสร็จตั้งแต่วินาทีเปิดจนปิดแท่ง มักเกิดต้นคลื่น Wave 3 หรือจังหวะ Breakout<br/>
+                • <strong>เนื้อเทียนสั้น/เล็ก (Spinning Top / Doji &lt; 15%):</strong> ตลาดลังเล แรงซื้อและแรงขายพอกัน หากเกิดหลังวิ่งมาไกลเป็นสัญญาณเตือนการพักตัวหรือกลับตัว
+              </div>
+              <div class="bg-[#1a1a1a] p-3 rounded border border-[#2a2a2a]">
+                <strong class="text-white">กฎข้อที่ 2: ความยาวไส้เทียน (Wicks / Shadows = การปฏิเสธราคา)</strong><br/>
+                • <strong>ไส้ล่างยาวเกิน 2 เท่าของเนื้อเทียน (Hammer / Bullish Pin Bar):</strong> ราคาถูกทุบลงไปแต่มีแรงซื้อสวนกลับขึ้นมาปิดด้านบน = ปฏิเสธการลง (Bullish Rejection)<br/>
+                • <strong>ไส้บนยาวเกิน 2 เท่าของเนื้อเทียน (Shooting Star / Bearish Pin Bar):</strong> ราคาถูกไล่ขึ้นไปแต่โดนเทขายสวนลงมาปิดด้านล่าง = ปฏิเสธการขึ้น (Bearish Rejection)
+              </div>
+              <div class="bg-[#1a1a1a] p-3 rounded border border-[#2a2a2a]">
+                <strong class="text-white">กฎข้อที่ 3: รูปแบบแท่งเทียนคู่และ 3 แท่ง (Multi-Candle Structure)</strong><br/>
+                • <strong>Engulfing (กลืนกิน):</strong> แท่งปัจจุบันมีเนื้อเทียนกลืนกินเนื้อเทียนก่อนหน้ามิดทั้งแท่ง ยืนยันการเปลี่ยนมือของผู้คุมตลาดทันที<br/>
+                • <strong>Morning Star / Evening Star (3 แท่งกลับตัว):</strong> แท่งยาวตามเทรนด์เดิม → แท่งเล็กพักตัว (Doji/Star) → แท่งยาวสวนกลับเกิน 50% ของแท่งแรก
+              </div>
+              <div class="bg-[#1a1a1a] p-3 rounded border border-[#2a2a2a]">
+                <strong class="text-white">กฎข้อที่ 4: ตำแหน่งเกิดสัญญาณ + Volume + การวาง Stop Loss</strong><br/>
+                • แท่งเทียนกลับตัวจะมีความแม่นยำสูงก็ต่อเมื่อ <strong>เกิดที่แนวรับ-แนวต้านสำคัญ (EMA 12/26, แนวรับ Fibonacci ของ Elliott Wave)</strong> และมี <strong>OBV / Volume</strong> หนุน<br/>
+                • <strong>กฎการวาง Stop Loss:</strong> สำหรับฝั่ง Long ให้วาง SL ต่ำกว่าปลายไส้ล่างของแท่งสัญญาณเล็กน้อย และฝั่ง Short ให้วาง SL เหนือปลายไส้บนของแท่งสัญญาณ
+              </div>
+            </div>
           </div>
         </div>
 
@@ -1099,6 +1235,401 @@ plotshape(Bear and Bull[1], "Sell (แดงแรก)", shape.labeldown, locati
       </div>
     </div>
 
+        <!-- NEW FEATURE: คัมภีร์แผนการเทรดและแผนรับมือฉุกเฉินสไตล์ "พี่ศรีสยาม" (Dynamic Srisiam Action & Contingency Playbook) -->
+    <div id="srisiamPlaybookSection" class="calc-card rounded-md p-4 sm:p-6 space-y-5 border-2 border-emerald-500/50">
+      <div class="flex items-start justify-between flex-wrap gap-3 border-b border-[#2e2e2e] pb-4">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-lg bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-300 shrink-0">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/>
+            </svg>
+          </div>
+          <div>
+            <div class="flex items-center gap-2 flex-wrap">
+              <h2 class="text-base sm:text-lg font-semibold text-white">คัมภีร์ตัดสินใจ Action & แผนรับมือเมื่อผิดทาง สไตล์ "พี่ศรีสยาม"</h2>
+              <span id="srisiamVerdictBadge" class="text-[11px] bg-emerald-950/90 text-emerald-300 border border-emerald-500/50 px-2.5 py-0.5 rounded font-bold">ACTION: BUY / LONG ตามระบบ</span>
+            </div>
+            <p class="text-xs text-[#9ca3af]">สรุปแนวทางการตัดสินใจจากข้อมูลทั้ง 4 เสาหลักในโปรแกรม (CDC ActionZone V3 + Elliott Wave + RSI/MACD/OBV Divergence + กฎแท่งเทียน) พร้อมแผนสำรอง 3 สถานการณ์เมื่อกราฟไม่เป็นไปตามแผน</p>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2">
+          <button id="applySrisiamPlanABtn" type="button" class="text-xs bg-emerald-600 hover:bg-emerald-500 text-white font-semibold px-3.5 py-2 rounded shadow transition flex items-center gap-1.5">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            <span>กดใช้แผนหลักพี่ศรีสยาม (Plan A) ลงตารางเทรด</span>
+          </button>
+          <button id="logSrisiamPlanToJournalBtn" type="button" class="text-xs bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 font-semibold px-3 py-2 rounded transition">
+            + บันทึกแผนพี่ศรีสยามลง Trade Journey
+          </button>
+        </div>
+      </div>
+
+      <!-- Part 1: Checklist 4 เสาหลักก่อนกดปุ่ม (4 Pillars Pre-Trade Checklist) -->
+      <div class="space-y-2.5">
+        <div class="text-xs sm:text-sm font-semibold text-emerald-400 flex items-center gap-2">
+          <span>ส่วนที่ 1: วิเคราะห์หน้างานก่อนกดปุ่ม (Checklist 4 เสาหลักสไตล์พี่ศรีสยาม — เช็กว่าสัญญาณพูดภาษาเดียวกันหรือไม่)</span>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs">
+          <!-- Pillar 1: CDC ActionZone V3 2020 -->
+          <div class="bg-[#161616] border border-[#2d2d2d] rounded-md p-3.5 space-y-1.5">
+            <div class="flex items-center justify-between text-[11px] text-[#9ca3af]">
+              <span class="font-semibold text-lime-300">เสาที่ 1: CDC ActionZone V3</span>
+              <span id="srisiamPillar1Zone" class="px-1.5 py-0.5 rounded bg-emerald-950 text-emerald-300 font-bold">GREEN ZONE</span>
+            </div>
+            <div id="srisiamPillar1Text" class="text-[#e0e0e0] leading-relaxed">
+              แท่งเทียนอยู่ใน <strong>โซนสีเขียว (Green Zone)</strong> ราคาปิดยืนเหนือเส้น Fast EMA(12) (<span id="spFastEma">77,510.0</span>) และ Slow EMA(26) (<span id="spSlowEma">76,980.0</span>) แปลว่า <strong>"ระบบสั่งให้ถือหน้า Buy/Long เท่านั้น ห้ามสวน Short เด็ดขาดตราบใดที่กราฟยังเขียว"</strong>
+            </div>
+          </div>
+
+          <!-- Pillar 2: Elliott Wave Structure -->
+          <div class="bg-[#161616] border border-[#2d2d2d] rounded-md p-3.5 space-y-1.5">
+            <div class="flex items-center justify-between text-[11px] text-[#9ca3af]">
+              <span class="font-semibold text-sky-300">เสาที่ 2: คลื่น Elliott Wave</span>
+              <span id="srisiamPillar2Wave" class="px-1.5 py-0.5 rounded bg-sky-950 text-sky-300 font-bold">Wave 3 Impulse</span>
+            </div>
+            <div id="srisiamPillar2Text" class="text-[#e0e0e0] leading-relaxed">
+              ราคาย่อจบคลื่นพักฐาน <strong>Wave 2</strong> ที่โซน <span id="spWave2Pivot">76,500.0</span> USDT (ไม่หลุดฐาน Wave 0 ที่ <span id="spWave0Pivot">75,200.0</span>) และกำลังยกตัววิ่งขึ้นใน <strong>คลื่นลูกที่ 3 (Wave 3 Impulse)</strong> ซึ่งเป็นคลื่นที่วิ่งแรงและคุ้มค่าที่สุด
+            </div>
+          </div>
+
+          <!-- Pillar 3: RSI + MACD + OBV Confluence -->
+          <div class="bg-[#161616] border border-[#2d2d2d] rounded-md p-3.5 space-y-1.5">
+            <div class="flex items-center justify-between text-[11px] text-[#9ca3af]">
+              <span class="font-semibold text-cyan-300">เสาที่ 3: RSI + MACD + OBV</span>
+              <span id="srisiamPillar3Flow" class="px-1.5 py-0.5 rounded bg-cyan-950 text-cyan-300 font-bold">Volume หนุน</span>
+            </div>
+            <div id="srisiamPillar3Text" class="text-[#e0e0e0] leading-relaxed">
+              • <strong>RSI(14):</strong> <span id="spRsiSignal">Hidden Bullish Divergence</span> (เคลียร์สัญญาณตื้อพร้อมวิ่งต่อ)<br/>
+              • <strong>MACD Hist:</strong> ยืนฝั่งบวก ไร้ Bearish Divergence ขัดขวาง<br/>
+              • <strong>เส้น OBV:</strong> ยืนเหนือ OBV EMA(20) ยืนยันเม็ดเงินจริงไหลเข้าสะสม (Accumulation) ไม่ใช่การลากราคาหลอก
+            </div>
+          </div>
+
+          <!-- Pillar 4: Candlestick Reading Rules -->
+          <div class="bg-[#161616] border border-[#2d2d2d] rounded-md p-3.5 space-y-1.5">
+            <div class="flex items-center justify-between text-[11px] text-[#9ca3af]">
+              <span class="font-semibold text-amber-300">เสาที่ 4: กฎการอ่านแท่งเทียน</span>
+              <span id="srisiamPillar4Candle" class="px-1.5 py-0.5 rounded bg-amber-950 text-amber-300 font-bold">Strong Body</span>
+            </div>
+            <div id="srisiamPillar4Text" class="text-[#e0e0e0] leading-relaxed">
+              แท่งเทียนล่าสุดเกิดสัญญาณ <strong id="spCandleName">Bullish Engulfing / Strong Body</strong> เนื้อเทียนแน่น (<span id="spCandleBodyPct">68.5%</span>) และมีไส้ล่างรับแรงขายไว้ได้ แปลว่าแรงซื้อคุมตลาดชัดเจน พร้อมจุดคัทปลายไส้ที่ <span id="spCandleWickSl">77,380.0</span> USDT
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Part 2: การตัดสินใจ Action (แผนเข้าทำกำไรหลัก — Plan A) -->
+      <div class="space-y-2.5">
+        <div class="text-xs sm:text-sm font-semibold text-amber-300">
+          ส่วนที่ 2: การตัดสินใจ Action (แผนเข้าทำกำไรหลัก — Plan A โดยคุมความเสี่ยงไม่ให้เกิน <span id="spPlanRiskPct">2</span>% ของพอร์ต หรือ <span id="spPlanRiskUsdt">100.00</span> USDT)
+        </div>
+        <div class="overflow-x-auto border border-[#2b2b2b] rounded">
+          <table class="w-full text-left border-collapse text-xs">
+            <thead>
+              <tr class="bg-[#222222] text-[#a3a3a3] border-b border-[#2e2e2e]">
+                <th class="py-2.5 px-3 font-medium">รายการคำสั่ง (Action)</th>
+                <th class="py-2.5 px-3 font-medium text-amber-300">ค่าที่ใช้กรอกในตารางเทรด (คำนวณสดตามพอร์ตของคุณ)</th>
+                <th class="py-2.5 px-3 font-medium">เหตุผลตามหลักวิชาสไตล์พี่ศรีสยาม</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-[#262626] bg-[#181818] text-[#e0e0e0]">
+              <tr class="hover:bg-[#222222]">
+                <td class="py-2.5 px-3 font-semibold text-white whitespace-nowrap">1. ฝั่งที่เข้า (Direction)</td>
+                <td id="spTableDirection" class="py-2.5 px-3 font-bold text-emerald-400">Buy / Long (Isolated 3x)</td>
+                <td id="spTableDirectionReason" class="py-2.5 px-3">เทรดตามสีเขียวของ CDC ActionZone V3 และรันเทรนด์คลื่น Wave 3 (ไม่สวนเทรนด์)</td>
+              </tr>
+              <tr class="hover:bg-[#222222]">
+                <td class="py-2.5 px-3 font-semibold text-white whitespace-nowrap">2. ราคาเข้า (Entry Price)</td>
+                <td id="spTableEntry" class="py-2.5 px-3 font-bold text-sky-300">~77,815.0 USDT (หรือแบ่งไม้รอรับที่ 77,510.0 แนว EMA12)</td>
+                <td class="py-2.5 px-3">เข้าตามโมเมนตัมแท่งเทียนสัญญาณ และกันไม้สำรองเผื่อราคาย่อแตะเส้น Fast EMA(12)</td>
+              </tr>
+              <tr class="hover:bg-[#222222]">
+                <td class="py-2.5 px-3 font-semibold text-white whitespace-nowrap">3. ขนาดสัญญา (Size & Cost)</td>
+                <td id="spTableSize" class="py-2.5 px-3 font-bold text-amber-300">0.0428 BTC (ใช้ Cost / Margin 1,111.11 USDT)</td>
+                <td id="spTableSizeReason" class="py-2.5 px-3">คำนวณจากสูตร MM เป๊ะๆ ถ้าผิดทางชน SL จะเสียแค่ 100.00 USDT (2% ของพอร์ต) เหลือโอกาสแก้ตัวอีก 49 ครั้ง</td>
+              </tr>
+              <tr class="hover:bg-[#222222]">
+                <td class="py-2.5 px-3 font-semibold text-white whitespace-nowrap">4. จุดตัดขาดทุน (Stop Loss)</td>
+                <td id="spTableSl" class="py-2.5 px-3 font-bold text-rose-400">75,480.6 USDT (-3.00%)</td>
+                <td id="spTableSlReason" class="py-2.5 px-3">อยู่ต่ำกว่าทั้งเส้น CDC Slow EMA(26) (76,980.0) และต่ำกว่าฐานย่อ Wave 2 (76,500.0) ไม่โดนเจ้ามือสะบัดกิน SL ง่ายๆ</td>
+              </tr>
+              <tr class="hover:bg-[#222222]">
+                <td class="py-2.5 px-3 font-semibold text-white whitespace-nowrap">5. เป้าหมายทำกำไร 1 (TP1)</td>
+                <td id="spTableTp1" class="py-2.5 px-3 font-bold text-emerald-300">80,824.5 USDT (Fibo 127.2% | แบ่งปิด 50% = 0.0214 BTC)</td>
+                <td class="py-2.5 px-3">แบ่งปิดทำกำไรครึ่งแรกเพื่อล็อกเงินเข้ากระเป๋าก่อน แล้วเลื่อน SL ของครึ่งที่เหลือมาบังทุน (Break-Even = Free Trade)</td>
+              </tr>
+              <tr class="hover:bg-[#222222]">
+                <td class="py-2.5 px-3 font-semibold text-white whitespace-nowrap">6. เป้าหมายทำกำไรหลัก (TP2)</td>
+                <td id="spTableTp2" class="py-2.5 px-3 font-bold text-amber-300">82,483.9 USDT (Fibo 161.8% / RR 1:2 | รับกำไร +200.00 USDT)</td>
+                <td class="py-2.5 px-3">เป้าหมายหลักของคลื่น Wave 3 หรือถือรันเทรนด์ต่อด้วย Trailing Stop (เส้น Slow EMA 26) จนกว่า CDC จะเปลี่ยนเป็นสีแดง</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Part 3: ถ้าไม่เป็นไปตามแผน ต้องทำอย่างไรต่อ? (แผนฉุกเฉิน 3 สถานการณ์ — Plan B & C) -->
+      <div class="space-y-3">
+        <div class="flex items-center justify-between flex-wrap gap-2">
+          <span class="text-xs sm:text-sm font-semibold text-rose-400">
+            ส่วนที่ 3: ถ้าไม่เป็นไปตามแผน ต้องทำอย่างไรต่อ? (แผนฉุกเฉิน 3 สถานการณ์ — รู้ล่วงหน้าว่าต้องทำอะไรโดยไม่ใช้อารมณ์)
+          </span>
+          <span class="text-[11px] text-[#9ca3af]">กดปุ่มด้านล่างในแต่ละสถานการณ์เพื่อปรับค่าตารางเทรดตามแผนรับมือได้ทันที</span>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-3.5 text-xs">
+          <!-- Scenario 1: CDC Yellow / Orange Pullback or Early Red Cut -->
+          <div class="bg-[#161616] border border-amber-500/40 rounded-md p-4 flex flex-col justify-between space-y-3">
+            <div class="space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="font-bold text-amber-300 text-sm">กรณีที่ 1: ราคาไม่ไปต่อ ย่อเกิดแท่ง "สีเหลือง/สีส้ม" หรือปิด "สีแดง"</span>
+                <span class="text-[10px] px-2 py-0.5 rounded bg-amber-950 text-amber-300 border border-amber-500/30">Plan B1</span>
+              </div>
+              <p class="text-[#cccccc] leading-relaxed">
+                • <strong>อาการบนกราฟ:</strong> ราคาหลุดเส้น Fast EMA(12) (<span id="spScen1Fast">77,510.0</span>) แท่งเทียนเปลี่ยนเป็น <strong>สีเหลือง (Yellow)</strong> แต่ยังไม่หลุดเส้น Slow EMA(26) (<span id="spScen1Slow">76,980.0</span>)<br/>
+                • <strong>วิธีรับมือเมื่อเป็นสีเหลือง:</strong> <strong>อย่าเพิ่งตกใจปิดมั่ว!</strong> ตามกฎ CDC สีเหลืองในขาขึ้นคือ "การย่อพักฐาน (Pullback)" ตราบใดที่ยังไม่หลุดฐาน Wave 2 (<span id="spScen1Wave2">76,500.0</span>) ให้ถือตามแผนเดิม<br/>
+                • <strong>แต่ถ้าแท่งเทียนปิดเป็น "สีแดง (Red)" + EMA12 ตัด EMA26 ลง + OBV หลุด EMA20:</strong> แปลว่ารอบขาขึ้นเสียทรงแล้ว ให้ <strong>คัดลอกปิดสถานะ (Manual Cut Loss) ที่เส้น Slow EMA26 ทันที</strong> เพื่อประหยัดความเสี่ยงให้เสียน้อยกว่า 1R (เสียเพียง ~0.4R - 0.5R)
+              </p>
+            </div>
+            <button id="simScenario1CutBtn" type="button" class="w-full bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 py-2 px-3 rounded font-semibold transition">
+              จำลองแผน B1: ยก SL มาชิดเส้น CDC Slow EMA(26)
+            </button>
+          </div>
+
+          <!-- Scenario 2: Hard Stop Loss Hit -> Wave Invalidation & Reversal Setup -->
+          <div class="bg-[#161616] border border-rose-500/40 rounded-md p-4 flex flex-col justify-between space-y-3">
+            <div class="space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="font-bold text-rose-400 text-sm">กรณีที่ 2: ราคาทุบแรงจนชน Stop Loss (ผิดแผน 100% / Wave โมฆะ)</span>
+                <span class="text-[10px] px-2 py-0.5 rounded bg-rose-950 text-rose-300 border border-rose-500/30">Plan B2</span>
+              </div>
+              <p class="text-[#cccccc] leading-relaxed">
+                • <strong>อาการบนกราฟ:</strong> ราคาทุบชน SL ที่ <strong id="spScen2Sl">75,480.6</strong> และหลุดฐานคลื่น แปลว่า <strong>การนับคลื่นขึ้นชุดนี้เป็นโมฆะ (Wave Invalidation)</strong><br/>
+                • <strong>กฎเหล็ก Money Management:</strong><br/>
+                1. <strong>ยอมรับการคัททันที ห้ามขยับหนี SL และห้ามถัวเฉลี่ยขาลง (No Martingale):</strong> คุณเสียแค่ <span id="spScen2LossUsdt">100.00</span> USDT (<span id="spScen2LossPct">2</span>%) พอร์ตยังเหลือเงินสดอีก <strong id="spScen2RemPort" class="text-white">4,900.00 USDT</strong> และเหลือกระสุนอีกถึง <strong id="spScen2RemChances" class="text-emerald-400">49 นัด</strong><br/>
+                2. <strong>ถอยออกมาตั้งหลัก & พลิกหน้าเทรดอย่างมีระบบ:</strong> สลับโหมดคลื่นเป็น <strong>"ขาลง/กลับตัว (A-B-C)"</strong> รอให้ราคาเด้งทำคลื่น Wave B (แท่งสีฟ้า Aqua ของ CDC ชนแนวต้าน EMA26 ไม่ผ่าน) ค่อยดักเข้า <strong>Sell / Short</strong> กินคลื่น C หรือรอเกิด Regular Bullish Divergence ที่ก้นคลื่นใหม่ค่อยกลับเข้า Long
+              </p>
+            </div>
+            <button id="simScenario2ReverseShortBtn" type="button" class="w-full bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 border border-rose-500/40 py-2 px-3 rounded font-semibold transition">
+              จำลองแผน B2: สลับเป็นโหมดดัก Short คลื่นปรับฐาน A-B-C
+            </button>
+          </div>
+
+          <!-- Scenario 3: Early Bearish Divergence + Shooting Star before TP2 -> Lock Profit -->
+          <div class="bg-[#161616] border border-emerald-500/40 rounded-md p-4 flex flex-col justify-between space-y-3">
+            <div class="space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="font-bold text-emerald-400 text-sm">กรณีที่ 3: วิ่งใกล้เป้าแต่เกิด Bearish Divergence + แท่งหางยาวบนยอด</span>
+                <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-500/30">Plan C (Win-Win)</span>
+              </div>
+              <p class="text-[#cccccc] leading-relaxed">
+                • <strong>อาการบนกราฟ:</strong> ราคาวิ่งขึ้นไปโซนกำไร (<span id="spScen3Tp1">80,824.5</span> USDT) ยังไม่ทันถึงเป้า TP2 (<span id="spScen3Tp2">82,483.9</span>) แต่เกิดสัญญาณเตือนล่วงหน้าคือ <strong>Regular Bearish Divergence</strong> ใน RSI + MACD Histogram หดตัวลง + เกิดแท่งเทียนไส้บนยาว (<strong>Shooting Star / Pin Bar</strong>)<br/>
+                • <strong>วิธีรับมือแบบมืออาชีพ:</strong> ไม่ต้องเกี่ยงให้ถึงราคาเป๊ะๆ ให้ <strong>แบ่งขายทำกำไร (Take Profit) ออกมาก่อน 50% – 70% ทันที</strong> แล้ว <strong>ยกเส้น Stop Loss ขึ้นมาล็อกกำไรไว้ใต้เส้น CDC Slow EMA(26) ล่าสุด (Trailing Stop)</strong><br/>
+                • <strong>ผลลัพธ์:</strong> ไม้นี้ของคุณจะกลายเป็น <strong>"ชนะ 100% (Risk-Free Win)"</strong> ไม่ว่ากราฟจะพุ่งต่อหรือทุบลง คุณก็ได้กำไรเข้าพอร์ตแน่นอน!
+              </p>
+            </div>
+            <button id="simScenario3LockProfitBtn" type="button" class="w-full bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/40 py-2 px-3 rounded font-semibold transition">
+              จำลองแผน C: ใช้เป้า TP1 ล็อกกำไร + ยก SL บังทุน
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+<!-- NEW FEATURE: Trade Journey & Trading Journal (ระบบบันทึกการเทรดและสถิติพอร์ตสไตล์พี่ศรีสยาม) -->
+    <div id="tradeJourneySection" class="calc-card rounded-md p-4 sm:p-6 space-y-5 border-2 border-amber-500/40">
+      <div class="flex items-start justify-between flex-wrap gap-3 border-b border-[#2e2e2e] pb-4">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-lg bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-300 shrink-0">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+            </svg>
+          </div>
+          <div>
+            <div class="flex items-center gap-2 flex-wrap">
+              <h2 class="text-base sm:text-lg font-semibold text-white">Trade Journey & Trading Journal (สมุดบันทึกการเทรดและติดตามการเติบโตของพอร์ต)</h2>
+              <span class="text-[11px] bg-amber-950/90 text-amber-300 border border-amber-500/40 px-2.5 py-0.5 rounded font-semibold">Auto-Sync & LocalStorage</span>
+            </div>
+            <p class="text-xs text-[#9ca3af]">บันทึกทุกไม้ก่อนเข้าเทรดพร้อมสัญญาณ CDC ActionZone V3, คลื่น Elliott Wave, RSI/MACD/OBV Divergence และแท่งเทียน พร้อมกราฟ Equity Curve และส่งออกไฟล์ CSV</p>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2">
+          <button id="exportJournalCsvBtn" type="button" class="text-xs bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-300 border border-emerald-500/40 px-3 py-1.5 rounded transition font-medium flex items-center gap-1.5">
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            <span>ส่งออกบันทึกเป็น Excel (CSV)</span>
+          </button>
+          <button id="syncPortWithJournalBtn" type="button" class="text-xs bg-sky-600/20 hover:bg-sky-600/30 text-sky-300 border border-sky-500/40 px-3 py-1.5 rounded transition font-medium" title="อัปเดตช่อง MY PORTFOLIO BALANCE ตามกำไร/ขาดทุนสะสม">
+            อัปเดตพอร์ตตามกำไรสุทธิ
+          </button>
+          <button id="resetDemoJournalBtn" type="button" class="text-xs bg-[#262626] hover:bg-[#333333] text-[#b0b0b0] hover:text-white border border-[#3a3a3a] px-2.5 py-1.5 rounded transition">
+            รีเซ็ตข้อมูลตัวอย่าง
+          </button>
+        </div>
+      </div>
+
+      <!-- 5 Portfolio Performance KPI Cards -->
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+        <div class="bg-[#161616] border border-[#2d2d2d] rounded-md p-3.5">
+          <div class="text-[11px] text-[#9ca3af]">จำนวนไม้ที่บันทึกทั้งหมด</div>
+          <div class="text-lg font-bold text-white mt-1">
+            <span id="journeyTotalTrades">0</span> <span class="text-xs font-normal text-[#9ca3af]">ไม้</span>
+          </div>
+          <div id="journeyWinLossCount" class="text-[11px] text-[#a3a3a3] mt-0.5">ชนะ 0 | แพ้ 0 | รอผล 0</div>
+        </div>
+
+        <div class="bg-[#161616] border border-[#2d2d2d] rounded-md p-3.5">
+          <div class="text-[11px] text-[#9ca3af]">อัตราชนะ (Win Rate)</div>
+          <div id="journeyWinRate" class="text-lg font-bold text-emerald-400 mt-1">0.0%</div>
+          <div id="journeyExpectancyNote" class="text-[11px] text-[#a3a3a3] mt-0.5">เทียบจากไม้ที่ปิดสถานะแล้ว</div>
+        </div>
+
+        <div class="bg-[#161616] border border-[#2d2d2d] rounded-md p-3.5">
+          <div class="text-[11px] text-[#9ca3af]">กำไร/ขาดทุนสุทธิ (Net PnL)</div>
+          <div id="journeyNetPnl" class="text-lg font-bold text-emerald-400 mt-1">+0.00 USDT</div>
+          <div id="journeyNetRMultiple" class="text-[11px] text-amber-300 mt-0.5">สะสม: +0.00 R</div>
+        </div>
+
+        <div class="bg-[#161616] border border-[#2d2d2d] rounded-md p-3.5">
+          <div class="text-[11px] text-[#9ca3af]">Profit Factor (กำไร ÷ ขาดทุน)</div>
+          <div id="journeyProfitFactor" class="text-lg font-bold text-sky-400 mt-1">0.00</div>
+          <div class="text-[11px] text-[#a3a3a3] mt-0.5">เกณฑ์ระบบที่ดีควร &gt; 1.50</div>
+        </div>
+
+        <div class="bg-[#161616] border border-[#2d2d2d] rounded-md p-3.5 col-span-2 sm:col-span-1">
+          <div class="text-[11px] text-[#9ca3af]">พอร์ตปัจจุบันรวม PnL</div>
+          <div id="journeyCurrentEquity" class="text-lg font-bold text-amber-300 mt-1">5,000.00 USDT</div>
+          <div id="journeyMaxDrawdown" class="text-[11px] text-[#a3a3a3] mt-0.5">Max Drawdown: 0.00%</div>
+        </div>
+      </div>
+
+      <!-- Form to Record New Trade Journey Entry + Equity Curve Chart -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 items-stretch">
+        <!-- Left 7 cols: New Trade Entry Form (Pre-filled from Current Calculator & Signals) -->
+        <div class="lg:col-span-7 bg-[#161616] border border-[#2b2b2b] rounded-md p-4 space-y-3.5">
+          <div class="flex items-center justify-between flex-wrap gap-2 border-b border-[#262626] pb-2.5">
+            <span class="text-xs sm:text-sm font-semibold text-amber-300">เพิ่มรายการบันทึกใหม่เข้าสู่ Trade Journey</span>
+            <button id="pullCurrentSetupToJournalBtn" type="button" class="text-xs bg-[#262626] hover:bg-[#323232] text-sky-300 border border-sky-500/30 px-2.5 py-1 rounded transition">
+              + ดึงค่าล่าสุดจากตารางคำนวณด้านบน
+            </button>
+          </div>
+
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 text-xs">
+            <div>
+              <label for="jSymbolInput" class="block text-[11px] text-[#9ca3af] mb-1">คู่เหรียญ (Symbol)</label>
+              <input id="jSymbolInput" type="text" value="BTCUSDT" class="w-full calc-input-box rounded px-2.5 py-1.5 text-white font-semibold focus:outline-none" />
+            </div>
+            <div>
+              <label for="jSideSelect" class="block text-[11px] text-[#9ca3af] mb-1">ฝั่งที่เข้า (Side)</label>
+              <select id="jSideSelect" class="w-full calc-input-box rounded px-2.5 py-1.5 text-emerald-400 font-semibold focus:outline-none bg-[#262626]">
+                <option value="LONG" selected>BUY / LONG</option>
+                <option value="SHORT">SELL / SHORT</option>
+              </select>
+            </div>
+            <div>
+              <label for="jEntryInput" class="block text-[11px] text-[#9ca3af] mb-1">ราคาเข้า (Entry)</label>
+              <input id="jEntryInput" type="number" step="any" value="77815.0" class="w-full calc-input-box rounded px-2.5 py-1.5 text-white font-semibold focus:outline-none" />
+            </div>
+            <div>
+              <label for="jSizeBtcInput" class="block text-[11px] text-[#9ca3af] mb-1">ขนาด Size (เหรียญ)</label>
+              <input id="jSizeBtcInput" type="number" step="any" value="0.0428" class="w-full calc-input-box rounded px-2.5 py-1.5 text-amber-300 font-semibold focus:outline-none" />
+            </div>
+
+            <div>
+              <label for="jSlInput" class="block text-[11px] text-[#9ca3af] mb-1">จุด Stop Loss (USDT)</label>
+              <input id="jSlInput" type="number" step="any" value="75480.6" class="w-full calc-input-box rounded px-2.5 py-1.5 text-rose-400 font-semibold focus:outline-none" />
+            </div>
+            <div>
+              <label for="jTpInput" class="block text-[11px] text-[#9ca3af] mb-1">เป้าหมาย TP (USDT)</label>
+              <input id="jTpInput" type="number" step="any" value="82483.9" class="w-full calc-input-box rounded px-2.5 py-1.5 text-emerald-400 font-semibold focus:outline-none" />
+            </div>
+            <div>
+              <label for="jRiskUsdtInput" class="block text-[11px] text-[#9ca3af] mb-1">เงินความเสี่ยง (1R USDT)</label>
+              <input id="jRiskUsdtInput" type="number" step="any" value="100.00" class="w-full calc-input-box rounded px-2.5 py-1.5 text-white font-semibold focus:outline-none" />
+            </div>
+            <div>
+              <label for="jStatusSelect" class="block text-[11px] text-[#9ca3af] mb-1">สถานะผลลัพธ์ (Outcome)</label>
+              <select id="jStatusSelect" class="w-full calc-input-box rounded px-2.5 py-1.5 text-white font-semibold focus:outline-none bg-[#262626]">
+                <option value="OPEN">กำลังถือสถานะ (Open)</option>
+                <option value="WIN_TP2" selected>ชนะตามเป้าหลัก (+2R / TP2)</option>
+                <option value="WIN_TP1">ชนะแบ่งปิดเป้าแรก (+1.2R / TP1)</option>
+                <option value="BE">เสมอตัว / บังทุน (0R / Break-Even)</option>
+                <option value="LOSS_CUT">คัทตามสัญญาณ CDC ก่อนโดน SL (-0.5R)</option>
+                <option value="LOSS_SL">แพ้ชน Stop Loss ตามแผน (-1R)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-12 gap-2.5 items-end text-xs">
+            <div class="sm:col-span-8">
+              <label for="jNoteInput" class="block text-[11px] text-[#9ca3af] mb-1">บันทึกเหตุผลเข้าเทรด / สัญญาณหน้างาน & แผนสำรอง (สไตล์พี่ศรีสยาม)</label>
+              <input
+                id="jNoteInput"
+                type="text"
+                placeholder="เช่น CDC เขียว + Wave 3 + OBV > EMA20 | ถ้าปิดแดงให้คัทออกก่อน"
+                class="w-full calc-input-box rounded px-3 py-2 text-white focus:outline-none"
+              />
+            </div>
+            <div class="sm:col-span-4">
+              <button id="addJournalEntryBtn" type="button" class="w-full bg-amber-500 hover:bg-amber-400 text-black font-bold py-2 px-4 rounded shadow transition flex items-center justify-center gap-1.5">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+                </svg>
+                <span>บันทึกไม้เทรด</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right 5 cols: Portfolio Equity Curve Canvas Chart -->
+        <div class="lg:col-span-5 bg-[#161616] border border-[#2b2b2b] rounded-md p-4 flex flex-col justify-between space-y-2">
+          <div class="flex items-center justify-between text-xs">
+            <span class="font-semibold text-white">กราฟการเติบโตของพอร์ต (Equity Curve)</span>
+            <span class="text-[11px] text-emerald-400">เริ่มต้น 5,000 USDT</span>
+          </div>
+          <div class="relative w-full h-44">
+            <canvas id="equityCurveCanvas" class="w-full h-full block"></canvas>
+          </div>
+          <div class="text-[11px] text-[#9ca3af] flex items-center justify-between border-t border-[#262626] pt-2">
+            <span>เคล็ดลับพี่ศรีสยาม: รักษาความเสี่ยงไม้ละ 1-2% เพื่อให้กราฟพอร์ตเติบโตอย่างยั่งยืน</span>
+            <span id="equityGrowthPctBadge" class="font-semibold text-emerald-400">+0.00%</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Trade Journey Log Table -->
+      <div class="space-y-2">
+        <div class="flex items-center justify-between flex-wrap gap-2 text-xs">
+          <span class="font-semibold text-[#e5e5e5]">ประวัติการเทรดและบันทึกแผนงานทั้งหมด (สามารถเปลี่ยนสถานะผลลัพธ์ในตารางได้ทันที)</span>
+          <span id="journalToastMsg" class="hidden text-emerald-400 font-medium">บันทึกข้อมูลลงใน Trade Journey เรียบร้อยแล้ว!</span>
+        </div>
+
+        <div class="overflow-x-auto border border-[#2b2b2b] rounded">
+          <table class="w-full text-left border-collapse text-xs">
+            <thead>
+              <tr class="bg-[#222222] text-[#a3a3a3] border-b border-[#2e2e2e]">
+                <th class="py-2.5 px-3 font-medium"># / วัน-เวลา</th>
+                <th class="py-2.5 px-3 font-medium">เหรียญ & ฝั่ง</th>
+                <th class="py-2.5 px-3 font-medium">Entry / SL / TP</th>
+                <th class="py-2.5 px-3 font-medium">Size & Cost</th>
+                <th class="py-2.5 px-3 font-medium">สัญญาณเทคนิค & บันทึกแผนงาน</th>
+                <th class="py-2.5 px-3 font-medium">อัปเดตสถานะผลลัพธ์</th>
+                <th class="py-2.5 px-3 font-medium text-right">กำไร/ขาดทุน (PnL)</th>
+                <th class="py-2.5 px-3 font-medium text-center">ลบ</th>
+              </tr>
+            </thead>
+            <tbody id="tradeJourneyTableBody" class="divide-y divide-[#262626] bg-[#181818]">
+              <!-- Populated by JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
   </div>
 
   <!-- Load TradingView Official Widget Script -->
@@ -1297,6 +1828,23 @@ plotshape(Bear and Bull[1], "Sell (แดงแรก)", shape.labeldown, locati
       const cdcBarsSinceCross = document.getElementById('cdcBarsSinceCross');
       const cdcCanvasChart = document.getElementById('cdcCanvasChart');
       const obvCanvasChart = document.getElementById('obvCanvasChart');
+      const candleSignalBadge = document.getElementById('candleSignalBadge');
+      const toggleCandleRulesModalBtn = document.getElementById('toggleCandleRulesModalBtn');
+      const candleRulesModalBox = document.getElementById('candleRulesModalBox');
+      const applyCandleStopLossBtn = document.getElementById('applyCandleStopLossBtn');
+      const candleTypeCountBadge = document.getElementById('candleTypeCountBadge');
+      const candlePatternName = document.getElementById('candlePatternName');
+      const candlePatternDesc = document.getElementById('candlePatternDesc');
+      const candleBodyPctBadge = document.getElementById('candleBodyPctBadge');
+      const candleBodyStrengthTitle = document.getElementById('candleBodyStrengthTitle');
+      const candleBodyStrengthSub = document.getElementById('candleBodyStrengthSub');
+      const candleWickRatioBadge = document.getElementById('candleWickRatioBadge');
+      const candleWickVerdictTitle = document.getElementById('candleWickVerdictTitle');
+      const candleWickVerdictSub = document.getElementById('candleWickVerdictSub');
+      const candleVolumeConfirmBadge = document.getElementById('candleVolumeConfirmBadge');
+      const candleWickSlPriceDisplay = document.getElementById('candleWickSlPriceDisplay');
+      const candleContextSub = document.getElementById('candleContextSub');
+      const recent3CandlesTableBody = document.getElementById('recent3CandlesTableBody');
       const obvTrendBadge = document.getElementById('obvTrendBadge');
       const ewObvSlopeBadge = document.getElementById('ewObvSlopeBadge');
       const ewObvDivTitle = document.getElementById('ewObvDivTitle');
@@ -1316,6 +1864,13 @@ plotshape(Bear and Bull[1], "Sell (แดงแรก)", shape.labeldown, locati
       latestMarketStats.obvTrendText = 'Volume สะสมขาขึ้น (OBV > EMA20)';
       latestMarketStats.obvDivergenceType = 'OBV Bullish Confirmation (แรงซื้อหนุนคลื่น)';
       latestMarketStats.obvDivergenceNote = 'เส้น OBV ยกตัวเหนือค่าเฉลี่ย OBV EMA(20) ยืนยันเม็ดเงินไหลเข้าสอดคล้องกับราคา';
+      latestMarketStats.candlePattern = 'Bullish Engulfing / Strong Bullish Close';
+      latestMarketStats.candleBias = 'LONG';
+      latestMarketStats.candlePatternNote = 'แท่งเขียวปิดใกล้จุดสูงสุด กลืนกินแรงขายก่อนหน้า ยืนยันโมเมนตัมฝั่งซื้อ';
+      latestMarketStats.candleWickStopPrice = 77380.0;
+      latestMarketStats.candleBodyPct = 68.5;
+      latestMarketStats.candleUpperWickPct = 12.0;
+      latestMarketStats.candleLowerWickPct = 19.5;
 
       function computeAndRenderCdcActionZone(opens, highs, lows, closes, ema12Arr, ema26Arr) {
         const n = closes.length;
@@ -1438,6 +1993,9 @@ plotshape(Bear and Bull[1], "Sell (แดงแรก)", shape.labeldown, locati
         }
 
         drawCdcCanvas();
+        if (typeof updateSrisiamPlaybookUI === 'function') {
+          updateSrisiamPlaybookUI();
+        }
       }
 
       const showTpSlLinesToggle = document.getElementById('showTpSlLinesToggle');
@@ -1658,6 +2216,7 @@ plotshape(Bear and Bull[1], "Sell (แดงแรก)", shape.labeldown, locati
         const e12 = computeEMAArray(closes, 12);
         const e26 = computeEMAArray(closes, 26);
         computeAndRenderCdcActionZone(opens, highs, lows, closes, e12, e26);
+        analyzeCandlestickPatterns(opens, highs, lows, closes, volumes, e12, e26);
         drawObvCanvas();
       }
 
@@ -2245,6 +2804,239 @@ plotshape(Bear and Bull[1], "Sell (แดงแรก)", shape.labeldown, locati
       }
 
       // Algorithmic Elliott Wave & RSI/MACD Divergence Detector from Klines
+      // Comprehensive Japanese Candlestick Anatomy & Pattern Engine (1-Bar, 2-Bar, 3-Bar Rules + Context)
+      function analyzeCandlestickPatterns(opens, highs, lows, closes, volumes, ema12Arr, ema26Arr) {
+        const n = closes.length;
+        if (n < 5) return;
+
+        const describeSingleCandle = (o, h, l, c) => {
+          const totalRange = Math.max(1e-8, h - l);
+          const body = Math.abs(c - o);
+          const upperWick = h - Math.max(o, c);
+          const lowerWick = Math.min(o, c) - l;
+          const bodyPct = (body / totalRange) * 100;
+          const upperPct = (upperWick / totalRange) * 100;
+          const lowerPct = (lowerWick / totalRange) * 100;
+          const isBull = c >= o;
+
+          let singleLabel = isBull ? 'แท่งเขียวมาตรฐาน (Bullish Bar)' : 'แท่งแดงมาตรฐาน (Bearish Bar)';
+          if (bodyPct <= 12) {
+            if (lowerPct >= 60) singleLabel = 'Dragonfly Doji (โดจิหางยาวดึงกลับขึ้น)';
+            else if (upperPct >= 60) singleLabel = 'Gravestone Doji (โดจิหางบนยาวกดลง)';
+            else singleLabel = 'Doji (โดจิ - ตลาดลังเลเลือกทาง)';
+          } else if (bodyPct >= 72) {
+            singleLabel = isBull ? 'Bullish Marubozu (แท่งเขียวตันแรงซื้อเต็ม)' : 'Bearish Marubozu (แท่งแดงตันแรงขายเต็ม)';
+          } else if (lowerWick >= body * 1.8 && upperWick <= body * 0.65) {
+            singleLabel = isBull ? 'Hammer / Bullish Pin Bar (ปฏิเสธราคาต่ำ)' : 'Hanging Man / Lower Wick Pin Bar';
+          } else if (upperWick >= body * 1.8 && lowerWick <= body * 0.65) {
+            singleLabel = isBull ? 'Inverted Hammer (ทดสอบแรงขายด้านบน)' : 'Shooting Star / Bearish Pin Bar (ปฏิเสธราคาสูง)';
+          } else if (bodyPct <= 30 && upperPct >= 30 && lowerPct >= 30) {
+            singleLabel = 'Spinning Top (แท่งสะสมพลัง/ลังเล)';
+          }
+
+          return {
+            o, h, l, c, totalRange, body, upperWick, lowerWick,
+            bodyPct, upperPct, lowerPct, isBull, singleLabel
+          };
+        };
+
+        const c2 = describeSingleCandle(opens[n - 3], highs[n - 3], lows[n - 3], closes[n - 3]); // 2 bars ago
+        const c1 = describeSingleCandle(opens[n - 2], highs[n - 2], lows[n - 2], closes[n - 2]); // 1 bar ago
+        const c0 = describeSingleCandle(opens[n - 1], highs[n - 1], lows[n - 1], closes[n - 1]); // Current bar
+
+        const fastEma = ema12Arr && ema12Arr[n - 1] ? ema12Arr[n - 1] : c0.c * 0.995;
+        const slowEma = ema26Arr && ema26Arr[n - 1] ? ema26Arr[n - 1] : c0.c * 0.99;
+        const inUptrend = fastEma >= slowEma;
+
+        // Multi-Candle Pattern Recognition (3-Bar & 2-Bar & 1-Bar Rules)
+        let patternTitle = c0.singleLabel;
+        let patternTypeTag = '1-Bar Anatomy';
+        let patternExplanation = '';
+        let patternBias = c0.isBull ? 'LONG' : 'SHORT';
+
+        const c2Mid = (c2.o + c2.c) / 2;
+        const c1Mid = (c1.o + c1.c) / 2;
+
+        // Check 3-Bar Morning Star / Evening Star / Three White Soldiers / Three Black Crows
+        if (!c2.isBull && c2.bodyPct > 45 && c1.bodyPct < 30 && c0.isBull && c0.c > c2Mid) {
+          patternTitle = 'Morning Star (รูปแบบ 3 แท่งกลับตัวขาขึ้น)';
+          patternTypeTag = '3-Bar Reversal';
+          patternExplanation = 'แท่งแดงยาว → แท่งชะลอตัว (Star) → แท่งเขียวพุ่งกลับทะลุเกินครึ่งแท่งแดงแรก ยืนยันจุดกลับตัวขึ้น';
+          patternBias = 'LONG';
+        } else if (c2.isBull && c2.bodyPct > 45 && c1.bodyPct < 30 && !c0.isBull && c0.c < c2Mid) {
+          patternTitle = 'Evening Star (รูปแบบ 3 แท่งกลับตัวขาลง)';
+          patternTypeTag = '3-Bar Reversal';
+          patternExplanation = 'แท่งเขียวยาว → แท่งชะลอตัวบนยอด → แท่งแดงทุบหลุดเกินครึ่งแท่งเขียวแรก เตือนการกลับตัวลง';
+          patternBias = 'SHORT';
+        } else if (c2.isBull && c1.isBull && c0.isBull && c0.c > c1.c && c1.c > c2.c && c0.bodyPct > 45 && c1.bodyPct > 45) {
+          patternTitle = 'Three White Soldiers (3 แท่งเขียวเรียงตัวขาขึ้น)';
+          patternTypeTag = '3-Bar Continuation';
+          patternExplanation = 'แท่งเทียนสีเขียวปิดยก High และยก Close ติดกัน 3 แท่ง สะท้อนแรงซื้อแข็งแกร่งต่อเนื่อง';
+          patternBias = 'LONG';
+        } else if (!c2.isBull && !c1.isBull && !c0.isBull && c0.c < c1.c && c1.c < c2.c && c0.bodyPct > 45 && c1.bodyPct > 45) {
+          patternTitle = 'Three Black Crows (3 แท่งแดงเรียงตัวขาลง)';
+          patternTypeTag = '3-Bar Continuation';
+          patternExplanation = 'แท่งเทียนสีแดงกดทำ Lower Close ติดกัน 3 แท่ง สะท้อนแรงเทขายต่อเนื่อง';
+          patternBias = 'SHORT';
+        }
+        // Check 2-Bar Engulfing, Piercing Line, Dark Cloud Cover, Inside Bar, Tweezer
+        else if (!c1.isBull && c0.isBull && c0.c >= c1.o && c0.o <= c1.c && c0.body > c1.body * 1.05) {
+          patternTitle = 'Bullish Engulfing (แท่งเขียวกลืนกินขาขึ้น)';
+          patternTypeTag = '2-Bar Reversal';
+          patternExplanation = 'เนื้อเทียนสีเขียวแท่งปัจจุบันกลืนกินเนื้อเทียนสีแดงก่อนหน้าทั้งแท่ง แรงซื้อกลับเข้าคุมตลาด';
+          patternBias = 'LONG';
+        } else if (c1.isBull && !c0.isBull && c0.c <= c1.o && c0.o >= c1.c && c0.body > c1.body * 1.05) {
+          patternTitle = 'Bearish Engulfing (แท่งแดงกลืนกินขาลง)';
+          patternTypeTag = '2-Bar Reversal';
+          patternExplanation = 'เนื้อเทียนสีแดงแท่งปัจจุบันกลืนกินเนื้อเทียนสีเขียวก่อนหน้าทั้งแท่ง แรงขายเทสวนลงมาชัดเจน';
+          patternBias = 'SHORT';
+        } else if (!c1.isBull && c0.isBull && c0.o < c1.c && c0.c > c1Mid && c0.c < c1.o) {
+          patternTitle = 'Piercing Line (แท่งเขียวแทงทะลุเกิน 50%)';
+          patternTypeTag = '2-Bar Bullish';
+          patternExplanation = 'แท่งเขียวดีดกลับขึ้นมาปิดเกินครึ่งหนึ่งของแท่งแดงก่อนหน้า สะท้อนแรงซื้อดักรับที่แนวรับ';
+          patternBias = 'LONG';
+        } else if (c1.isBull && !c0.isBull && c0.o > c1.c && c0.c < c1Mid && c0.c > c1.o) {
+          patternTitle = 'Dark Cloud Cover (เมฆดำปกคลุมกดราคาลง)';
+          patternTypeTag = '2-Bar Bearish';
+          patternExplanation = 'แท่งแดงทุบลงมาปิดต่ำกว่าครึ่งหนึ่งของแท่งเขียวก่อนหน้า เตือนแรงขายกดดันที่แนวต้าน';
+          patternBias = 'SHORT';
+        } else if (c0.h <= c1.h && c0.l >= c1.l) {
+          patternTitle = c0.isBull ? 'Bullish Inside Bar / Harami (บีบอัดสะสมพลัง)' : 'Bearish Inside Bar / Harami (บีบอัดรอเลือกทาง)';
+          patternTypeTag = '2-Bar Inside Bar';
+          patternExplanation = 'กรอบ High-Low ของแท่งปัจจุบันอยู่ภายในแท่งก่อนหน้า (Mother Bar) รอจังหวะเบรกทะลุกรอบ';
+          patternBias = inUptrend ? 'LONG' : 'SHORT';
+        } else if (Math.abs(c0.l - c1.l) / c0.totalRange < 0.08 && c0.isBull && !c1.isBull) {
+          patternTitle = 'Tweezer Bottom (ย้ำฐานแนวรับ 2 แท่งไม่หลุด)';
+          patternTypeTag = '2-Bar Support';
+          patternExplanation = 'แท่งเทียน 2 แท่งลงมาทดสอบจุดต่ำสุดเดียวกันแล้วดีดกลับ ยืนยันแนวรับแข็งแกร่ง';
+          patternBias = 'LONG';
+        } else if (Math.abs(c0.h - c1.h) / c0.totalRange < 0.08 && !c0.isBull && c1.isBull) {
+          patternTitle = 'Tweezer Top (ชนแนวต้าน 2 แท่งไม่ผ่าน)';
+          patternTypeTag = '2-Bar Resistance';
+          patternExplanation = 'แท่งเทียน 2 แท่งขึ้นทดสอบจุดสูงสุดเดียวกันแล้วถูกตบลง ยืนยันแนวต้านแข็งแกร่ง';
+          patternBias = 'SHORT';
+        } else {
+          // 1-Bar Detailed Explanation
+          if (c0.lowerPct >= 45) {
+            patternExplanation = 'ไส้ล่างยาวสะท้อนแรงซื้อสวนกลับ (Bullish Wick Rejection) ปฏิเสธการลงต่อ';
+            patternBias = 'LONG';
+          } else if (c0.upperPct >= 45) {
+            patternExplanation = 'ไส้บนยาวสะท้อนแรงเทขายกดลงมาจากด้านบน (Bearish Wick Rejection)';
+            patternBias = 'SHORT';
+          } else if (c0.bodyPct >= 65) {
+            patternExplanation = c0.isBull
+              ? 'เนื้อเทียนสีเขียวแน่นเต็มแท่ง แรงซื้อคุมตลาดชัดเจนตามทิศทางขาขึ้น'
+              : 'เนื้อเทียนสีแดงแน่นเต็มแท่ง แรงขายคุมตลาดชัดเจนตามทิศทางขาลง';
+            patternBias = c0.isBull ? 'LONG' : 'SHORT';
+          } else {
+            patternExplanation = inUptrend
+              ? 'แท่งเทียนเคลื่อนไหวสร้างฐานเหนือเส้นค่าเฉลี่ยในแนวโน้มขาขึ้น'
+              : 'แท่งเทียนเคลื่อนไหวใต้เส้นค่าเฉลี่ยในแนวโน้มพักตัว';
+            patternBias = inUptrend ? 'LONG' : 'SHORT';
+          }
+        }
+
+        // Rule 2: Body Strength Assessment
+        let bodyTitle = 'เนื้อเทียนปานกลาง (Balanced Body)';
+        let bodySub = 'แรงซื้อและแรงขายสู้กันในกรอบปกติ';
+        if (c0.bodyPct >= 65) {
+          bodyTitle = c0.isBull ? 'เนื้อเทียนเขียวแน่น (Strong Bullish Body)' : 'เนื้อเทียนแดงแน่น (Strong Bearish Body)';
+          bodySub = c0.isBull ? 'ผู้ซื้อคุมเกมตั้งแต่ต้นจนจบแท่ง (Momentum แรง)' : 'ผู้ขายทุบราคาปิดใกล้จุดต่ำสุดของแท่ง';
+        } else if (c0.bodyPct <= 20) {
+          bodyTitle = 'เนื้อเทียนเล็ก / โดจิ (Indecision)';
+          bodySub = 'ราคาเปิดและปิดใกล้กันมาก ตลาดกำลังรอเลือกทางหรือชะลอความร้อนแรง';
+        }
+
+        // Rule 3: Wick Rejection Assessment
+        let wickTitle = 'ไส้เทียนสมดุล (Neutral Wicks)';
+        let wickSub = 'แรงปะทะที่กรอบบนและกรอบล่างใกล้เคียงกัน';
+        if (c0.lowerPct > c0.upperPct + 12) {
+          wickTitle = 'ไส้ล่างยาว (Bullish Lower-Wick Rejection)';
+          wickSub = `มีแรงซื้อรับของด้านล่าง ${c0.lowerPct.toFixed(0)}% ของความยาวแท่ง ดันราคาปิดกลับขึ้น`;
+        } else if (c0.upperPct > c0.lowerPct + 12) {
+          wickTitle = 'ไส้บนยาว (Bearish Upper-Wick Rejection)';
+          wickSub = `มีแรงขายตบลงมาจากด้านบน ${c0.upperPct.toFixed(0)}% ของความยาวแท่ง กดราคาปิดต่ำลง`;
+        }
+
+        // Rule 4: Wick-based Stop Loss & Volume confirmation
+        const decimals = c0.c < 10 ? 4 : 1;
+        const recentLowestWick = Math.min(c0.l, c1.l);
+        const recentHighestWick = Math.max(c0.h, c1.h);
+        // Add 0.15% buffer beyond the signal candle's wick tip
+        const wickSlPrice = patternBias === 'LONG'
+          ? recentLowestWick * 0.9985
+          : recentHighestWick * 1.0015;
+
+        let volConfirmed = true;
+        if (volumes && volumes.length >= 10) {
+          const avgVol = volumes.slice(-10, -1).reduce((a, b) => a + b, 0) / 9;
+          volConfirmed = volumes[n - 1] >= avgVol * 0.85;
+        }
+
+        // Update UI Elements
+        if (candleSignalBadge) {
+          if (patternBias === 'LONG') {
+            candleSignalBadge.textContent = `BULLISH CANDLE (${patternTitle.split(' ')[0]})`;
+            candleSignalBadge.className = 'text-[11px] bg-emerald-950/90 text-emerald-300 border border-emerald-500/50 px-2.5 py-0.5 rounded font-bold';
+            candlePatternName.className = 'text-sm font-bold text-emerald-400';
+          } else {
+            candleSignalBadge.textContent = `BEARISH CANDLE (${patternTitle.split(' ')[0]})`;
+            candleSignalBadge.className = 'text-[11px] bg-rose-950/90 text-rose-300 border border-rose-500/50 px-2.5 py-0.5 rounded font-bold';
+            candlePatternName.className = 'text-sm font-bold text-rose-400';
+          }
+          candleTypeCountBadge.textContent = patternTypeTag;
+          candlePatternName.textContent = patternTitle;
+          candlePatternDesc.textContent = patternExplanation;
+
+          candleBodyPctBadge.textContent = `Body: ${c0.bodyPct.toFixed(1)}%`;
+          candleBodyStrengthTitle.textContent = bodyTitle;
+          candleBodyStrengthSub.textContent = bodySub;
+
+          candleWickRatioBadge.textContent = `บน ${c0.upperPct.toFixed(0)}% | ล่าง ${c0.lowerPct.toFixed(0)}%`;
+          candleWickVerdictTitle.textContent = wickTitle;
+          candleWickVerdictSub.textContent = wickSub;
+
+          candleVolumeConfirmBadge.textContent = volConfirmed ? 'Volume หนุนสัญญาณ' : 'Volume เบาบาง';
+          candleVolumeConfirmBadge.className = `text-[10px] font-semibold ${volConfirmed ? 'text-emerald-300' : 'text-amber-300'}`;
+          candleWickSlPriceDisplay.textContent = `SL ปลายไส้: ${formatNum(wickSlPrice, decimals)} USDT`;
+          candleContextSub.textContent = patternBias === 'LONG'
+            ? `วาง SL ใต้หางแท่งเทียน (${formatNum(recentLowestWick, decimals)}) ป้องกันโดนสะบัด`
+            : `วาง SL เหนือปลายไส้บน (${formatNum(recentHighestWick, decimals)}) ตามกฎ Price Action`;
+        }
+
+        // Populate 3 Latest Candles Breakdown Table
+        if (recent3CandlesTableBody) {
+          const rows = [
+            { label: 'แท่งก่อนหน้า (-2)', data: c2 },
+            { label: 'แท่งก่อนหน้า (-1)', data: c1 },
+            { label: 'แท่งปัจจุบัน (0)', data: c0, isCurrent: true }
+          ];
+          recent3CandlesTableBody.innerHTML = rows.map(r => {
+            const d = r.data;
+            const colorClass = d.isBull ? 'text-emerald-400' : 'text-rose-400';
+            const badgeBg = d.isBull ? 'bg-emerald-500/20 text-emerald-300' : 'bg-rose-500/20 text-rose-300';
+            return `
+              <tr class="${r.isCurrent ? 'bg-amber-500/10' : 'hover:bg-[#222222]'}">
+                <td class="py-2 px-2.5 font-medium text-white">${r.label} <span class="text-[10px] px-1.5 py-0.5 rounded ${badgeBg}">${d.isBull ? 'เขียว' : 'แดง'}</span></td>
+                <td class="py-2 px-2.5 ${colorClass} font-medium">${formatNum(d.o, decimals)} → ${formatNum(d.c, decimals)}</td>
+                <td class="py-2 px-2.5 text-[#cccccc]">${formatNum(d.l, decimals)} ↔ ${formatNum(d.h, decimals)}</td>
+                <td class="py-2 px-2.5 text-white font-semibold">${d.bodyPct.toFixed(1)}%</td>
+                <td class="py-2 px-2.5 text-sky-300">บน ${d.upperPct.toFixed(0)}% / ล่าง ${d.lowerPct.toFixed(0)}%</td>
+                <td class="py-2 px-2.5 text-[#d4d4d4]">${d.singleLabel}</td>
+              </tr>
+            `;
+          }).join('');
+        }
+
+        latestMarketStats.candlePattern = patternTitle;
+        latestMarketStats.candleBias = patternBias;
+        latestMarketStats.candlePatternNote = patternExplanation;
+        latestMarketStats.candleWickStopPrice = wickSlPrice;
+        latestMarketStats.candleBodyPct = c0.bodyPct;
+        latestMarketStats.candleUpperWickPct = c0.upperPct;
+        latestMarketStats.candleLowerWickPct = c0.lowerPct;
+      }
+
       function analyzeElliottAndDivergenceFromKlines(highs, lows, closes, rsiArr, macdObj, obvObj) {
         const n = closes.length;
         if (n < 40) return;
@@ -2503,6 +3295,7 @@ plotshape(Bear and Bull[1], "Sell (แดงแรก)", shape.labeldown, locati
           const ema12Arr = computeEMAArray(closes, 12);
           const ema26Arr = computeEMAArray(closes, 26);
           computeAndRenderCdcActionZone(opens, highs, lows, closes, ema12Arr, ema26Arr);
+          analyzeCandlestickPatterns(opens, highs, lows, closes, volumes, ema12Arr, ema26Arr);
           drawObvCanvas();
           analyzeElliottAndDivergenceFromKlines(highs, lows, closes, rsiArr, macdObj, obvObj);
 
@@ -2614,6 +3407,7 @@ plotshape(Bear and Bull[1], "Sell (แดงแรก)", shape.labeldown, locati
                 <li><strong>RSI(14) Divergence (${s.rsi14 ? s.rsi14.toFixed(1) : '-'}):</strong> <span class="text-amber-300 font-medium">${s.rsiDivergenceType}</span> (${s.rsiDivergenceNote})</li>
                 <li><strong>MACD(12,26,9) Histogram:</strong> <span class="text-sky-300 font-medium">${s.macdDivergenceType}</span> (${s.macdDivergenceNote})</li>
                 <li><strong>เส้น OBV (On-Balance Volume):</strong> <span class="text-cyan-300 font-medium">${s.obvDivergenceType}</span> — ${s.obvDivergenceNote}</li>
+                <li><strong>การอ่านแท่งเทียน (Candlestick Rules):</strong> <span class="text-amber-300 font-semibold">${s.candlePattern}</span> (เนื้อเทียน ${s.candleBodyPct ? s.candleBodyPct.toFixed(1) : '68.5'}% | ไส้บน ${s.candleUpperWickPct ? s.candleUpperWickPct.toFixed(0) : '12'}% | ไส้ล่าง ${s.candleLowerWickPct ? s.candleLowerWickPct.toFixed(0) : '19'}%) — ${s.candlePatternNote}</li>
               </ul>
             </div>
             <div>
@@ -2667,6 +3461,7 @@ plotshape(Bear and Bull[1], "Sell (แดงแรก)", shape.labeldown, locati
 - ค่า RSI(14): ${latestMarketStats.rsi14 ? latestMarketStats.rsi14.toFixed(2) : 'N/A'} | สัญญาณที่ระบบตรวจพบ: ${latestMarketStats.rsiDivergenceType}
 - ค่า MACD Histogram: ${latestMarketStats.macdHist ? latestMarketStats.macdHist.toFixed(2) : 'N/A'} | สัญญาณ MACD: ${latestMarketStats.macdDivergenceType}
 - เส้น OBV (On-Balance Volume): ${latestMarketStats.obvTrendText} | สัญญาณ OBV: ${latestMarketStats.obvDivergenceType} (${latestMarketStats.obvDivergenceNote})
+- การอ่านแท่งเทียนตามกฎ Price Action: รูปแบบ ${latestMarketStats.candlePattern} (${latestMarketStats.candlePatternNote}) | สัดส่วนเนื้อเทียน ${latestMarketStats.candleBodyPct ? latestMarketStats.candleBodyPct.toFixed(1) : '68'}% | จุดวาง SL ปลายไส้เทียน = ${latestMarketStats.candleWickStopPrice ? latestMarketStats.candleWickStopPrice.toFixed(2) : 'N/A'} USDT
 - จุดอ้างอิงคลื่น: Wave 0 = ${ewPivot0Input.value}, Wave 1 = ${ewPivot1Input.value}, Wave 2 = ${ewPivot2Input.value}
 - เป้าหมาย Fibonacci ที่คำนวณไว้: TP1 = ${ew.tp1Price.toFixed(2)} USDT, TP2 (161.8%) = ${ew.tp2Price.toFixed(2)} USDT, จุด Invalidation SL = ${ew.slPrice.toFixed(2)} USDT
 
@@ -2920,6 +3715,22 @@ plotshape(Bear and Bull[1], "Sell (แดงแรก)", shape.labeldown, locati
 
       runGeminiAnalysisBtn.addEventListener('click', runGeminiAnalysis);
 
+      toggleCandleRulesModalBtn.addEventListener('click', () => {
+        candleRulesModalBox.classList.toggle('hidden');
+      });
+
+      applyCandleStopLossBtn.addEventListener('click', () => {
+        const entry = parseFloat(entryPriceInput.value) || latestMarketStats.lastPrice || 77815.0;
+        const wickSl = latestMarketStats.candleWickStopPrice || (entry * 0.985);
+        const decimals = entry < 10 ? 4 : 1;
+        const distPct = Math.max(0.2, (Math.abs(entry - wickSl) / entry) * 100);
+        slPriceInput.value = Number(wickSl.toFixed(decimals));
+        stopLossInput.value = Number(distPct.toFixed(2));
+        setOrderDirection(latestMarketStats.candleBias || 'LONG');
+        updateSlHelper();
+        calculateAll();
+      });
+
       toggleCdcPineModalBtn.addEventListener('click', () => {
         cdcPineModalBox.classList.toggle('hidden');
       });
@@ -2951,10 +3762,668 @@ plotshape(Bear and Bull[1], "Sell (แดงแรก)", shape.labeldown, locati
         drawObvCanvas();
       });
 
+      // ==========================================
+      // SRISIAM PLAYBOOK & CONTINGENCY ENGINE
+      // ==========================================
+      const srisiamVerdictBadge = document.getElementById('srisiamVerdictBadge');
+      const applySrisiamPlanABtn = document.getElementById('applySrisiamPlanABtn');
+      const logSrisiamPlanToJournalBtn = document.getElementById('logSrisiamPlanToJournalBtn');
+      const simScenario1CutBtn = document.getElementById('simScenario1CutBtn');
+      const simScenario2ReverseShortBtn = document.getElementById('simScenario2ReverseShortBtn');
+      const simScenario3LockProfitBtn = document.getElementById('simScenario3LockProfitBtn');
+
+      function updateSrisiamPlaybookUI() {
+        const balance = Math.max(0, parseFloat(balanceInput.value) || 5000);
+        const riskPct = Math.max(0.01, parseFloat(riskInput.value) || 2);
+        const slPct = Math.max(0.01, parseFloat(stopLossInput.value) || 3);
+        const leverage = Math.max(1, parseFloat(leverageInput.value) || 3);
+        const entry = Math.max(0, parseFloat(entryPriceInput.value) || latestMarketStats.lastPrice || 77815.0);
+        const dec = entry < 10 ? 4 : 1;
+
+        const riskUsdt = balance * (riskPct / 100);
+        const totalNotional = slPct > 0 ? riskUsdt / (slPct / 100) : 0;
+        const marginCost = leverage > 0 ? totalNotional / leverage : 0;
+        const sizeBtc = entry > 0 ? totalNotional / entry : 0;
+        const remChances = Math.max(0, Math.floor(100 / riskPct) - 1);
+        const remPort = Math.max(0, balance - riskUsdt);
+
+        const s = latestMarketStats;
+        const ew = currentEwComputed;
+        const isLong = selectedOrderDirection === 'LONG';
+
+        const slPrice = isLong ? entry * (1 - slPct / 100) : entry * (1 + slPct / 100);
+        const tp1Price = ew && ew.tp1Price ? ew.tp1Price : (isLong ? entry * (1 + (slPct * 1.3) / 100) : entry * (1 - (slPct * 1.3) / 100));
+        const tp2Price = customTpOverridePrice ? customTpOverridePrice : (isLong ? entry * (1 + (slPct * 2) / 100) : entry * (1 - (slPct * 2) / 100));
+
+        const setTxt = (id, val) => {
+          const el = document.getElementById(id);
+          if (el) el.textContent = val;
+        };
+
+        if (srisiamVerdictBadge) {
+          if (isLong) {
+            srisiamVerdictBadge.textContent = `ACTION: BUY / LONG (${s.cdcZoneCode || 'GREEN'} ZONE)`;
+            srisiamVerdictBadge.className = 'text-[11px] bg-emerald-950/90 text-emerald-300 border border-emerald-500/50 px-2.5 py-0.5 rounded font-bold';
+          } else {
+            srisiamVerdictBadge.textContent = `ACTION: SELL / SHORT (${s.cdcZoneCode || 'RED'} ZONE)`;
+            srisiamVerdictBadge.className = 'text-[11px] bg-rose-950/90 text-rose-300 border border-rose-500/50 px-2.5 py-0.5 rounded font-bold';
+          }
+        }
+
+        // Update Pillar 1-4 live values
+        setTxt('srisiamPillar1Zone', `${s.cdcZoneCode || 'GREEN'} ZONE`);
+        setTxt('spFastEma', formatNum(s.ema12 || entry * 0.996, dec));
+        setTxt('spSlowEma', formatNum(s.ema26 || entry * 0.989, dec));
+        setTxt('srisiamPillar2Wave', ewSetupSelect.options[ewSetupSelect.selectedIndex]?.text.split(':')[0] || 'Wave 3');
+        setTxt('spWave2Pivot', formatNum(parseFloat(ewPivot2Input.value) || 76500, dec));
+        setTxt('spWave0Pivot', formatNum(parseFloat(ewPivot0Input.value) || 75200, dec));
+        setTxt('spRsiSignal', s.rsiDivergenceType || 'Hidden Bullish Divergence');
+        setTxt('spCandleName', s.candlePattern || 'Bullish Engulfing / Strong Body');
+        setTxt('spCandleBodyPct', `${(s.candleBodyPct || 68.5).toFixed(1)}%`);
+        setTxt('spCandleWickSl', formatNum(s.candleWickStopPrice || entry * 0.994, dec));
+
+        // Update Plan A Action Table
+        setTxt('spPlanRiskPct', riskPct.toString());
+        setTxt('spPlanRiskUsdt', formatNum(riskUsdt, 2));
+        const dirEl = document.getElementById('spTableDirection');
+        if (dirEl) {
+          dirEl.textContent = isLong ? `Buy / Long (Isolated ${leverage}x)` : `Sell / Short (Isolated ${leverage}x)`;
+          dirEl.className = `py-2.5 px-3 font-bold ${isLong ? 'text-emerald-400' : 'text-rose-400'}`;
+        }
+        setTxt('spTableDirectionReason', isLong
+          ? 'เทรดตามสีเขียวของ CDC ActionZone V3 และรันเทรนด์คลื่นขาขึ้น (ไม่สวนเทรนด์)'
+          : 'ดักจังหวะปรับฐาน A-B-C เมื่อเกิดสัญญาณเตือนปลายคลื่น / แท่งแดง CDC');
+        setTxt('spTableEntry', `~${formatNum(entry, dec)} USDT (แนวรับ/ต้าน Fast EMA12 ที่ ${formatNum(s.ema12 || entry * 0.996, dec)})`);
+        setTxt('spTableSize', `${formatPlainFixed(sizeBtc, 4)} BTC (ใช้ Cost / Margin ${formatNum(marginCost, 2)} USDT)`);
+        setTxt('spTableSizeReason', `คำนวณจากสูตร MM เป๊ะๆ ถ้าผิดทางชน SL จะเสียแค่ ${formatNum(riskUsdt, 2)} USDT (${riskPct}% ของพอร์ต) เหลือโอกาสแก้ตัวอีก ${remChances} ครั้ง`);
+        setTxt('spTableSl', `${formatNum(slPrice, dec)} USDT (${isLong ? '-' : '+'}${formatPlainFixed(slPct, 2)}%)`);
+        setTxt('spTableSlReason', `วางป้องกันไว้พ้นเส้น CDC Slow EMA(26) (${formatNum(s.ema26 || entry * 0.989, dec)}) และฐานคลื่นสำคัญ ไม่โดนสะบัดกิน SL ง่ายๆ`);
+        setTxt('spTableTp1', `${formatNum(tp1Price, dec)} USDT (Fibo 100%/127.2% | แบ่งปิด 50% = ${formatPlainFixed(sizeBtc * 0.5, 4)} BTC)`);
+        setTxt('spTableTp2', `${formatNum(tp2Price, dec)} USDT (เป้าหลัก Fibo 161.8% / RR 1:2 | รับกำไรคาดหวัง +${formatNum(riskUsdt * 2, 2)} USDT)`);
+
+        // Update Contingency Scenarios 1, 2, 3 live figures
+        setTxt('spScen1Fast', formatNum(s.ema12 || entry * 0.996, dec));
+        setTxt('spScen1Slow', formatNum(s.ema26 || entry * 0.989, dec));
+        setTxt('spScen1Wave2', formatNum(parseFloat(ewPivot2Input.value) || 76500, dec));
+        setTxt('spScen2Sl', formatNum(slPrice, dec));
+        setTxt('spScen2LossUsdt', formatNum(riskUsdt, 2));
+        setTxt('spScen2LossPct', riskPct.toString());
+        setTxt('spScen2RemPort', `${formatNum(remPort, 2)} USDT`);
+        setTxt('spScen2RemChances', `${remChances} นัด`);
+        setTxt('spScen3Tp1', formatNum(tp1Price, dec));
+        setTxt('spScen3Tp2', formatNum(tp2Price, dec));
+      }
+
+      if (applySrisiamPlanABtn) {
+        applySrisiamPlanABtn.addEventListener('click', () => {
+          ewSetupSelect.value = 'BULL_W3';
+          computeElliottWaveTargets();
+          const dec = currentEwComputed.entryPrice < 10 ? 4 : 1;
+          setOrderDirection('LONG');
+          entryPriceInput.value = Number(currentEwComputed.entryPrice.toFixed(dec));
+          slPriceInput.value = Number(currentEwComputed.slPrice.toFixed(dec));
+          stopLossInput.value = Number(currentEwComputed.slPct.toFixed(2));
+          customTpOverridePrice = currentEwComputed.tp2Price;
+          updateSlHelper();
+          calculateAll();
+        });
+      }
+
+      if (simScenario1CutBtn) {
+        simScenario1CutBtn.addEventListener('click', () => {
+          const entry = parseFloat(entryPriceInput.value) || latestMarketStats.lastPrice || 77815.0;
+          const slow = latestMarketStats.ema26 || entry * 0.989;
+          const dec = entry < 10 ? 4 : 1;
+          const distPct = Math.max(0.25, (Math.abs(entry - slow) / entry) * 100);
+          slPriceInput.value = Number(slow.toFixed(dec));
+          stopLossInput.value = Number(distPct.toFixed(2));
+          updateSlHelper();
+          calculateAll();
+        });
+      }
+
+      if (simScenario2ReverseShortBtn) {
+        simScenario2ReverseShortBtn.addEventListener('click', () => {
+          ewSetupSelect.value = 'BEAR_ABC';
+          computeElliottWaveTargets();
+          const dec = currentEwComputed.entryPrice < 10 ? 4 : 1;
+          setOrderDirection('SHORT');
+          entryPriceInput.value = Number(currentEwComputed.entryPrice.toFixed(dec));
+          slPriceInput.value = Number(currentEwComputed.slPrice.toFixed(dec));
+          stopLossInput.value = Number(currentEwComputed.slPct.toFixed(2));
+          customTpOverridePrice = currentEwComputed.tp2Price;
+          updateSlHelper();
+          calculateAll();
+        });
+      }
+
+      if (simScenario3LockProfitBtn) {
+        simScenario3LockProfitBtn.addEventListener('click', () => {
+          const dec = currentEwComputed.entryPrice < 10 ? 4 : 1;
+          customTpOverridePrice = currentEwComputed.tp1Price;
+          const slow = latestMarketStats.ema26 || currentEwComputed.entryPrice * 0.992;
+          const distPct = Math.max(0.25, (Math.abs(currentEwComputed.entryPrice - slow) / currentEwComputed.entryPrice) * 100);
+          slPriceInput.value = Number(slow.toFixed(dec));
+          stopLossInput.value = Number(distPct.toFixed(2));
+          updateSlHelper();
+          calculateAll();
+        });
+      }
+
+      // ==========================================
+      // TRADE JOURNEY & JOURNAL ENGINE
+      // ==========================================
+      const quickLogJourneyFromOrderBtn = document.getElementById('quickLogJourneyFromOrderBtn');
+      const exportJournalCsvBtn = document.getElementById('exportJournalCsvBtn');
+      const syncPortWithJournalBtn = document.getElementById('syncPortWithJournalBtn');
+      const resetDemoJournalBtn = document.getElementById('resetDemoJournalBtn');
+      const pullCurrentSetupToJournalBtn = document.getElementById('pullCurrentSetupToJournalBtn');
+      const addJournalEntryBtn = document.getElementById('addJournalEntryBtn');
+
+      const journeyTotalTrades = document.getElementById('journeyTotalTrades');
+      const journeyWinLossCount = document.getElementById('journeyWinLossCount');
+      const journeyWinRate = document.getElementById('journeyWinRate');
+      const journeyExpectancyNote = document.getElementById('journeyExpectancyNote');
+      const journeyNetPnl = document.getElementById('journeyNetPnl');
+      const journeyNetRMultiple = document.getElementById('journeyNetRMultiple');
+      const journeyProfitFactor = document.getElementById('journeyProfitFactor');
+      const journeyCurrentEquity = document.getElementById('journeyCurrentEquity');
+      const journeyMaxDrawdown = document.getElementById('journeyMaxDrawdown');
+      const equityCurveCanvas = document.getElementById('equityCurveCanvas');
+      const equityGrowthPctBadge = document.getElementById('equityGrowthPctBadge');
+      const tradeJourneyTableBody = document.getElementById('tradeJourneyTableBody');
+      const journalToastMsg = document.getElementById('journalToastMsg');
+
+      const jSymbolInput = document.getElementById('jSymbolInput');
+      const jSideSelect = document.getElementById('jSideSelect');
+      const jEntryInput = document.getElementById('jEntryInput');
+      const jSizeBtcInput = document.getElementById('jSizeBtcInput');
+      const jSlInput = document.getElementById('jSlInput');
+      const jTpInput = document.getElementById('jTpInput');
+      const jRiskUsdtInput = document.getElementById('jRiskUsdtInput');
+      const jStatusSelect = document.getElementById('jStatusSelect');
+      const jNoteInput = document.getElementById('jNoteInput');
+
+      const JOURNAL_STORAGE_KEY = 'srisiam_trade_journey_v1';
+
+      function getDefaultSampleJournal() {
+        return [
+          {
+            id: 't1',
+            timestamp: '2026-11-01 10:30',
+            symbol: 'BTCUSDT',
+            side: 'LONG',
+            entry: 76420.0,
+            sl: 74127.4,
+            tp: 81005.2,
+            sizeBtc: 0.0436,
+            costUsdt: 1111.11,
+            riskUsdt: 100.00,
+            status: 'WIN_TP2',
+            rMultiple: 2.0,
+            pnlUsdt: 200.00,
+            signals: 'CDC เขียวแรก (Buy) | จบ Wave 2 ขึ้น Wave 3 | OBV > EMA20',
+            note: 'เข้าตามสัญญาณเขียวแรก CDC ActionZone V3 ถือรันเทรนด์ชนเป้า Fibo 161.8%'
+          },
+          {
+            id: 't2',
+            timestamp: '2026-11-02 14:15',
+            symbol: 'BTCUSDT',
+            side: 'LONG',
+            entry: 77250.0,
+            sl: 74932.5,
+            tp: 81885.0,
+            sizeBtc: 0.0431,
+            costUsdt: 1111.11,
+            riskUsdt: 100.00,
+            status: 'LOSS_CUT',
+            rMultiple: -0.5,
+            pnlUsdt: -50.00,
+            signals: 'CDC ย่อสีเหลือง | Inside Bar | RSI พักตัว',
+            note: 'ราคาหลุด Fast EMA12 จึงแบ่งคัทลดความเสี่ยงครึ่งหนึ่งตามแผนฉุกเฉินพี่ศรีสยาม'
+          },
+          {
+            id: 't3',
+            timestamp: '2026-11-03 21:55',
+            symbol: 'BTCUSDT',
+            side: 'LONG',
+            entry: 77815.0,
+            sl: 75480.6,
+            tp: 82483.9,
+            sizeBtc: 0.0428,
+            costUsdt: 1111.11,
+            riskUsdt: 100.00,
+            status: 'OPEN',
+            rMultiple: 0.0,
+            pnlUsdt: 0.00,
+            signals: 'CDC Green Zone | Wave 3 Impulse | Bullish Candle + OBV หนุน',
+            note: 'แผนพี่ศรีสยาม: แบ่ง TP1 ที่ 80,824.5 แล้วเลื่อน SL บังทุน หากหลุด 75,480.6 ยอมคัทตามวินัย'
+          }
+        ];
+      }
+
+      let tradeJourneyList = [];
+      try {
+        const rawSaved = localStorage.getItem(JOURNAL_STORAGE_KEY);
+        if (rawSaved) {
+          const parsed = JSON.parse(rawSaved);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            tradeJourneyList = parsed;
+          } else {
+            tradeJourneyList = getDefaultSampleJournal();
+          }
+        } else {
+          tradeJourneyList = getDefaultSampleJournal();
+        }
+      } catch (e) {
+        tradeJourneyList = getDefaultSampleJournal();
+      }
+
+      function saveJournalToStorage() {
+        try {
+          localStorage.setItem(JOURNAL_STORAGE_KEY, JSON.stringify(tradeJourneyList));
+        } catch (e) {}
+      }
+
+      function computePnlFromOutcome(status, riskUsdt, entry, tp, sl) {
+        const r = Math.max(1, parseFloat(riskUsdt) || 100);
+        // Calculate actual RR ratio from entry, tp, sl if available
+        const slDist = Math.abs(entry - sl);
+        const tpDist = Math.abs(tp - entry);
+        const actualRR = slDist > 0 ? Math.max(0.5, tpDist / slDist) : 2.0;
+
+        if (status === 'WIN_TP2') {
+          return { rMultiple: Number(actualRR.toFixed(2)), pnlUsdt: Number((r * actualRR).toFixed(2)) };
+        } else if (status === 'WIN_TP1') {
+          const tp1R = Math.max(1.0, actualRR * 0.6);
+          return { rMultiple: Number(tp1R.toFixed(2)), pnlUsdt: Number((r * tp1R).toFixed(2)) };
+        } else if (status === 'BE') {
+          return { rMultiple: 0.0, pnlUsdt: 0.0 };
+        } else if (status === 'LOSS_CUT') {
+          return { rMultiple: -0.5, pnlUsdt: Number((-r * 0.5).toFixed(2)) };
+        } else if (status === 'LOSS_SL') {
+          return { rMultiple: -1.0, pnlUsdt: Number((-r).toFixed(2)) };
+        }
+        return { rMultiple: 0.0, pnlUsdt: 0.0 };
+      }
+
+      function syncJournalFormWithCurrentCalculator() {
+        const s = latestMarketStats;
+        const entry = parseFloat(entryPriceInput.value) || s.lastPrice || 77815.0;
+        const dec = entry < 10 ? 4 : 1;
+        jSymbolInput.value = symbolSelect.value || 'BTCUSDT';
+        jSideSelect.value = selectedOrderDirection || 'LONG';
+        jEntryInput.value = Number(entry.toFixed(dec));
+        jSizeBtcInput.value = orderPanelSizeBtc.textContent.trim();
+        jSlInput.value = orderPanelSlInputBox.textContent.replace(/,/g, '').trim();
+        jTpInput.value = orderPanelTpInputBox.textContent.replace(/,/g, '').trim();
+        const balance = parseFloat(balanceInput.value) || 5000;
+        const riskPct = parseFloat(riskInput.value) || 2;
+        jRiskUsdtInput.value = Number((balance * (riskPct / 100)).toFixed(2));
+        jNoteInput.value = `CDC: ${s.cdcZoneCode} | ${s.wavePhase} | แท่งเทียน: ${s.candlePattern} | แผน: ถ้าผิดทางคัทตาม SL`;
+      }
+
+      function drawEquityCurveChart(equityPoints) {
+        if (!equityCurveCanvas || !equityPoints || equityPoints.length === 0) return;
+        const rect = equityCurveCanvas.parentElement.getBoundingClientRect();
+        const dpr = window.devicePixelRatio || 1;
+        const width = Math.max(260, rect.width);
+        const height = Math.max(150, rect.height);
+
+        equityCurveCanvas.width = width * dpr;
+        equityCurveCanvas.height = height * dpr;
+        const ctx = equityCurveCanvas.getContext('2d');
+        ctx.scale(dpr, dpr);
+        ctx.clearRect(0, 0, width, height);
+
+        const padTop = 14, padBottom = 18, padLeft = 10, padRight = 68;
+        const plotW = width - padLeft - padRight;
+        const plotH = height - padTop - padBottom;
+
+        let minE = Math.min(...equityPoints);
+        let maxE = Math.max(...equityPoints);
+        if (minE === maxE) {
+          minE -= 100;
+          maxE += 100;
+        } else {
+          const buf = (maxE - minE) * 0.15;
+          minE -= buf;
+          maxE += buf;
+        }
+        const range = maxE - minE || 1;
+        const yOf = (val) => padTop + plotH - ((val - minE) / range) * plotH;
+
+        // Grid lines
+        ctx.strokeStyle = '#242424';
+        ctx.lineWidth = 1;
+        ctx.fillStyle = '#888888';
+        ctx.font = '10px Inter, sans-serif';
+        for (let g = 0; g <= 2; g++) {
+          const gy = padTop + (plotH / 2) * g;
+          const gv = maxE - (range / 2) * g;
+          ctx.beginPath();
+          ctx.moveTo(padLeft, gy);
+          ctx.lineTo(width - padRight, gy);
+          ctx.stroke();
+          ctx.fillText(formatNum(gv, 0), width - padRight + 6, gy + 3);
+        }
+
+        const count = equityPoints.length;
+        const stepX = count > 1 ? plotW / (count - 1) : plotW;
+
+        // Fill gradient under equity curve
+        ctx.beginPath();
+        equityPoints.forEach((eq, idx) => {
+          const cx = padLeft + idx * stepX;
+          const cy = yOf(eq);
+          if (idx === 0) ctx.moveTo(cx, cy);
+          else ctx.lineTo(cx, cy);
+        });
+        ctx.lineTo(padLeft + (count - 1) * stepX, padTop + plotH);
+        ctx.lineTo(padLeft, padTop + plotH);
+        ctx.closePath();
+        const isNetUp = equityPoints[equityPoints.length - 1] >= equityPoints[0];
+        ctx.fillStyle = isNetUp ? 'rgba(16, 185, 129, 0.14)' : 'rgba(244, 63, 94, 0.14)';
+        ctx.fill();
+
+        // Main Equity Line
+        ctx.strokeStyle = isNetUp ? '#10b981' : '#f43f5e';
+        ctx.lineWidth = 2.2;
+        ctx.beginPath();
+        equityPoints.forEach((eq, idx) => {
+          const cx = padLeft + idx * stepX;
+          const cy = yOf(eq);
+          if (idx === 0) ctx.moveTo(cx, cy);
+          else ctx.lineTo(cx, cy);
+        });
+        ctx.stroke();
+
+        // Draw Node Dots
+        equityPoints.forEach((eq, idx) => {
+          const cx = padLeft + idx * stepX;
+          const cy = yOf(eq);
+          ctx.fillStyle = '#ffffff';
+          ctx.beginPath();
+          ctx.arc(cx, cy, 3, 0, Math.PI * 2);
+          ctx.fill();
+        });
+      }
+
+      function renderTradeJourney() {
+        const baseBalance = 5000.0;
+        let wins = 0, losses = 0, opens = 0, bes = 0;
+        let grossProfit = 0, grossLoss = 0, netPnl = 0, netR = 0;
+
+        const equityPoints = [baseBalance];
+        let runningEq = baseBalance;
+        let peakEq = baseBalance;
+        let maxDdPct = 0;
+
+        tradeJourneyList.forEach(item => {
+          if (item.status === 'OPEN') {
+            opens++;
+          } else {
+            netPnl += item.pnlUsdt;
+            netR += item.rMultiple;
+            runningEq += item.pnlUsdt;
+            equityPoints.push(runningEq);
+
+            if (runningEq > peakEq) peakEq = runningEq;
+            const dd = peakEq > 0 ? ((peakEq - runningEq) / peakEq) * 100 : 0;
+            if (dd > maxDdPct) maxDdPct = dd;
+
+            if (item.pnlUsdt > 0) {
+              wins++;
+              grossProfit += item.pnlUsdt;
+            } else if (item.pnlUsdt < 0) {
+              losses++;
+              grossLoss += Math.abs(item.pnlUsdt);
+            } else {
+              bes++;
+            }
+          }
+        });
+
+        const closedCount = wins + losses + bes;
+        const winRate = closedCount > 0 ? (wins / closedCount) * 100 : 0;
+        const profitFactor = grossLoss > 0 ? (grossProfit / grossLoss) : (grossProfit > 0 ? 9.99 : 0);
+        const avgR = closedCount > 0 ? (netR / closedCount) : 0;
+
+        journeyTotalTrades.textContent = tradeJourneyList.length.toString();
+        journeyWinLossCount.textContent = `ชนะ ${wins} | แพ้ ${losses} | รอผล ${opens}`;
+        journeyWinRate.textContent = `${formatPlainFixed(winRate, 1)}%`;
+        journeyExpectancyNote.textContent = `ค่าเฉลี่ยต่อไม้: ${avgR >= 0 ? '+' : ''}${formatPlainFixed(avgR, 2)} R`;
+
+        journeyNetPnl.textContent = `${netPnl >= 0 ? '+' : ''}${formatNum(netPnl, 2)} USDT`;
+        journeyNetPnl.className = `text-lg font-bold mt-1 ${netPnl >= 0 ? 'text-emerald-400' : 'text-rose-400'}`;
+        journeyNetRMultiple.textContent = `สะสม: ${netR >= 0 ? '+' : ''}${formatPlainFixed(netR, 2)} R`;
+
+        journeyProfitFactor.textContent = formatPlainFixed(profitFactor, 2);
+        journeyCurrentEquity.textContent = `${formatNum(runningEq, 2)} USDT`;
+        journeyMaxDrawdown.textContent = `Max Drawdown: ${formatPlainFixed(maxDdPct, 2)}%`;
+
+        const growthPct = ((runningEq - baseBalance) / baseBalance) * 100;
+        equityGrowthPctBadge.textContent = `${growthPct >= 0 ? '+' : ''}${formatPlainFixed(growthPct, 2)}%`;
+        equityGrowthPctBadge.className = `font-semibold ${growthPct >= 0 ? 'text-emerald-400' : 'text-rose-400'}`;
+
+        drawEquityCurveChart(equityPoints);
+
+        // Render Table Rows (Newest at Top)
+        tradeJourneyTableBody.innerHTML = tradeJourneyList.slice().reverse().map((item, revIdx) => {
+          const origIdx = tradeJourneyList.length - 1 - revIdx;
+          const isLong = item.side === 'LONG';
+          const sideBadge = isLong
+            ? '<span class="px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-semibold text-[10px]">LONG</span>'
+            : '<span class="px-1.5 py-0.5 rounded bg-rose-500/20 text-rose-300 font-semibold text-[10px]">SHORT</span>';
+
+          const pnlColor = item.status === 'OPEN'
+            ? 'text-sky-300'
+            : (item.pnlUsdt > 0 ? 'text-emerald-400' : (item.pnlUsdt < 0 ? 'text-rose-400' : 'text-[#b0b0b0]'));
+          const pnlText = item.status === 'OPEN'
+            ? 'กำลังถือ (Open)'
+            : `${item.pnlUsdt >= 0 ? '+' : ''}${formatNum(item.pnlUsdt, 2)} USDT (${item.rMultiple >= 0 ? '+' : ''}${item.rMultiple}R)`;
+
+          return `
+            <tr class="hover:bg-[#222222] transition">
+              <td class="py-2.5 px-3 text-[#b0b0b0] whitespace-nowrap">
+                <div class="font-semibold text-white">#${origIdx + 1}</div>
+                <div class="text-[10px]">${item.timestamp}</div>
+              </td>
+              <td class="py-2.5 px-3 whitespace-nowrap">
+                <div class="font-bold text-white">${item.symbol}</div>
+                <div class="mt-0.5">${sideBadge}</div>
+              </td>
+              <td class="py-2.5 px-3 whitespace-nowrap text-[11px]">
+                <div>Entry: <strong class="text-white">${formatNum(item.entry, 1)}</strong></div>
+                <div>SL: <span class="text-rose-400">${formatNum(item.sl, 1)}</span> | TP: <span class="text-emerald-400">${formatNum(item.tp, 1)}</span></div>
+              </td>
+              <td class="py-2.5 px-3 whitespace-nowrap text-[11px]">
+                <div class="font-bold text-amber-300">${item.sizeBtc} BTC</div>
+                <div class="text-[#9ca3af]">Risk 1R: ${formatNum(item.riskUsdt, 0)} USDT</div>
+              </td>
+              <td class="py-2.5 px-3 max-w-xs">
+                <div class="text-[11px] text-sky-300 font-medium">${item.signals || '-'}</div>
+                <div class="text-[11px] text-[#cccccc] mt-0.5">${item.note || '-'}</div>
+              </td>
+              <td class="py-2.5 px-3 whitespace-nowrap">
+                <select data-idx="${origIdx}" class="journal-status-select bg-[#262626] border border-[#3a3a3a] rounded px-2 py-1 text-[11px] text-white focus:outline-none">
+                  <option value="OPEN" ${item.status === 'OPEN' ? 'selected' : ''}>กำลังถือสถานะ (Open)</option>
+                  <option value="WIN_TP2" ${item.status === 'WIN_TP2' ? 'selected' : ''}>ชนะเป้าหลัก (+TP2)</option>
+                  <option value="WIN_TP1" ${item.status === 'WIN_TP1' ? 'selected' : ''}>ชนะเป้าแรก (+TP1)</option>
+                  <option value="BE" ${item.status === 'BE' ? 'selected' : ''}>เสมอตัว (0R / บังทุน)</option>
+                  <option value="LOSS_CUT" ${item.status === 'LOSS_CUT' ? 'selected' : ''}>คัทก่อน SL ตาม CDC (-0.5R)</option>
+                  <option value="LOSS_SL" ${item.status === 'LOSS_SL' ? 'selected' : ''}>แพ้ชน SL ตามแผน (-1R)</option>
+                </select>
+              </td>
+              <td class="py-2.5 px-3 text-right font-bold whitespace-nowrap ${pnlColor}">
+                ${pnlText}
+              </td>
+              <td class="py-2.5 px-3 text-center">
+                <button type="button" data-del-idx="${origIdx}" class="journal-del-btn text-[#888888] hover:text-rose-400 p-1 rounded transition" title="ลบรายการนี้">
+                  ✕
+                </button>
+              </td>
+            </tr>
+          `;
+        }).join('');
+
+        // Attach dynamic listeners for outcome change and delete
+        document.querySelectorAll('.journal-status-select').forEach(sel => {
+          sel.addEventListener('change', (e) => {
+            const idx = parseInt(e.target.getAttribute('data-idx'), 10);
+            const newStatus = e.target.value;
+            const item = tradeJourneyList[idx];
+            if (item) {
+              item.status = newStatus;
+              const res = computePnlFromOutcome(newStatus, item.riskUsdt, item.entry, item.tp, item.sl);
+              item.rMultiple = res.rMultiple;
+              item.pnlUsdt = res.pnlUsdt;
+              saveJournalToStorage();
+              renderTradeJourney();
+            }
+          });
+        });
+
+        document.querySelectorAll('.journal-del-btn').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            const idx = parseInt(e.currentTarget.getAttribute('data-del-idx'), 10);
+            tradeJourneyList.splice(idx, 1);
+            saveJournalToStorage();
+            renderTradeJourney();
+          });
+        });
+      }
+
+      function addNewJournalRecord(statusOverride = null) {
+        const now = new Date();
+        const pad = (n) => n.toString().padStart(2, '0');
+        const ts = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())} ${pad(now.getHours())}:${pad(now.getMinutes())}`;
+
+        const symbol = (jSymbolInput.value || symbolSelect.value || 'BTCUSDT').toUpperCase();
+        const side = jSideSelect.value || selectedOrderDirection || 'LONG';
+        const entry = parseFloat(jEntryInput.value) || parseFloat(entryPriceInput.value) || 77815.0;
+        const sl = parseFloat(jSlInput.value) || 75480.6;
+        const tp = parseFloat(jTpInput.value) || 82483.9;
+        const sizeBtc = parseFloat(jSizeBtcInput.value) || parseFloat(orderPanelSizeBtc.textContent) || 0.0428;
+        const riskUsdt = parseFloat(jRiskUsdtInput.value) || 100.0;
+        const status = statusOverride || jStatusSelect.value || 'OPEN';
+        const costUsdt = parseFloat(positionSizeDisplay.textContent) || 1111.11;
+
+        const s = latestMarketStats;
+        const signalsSnapshot = `CDC: ${s.cdcZoneCode} | ${s.wavePhase} | ${s.candlePattern}`;
+        const noteText = jNoteInput.value.trim() || 'ทำตามแผน Money Management 2% อย่างเคร่งครัด';
+
+        const res = computePnlFromOutcome(status, riskUsdt, entry, tp, sl);
+
+        tradeJourneyList.push({
+          id: 't_' + Date.now(),
+          timestamp: ts,
+          symbol,
+          side,
+          entry,
+          sl,
+          tp,
+          sizeBtc,
+          costUsdt,
+          riskUsdt,
+          status,
+          rMultiple: res.rMultiple,
+          pnlUsdt: res.pnlUsdt,
+          signals: signalsSnapshot,
+          note: noteText
+        });
+
+        saveJournalToStorage();
+        renderTradeJourney();
+
+        if (journalToastMsg) {
+          journalToastMsg.classList.remove('hidden');
+          setTimeout(() => journalToastMsg.classList.add('hidden'), 2500);
+        }
+      }
+
+      pullCurrentSetupToJournalBtn.addEventListener('click', syncJournalFormWithCurrentCalculator);
+
+      addJournalEntryBtn.addEventListener('click', () => {
+        addNewJournalRecord(null);
+      });
+
+      if (logSrisiamPlanToJournalBtn) {
+        logSrisiamPlanToJournalBtn.addEventListener('click', () => {
+          syncJournalFormWithCurrentCalculator();
+          jNoteInput.value = 'แผนพี่ศรีสยาม: แบ่งปิด TP1 (50%) แล้วเลื่อน SL บังทุน | ถ้าแท่งปิดแดงคัทที่ Slow EMA26 | ถ้าชน SL ยอมคัท 2% ห้ามถัว';
+          jStatusSelect.value = 'OPEN';
+          addNewJournalRecord('OPEN');
+          const sec = document.getElementById('tradeJourneySection');
+          if (sec && sec.scrollIntoView) sec.scrollIntoView({ behavior: 'smooth' });
+        });
+      }
+
+      quickLogJourneyFromOrderBtn.addEventListener('click', () => {
+        syncJournalFormWithCurrentCalculator();
+        jStatusSelect.value = 'OPEN';
+        addNewJournalRecord('OPEN');
+        const sec = document.getElementById('tradeJourneySection');
+        if (sec && sec.scrollIntoView) {
+          sec.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+
+      syncPortWithJournalBtn.addEventListener('click', () => {
+        const currentEqText = journeyCurrentEquity.textContent.replace(/[^0-9.]/g, '');
+        const eqVal = parseFloat(currentEqText);
+        if (eqVal > 0) {
+          balanceInput.value = Number(eqVal.toFixed(2));
+          calculateAll();
+        }
+      });
+
+      resetDemoJournalBtn.addEventListener('click', () => {
+        tradeJourneyList = getDefaultSampleJournal();
+        saveJournalToStorage();
+        renderTradeJourney();
+      });
+
+      exportJournalCsvBtn.addEventListener('click', () => {
+        const headers = ['No', 'Timestamp', 'Symbol', 'Side', 'Entry', 'StopLoss', 'TakeProfit', 'SizeBTC', 'RiskUSDT', 'Status', 'R_Multiple', 'PnL_USDT', 'Signals', 'Note'];
+        const rows = tradeJourneyList.map((t, i) => [
+          i + 1,
+          `"${t.timestamp}"`,
+          t.symbol,
+          t.side,
+          t.entry,
+          t.sl,
+          t.tp,
+          t.sizeBtc,
+          t.riskUsdt,
+          t.status,
+          t.rMultiple,
+          t.pnlUsdt,
+          `"${(t.signals || '').replace(/"/g, '""')}"`,
+          `"${(t.note || '').replace(/"/g, '""')}"`
+        ]);
+        const csvContent = '﻿' + [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `trade_journey_${new Date().toISOString().slice(0, 10)}.csv`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      });
+
+      window.addEventListener('resize', () => {
+        renderTradeJourney();
+      });
+
       // Initialize everything on load
       buildFallbackSyntheticBars();
       updateSlHelper();
       calculateAll();
+      syncJournalFormWithCurrentCalculator();
+      renderTradeJourney();
       loadTradingViewWidget();
       fetchMarketIndicators(false);
     })();
