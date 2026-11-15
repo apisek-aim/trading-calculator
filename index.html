@@ -100,55 +100,11 @@
         <div class="flex items-center gap-1.5 bg-[#161616] border border-[#333333] rounded px-2.5 py-1.5">
           <label for="symbolSelect" class="text-xs text-[#9ca3af]">คู่เหรียญ Binance Futures:</label>
           <select id="symbolSelect" class="bg-transparent text-xs sm:text-sm font-semibold text-white focus:outline-none cursor-pointer">
-            <optgroup label="เหรียญหลัก (Major USDT-M Perpetual)" class="bg-[#1e1e1e] text-amber-400">
-              <option value="BTCUSDT" data-tv="BINANCE:BTCUSDT.P" data-unit="BTC" data-quote="USDT" data-base="77815.0" class="bg-[#1e1e1e] text-white" selected>BTCUSDT Perp</option>
-              <option value="ETHUSDT" data-tv="BINANCE:ETHUSDT.P" data-unit="ETH" data-quote="USDT" data-base="2920.0" class="bg-[#1e1e1e] text-white">ETHUSDT Perp</option>
-              <option value="SOLUSDT" data-tv="BINANCE:SOLUSDT.P" data-unit="SOL" data-quote="USDT" data-base="188.5" class="bg-[#1e1e1e] text-white">SOLUSDT Perp</option>
-              <option value="BNBUSDT" data-tv="BINANCE:BNBUSDT.P" data-unit="BNB" data-quote="USDT" data-base="615.0" class="bg-[#1e1e1e] text-white">BNBUSDT Perp</option>
-              <option value="XRPUSDT" data-tv="BINANCE:XRPUSDT.P" data-unit="XRP" data-quote="USDT" data-base="0.585" class="bg-[#1e1e1e] text-white">XRPUSDT Perp</option>
-              <option value="DOGEUSDT" data-tv="BINANCE:DOGEUSDT.P" data-unit="DOGE" data-quote="USDT" data-base="0.195" class="bg-[#1e1e1e] text-white">DOGEUSDT Perp</option>
-              <option value="ADAUSDT" data-tv="BINANCE:ADAUSDT.P" data-unit="ADA" data-quote="USDT" data-base="0.445" class="bg-[#1e1e1e] text-white">ADAUSDT Perp</option>
-              <option value="AVAXUSDT" data-tv="BINANCE:AVAXUSDT.P" data-unit="AVAX" data-quote="USDT" data-base="28.40" class="bg-[#1e1e1e] text-white">AVAXUSDT Perp</option>
-              <option value="LINKUSDT" data-tv="BINANCE:LINKUSDT.P" data-unit="LINK" data-quote="USDT" data-base="13.80" class="bg-[#1e1e1e] text-white">LINKUSDT Perp</option>
-              <option value="TRXUSDT" data-tv="BINANCE:TRXUSDT.P" data-unit="TRX" data-quote="USDT" data-base="0.165" class="bg-[#1e1e1e] text-white">TRXUSDT Perp</option>
-              <option value="LTCUSDT" data-tv="BINANCE:LTCUSDT.P" data-unit="LTC" data-quote="USDT" data-base="75.0" class="bg-[#1e1e1e] text-white">LTCUSDT Perp</option>
-              <option value="BCHUSDT" data-tv="BINANCE:BCHUSDT.P" data-unit="BCH" data-quote="USDT" data-base="410.0" class="bg-[#1e1e1e] text-white">BCHUSDT Perp</option>
-              <option value="DOTUSDT" data-tv="BINANCE:DOTUSDT.P" data-unit="DOT" data-quote="USDT" data-base="4.85" class="bg-[#1e1e1e] text-white">DOTUSDT Perp</option>
-            </optgroup>
-            <optgroup label="Layer-1 / Layer-2 &amp; DeFi Futures" class="bg-[#1e1e1e] text-emerald-400">
-              <option value="SUIUSDT" data-tv="BINANCE:SUIUSDT.P" data-unit="SUI" data-quote="USDT" data-base="2.35" class="bg-[#1e1e1e] text-white">SUIUSDT Perp</option>
-              <option value="TONUSDT" data-tv="BINANCE:TONUSDT.P" data-unit="TON" data-quote="USDT" data-base="5.10" class="bg-[#1e1e1e] text-white">TONUSDT Perp</option>
-              <option value="NEARUSDT" data-tv="BINANCE:NEARUSDT.P" data-unit="NEAR" data-quote="USDT" data-base="4.70" class="bg-[#1e1e1e] text-white">NEARUSDT Perp</option>
-              <option value="APTUSDT" data-tv="BINANCE:APTUSDT.P" data-unit="APT" data-quote="USDT" data-base="9.80" class="bg-[#1e1e1e] text-white">APTUSDT Perp</option>
-              <option value="SEIUSDT" data-tv="BINANCE:SEIUSDT.P" data-unit="SEI" data-quote="USDT" data-base="0.45" class="bg-[#1e1e1e] text-white">SEIUSDT Perp</option>
-              <option value="TIAUSDT" data-tv="BINANCE:TIAUSDT.P" data-unit="TIA" data-quote="USDT" data-base="5.20" class="bg-[#1e1e1e] text-white">TIAUSDT Perp</option>
-              <option value="ARBUSDT" data-tv="BINANCE:ARBUSDT.P" data-unit="ARB" data-quote="USDT" data-base="0.62" class="bg-[#1e1e1e] text-white">ARBUSDT Perp</option>
-              <option value="OPUSDT" data-tv="BINANCE:OPUSDT.P" data-unit="OP" data-quote="USDT" data-base="1.65" class="bg-[#1e1e1e] text-white">OPUSDT Perp</option>
-              <option value="INJUSDT" data-tv="BINANCE:INJUSDT.P" data-unit="INJ" data-quote="USDT" data-base="21.50" class="bg-[#1e1e1e] text-white">INJUSDT Perp</option>
-              <option value="AAVEUSDT" data-tv="BINANCE:AAVEUSDT.P" data-unit="AAVE" data-quote="USDT" data-base="165.0" class="bg-[#1e1e1e] text-white">AAVEUSDT Perp</option>
-              <option value="UNIUSDT" data-tv="BINANCE:UNIUSDT.P" data-unit="UNI" data-quote="USDT" data-base="8.90" class="bg-[#1e1e1e] text-white">UNIUSDT Perp</option>
-              <option value="PENDLEUSDT" data-tv="BINANCE:PENDLEUSDT.P" data-unit="PENDLE" data-quote="USDT" data-base="5.10" class="bg-[#1e1e1e] text-white">PENDLEUSDT Perp</option>
-              <option value="ENAUSDT" data-tv="BINANCE:ENAUSDT.P" data-unit="ENA" data-quote="USDT" data-base="0.52" class="bg-[#1e1e1e] text-white">ENAUSDT Perp</option>
-              <option value="JUPUSDT" data-tv="BINANCE:JUPUSDT.P" data-unit="JUP" data-quote="USDT" data-base="1.05" class="bg-[#1e1e1e] text-white">JUPUSDT Perp</option>
-              <option value="ATOMUSDT" data-tv="BINANCE:ATOMUSDT.P" data-unit="ATOM" data-quote="USDT" data-base="4.95" class="bg-[#1e1e1e] text-white">ATOMUSDT Perp</option>
-              <option value="FTMUSDT" data-tv="BINANCE:FTMUSDT.P" data-unit="FTM" data-quote="USDT" data-base="0.72" class="bg-[#1e1e1e] text-white">FTMUSDT Perp</option>
-            </optgroup>
-            <optgroup label="AI / Infra / Meme USDT-M Futures" class="bg-[#1e1e1e] text-sky-400">
-              <option value="FETUSDT" data-tv="BINANCE:FETUSDT.P" data-unit="FET" data-quote="USDT" data-base="1.38" class="bg-[#1e1e1e] text-white">FETUSDT Perp</option>
-              <option value="RENDERUSDT" data-tv="BINANCE:RENDERUSDT.P" data-unit="RENDER" data-quote="USDT" data-base="5.60" class="bg-[#1e1e1e] text-white">RENDERUSDT Perp</option>
-              <option value="WLDUSDT" data-tv="BINANCE:WLDUSDT.P" data-unit="WLD" data-quote="USDT" data-base="2.10" class="bg-[#1e1e1e] text-white">WLDUSDT Perp</option>
-              <option value="TAOUSDT" data-tv="BINANCE:TAOUSDT.P" data-unit="TAO" data-quote="USDT" data-base="515.0" class="bg-[#1e1e1e] text-white">TAOUSDT Perp</option>
-              <option value="FILUSDT" data-tv="BINANCE:FILUSDT.P" data-unit="FIL" data-quote="USDT" data-base="4.10" class="bg-[#1e1e1e] text-white">FILUSDT Perp</option>
-              <option value="ICPUSDT" data-tv="BINANCE:ICPUSDT.P" data-unit="ICP" data-quote="USDT" data-base="8.50" class="bg-[#1e1e1e] text-white">ICPUSDT Perp</option>
-              <option value="ORDIUSDT" data-tv="BINANCE:ORDIUSDT.P" data-unit="ORDI" data-quote="USDT" data-base="36.50" class="bg-[#1e1e1e] text-white">ORDIUSDT Perp</option>
-              <option value="WIFUSDT" data-tv="BINANCE:WIFUSDT.P" data-unit="WIF" data-quote="USDT" data-base="2.55" class="bg-[#1e1e1e] text-white">WIFUSDT Perp</option>
-              <option value="1000PEPEUSDT" data-tv="BINANCE:1000PEPEUSDT.P" data-unit="1000PEPE" data-quote="USDT" data-base="0.0115" class="bg-[#1e1e1e] text-white">1000PEPEUSDT Perp</option>
-              <option value="1000SHIBUSDT" data-tv="BINANCE:1000SHIBUSDT.P" data-unit="1000SHIB" data-quote="USDT" data-base="0.0225" class="bg-[#1e1e1e] text-white">1000SHIBUSDT Perp</option>
-              <option value="1000BONKUSDT" data-tv="BINANCE:1000BONKUSDT.P" data-unit="1000BONK" data-quote="USDT" data-base="0.0245" class="bg-[#1e1e1e] text-white">1000BONKUSDT Perp</option>
-              <option value="1000FLOKIUSDT" data-tv="BINANCE:1000FLOKIUSDT.P" data-unit="1000FLOKI" data-quote="USDT" data-base="0.155" class="bg-[#1e1e1e] text-white">1000FLOKIUSDT Perp</option>
-            </optgroup>
-            <optgroup id="allBinanceFuturesOptgroup" label="เหรียญ Binance Futures อื่นๆ ทั้งตลาด (Auto-Synced)" class="bg-[#1e1e1e] text-purple-400">
-            </optgroup>
+            <option value="BTCUSDT" data-tv="BINANCE:BTCUSDT.P" data-unit="BTC" data-quote="USDT" data-base="77815.0" class="bg-[#1e1e1e] text-white" selected>BTCUSDT</option>
+            <option value="ETHUSDT" data-tv="BINANCE:ETHUSDT.P" data-unit="ETH" data-quote="USDT" data-base="2920.0" class="bg-[#1e1e1e] text-white">ETHUSDT</option>
+            <option value="BNBUSDT" data-tv="BINANCE:BNBUSDT.P" data-unit="BNB" data-quote="USDT" data-base="615.0" class="bg-[#1e1e1e] text-white">BNBUSDT</option>
+            <option value="CLUSDT" data-tv="TVC:USOIL" data-unit="CL" data-quote="USDT" data-base="70.50" class="bg-[#1e1e1e] text-white">CLUSDT</option>
+            <option value="PAXGUSDT" data-tv="BINANCE:PAXGUSDT.P" data-unit="PAXG" data-quote="USDT" data-base="2685.0" class="bg-[#1e1e1e] text-white">PAXGUSDT</option>
           </select>
         </div>
 
@@ -159,7 +115,6 @@
             <option value="60" data-binance="1h" class="bg-[#1e1e1e]">1 ชั่วโมง (1H)</option>
             <option value="240" data-binance="4h" class="bg-[#1e1e1e]">4 ชั่วโมง (4H)</option>
             <option value="D" data-binance="1d" selected class="bg-[#1e1e1e]">1 วัน (1D)</option>
-            <option value="W" data-binance="1w" class="bg-[#1e1e1e]">1 สัปดาห์ (1W)</option>
           </select>
         </div>
 
@@ -333,7 +288,7 @@
                 Position Size (Cost) = <span id="bulletPositionSize" class="font-semibold text-white">1111.11</span> USDT
               </li>
               <li>
-                Size (<span id="bulletUnitLabel">BTC</span>) = <span id="bulletBtcSize" class="font-semibold text-amber-400">0.0428</span>
+                Size (<span id="bulletUnitLabel">BTC</span>) = <span id="bulletBtcSize" class="font-semibold text-amber-400">0.009</span>
               </li>
               <li>
                 โอกาสคงเหลือหากแพ้ = <span id="bulletRemainingChances" class="font-semibold text-white">49</span> ครั้ง
@@ -414,7 +369,7 @@
             </div>
             <div class="bg-[#1e2329] border-2 border-[#f0b90b]/80 rounded-md px-3 py-2.5 flex items-center justify-between">
               <div id="orderPanelSizeBtc" class="text-base font-bold text-[#f0b90b] select-all">
-                0.0428
+                0.009
               </div>
               <div class="flex items-center gap-2">
                 <span class="text-xs text-[#848e9c]">(<span id="orderPanelSizeUsdt">3,333.33</span> USDT)</span>
@@ -430,7 +385,7 @@
             </div>
             <div class="flex justify-between text-[10px] text-[#848e9c]">
               <span>Margin: <strong id="orderPanelPctUsed" class="text-[#eaecef]">22.22%</strong></span>
-              <span>Max: <span id="orderPanelMaxBtcTop">0.1925</span> <span id="orderPanelMaxUnitTop">BTC</span></span>
+              <span>Max: <span id="orderPanelMaxBtcTop">0.019</span> <span id="orderPanelMaxUnitTop">BTC</span></span>
             </div>
           </div>
 
@@ -609,27 +564,26 @@
             </div>
           </div>
 
-          <!-- Interactive CDC ActionZone V3 2020 Canvas Chart + TP/SL Overlay Lines -->
-          <div class="bg-[#141414] border border-[#2b2b2b] rounded-md p-3 space-y-2.5">
+          <!-- Interactive CDC ActionZone V3 2020 Multi-Timeframe Separated Charts (15m, 1H, 4H, 1D) + TP/SL Overlay Lines -->
+          <div class="bg-[#141414] border border-[#2b2b2b] rounded-md p-3 space-y-3">
             <div class="flex items-center justify-between flex-wrap gap-2 text-xs">
               <div class="flex items-center gap-2 flex-wrap">
-                <span class="font-semibold text-white">CDC ActionZone V3 (<span id="cdcChartTfLabel" class="text-lime-300">Timeframe: 1D (วัน)</span>)</span>
+                <span class="font-semibold text-white">CDC ActionZone V3 แยก 4 Timeframe (<span id="cdcChartTfLabel" class="text-lime-300">15m, 1H, 4H, 1D</span>)</span>
                 <div class="inline-flex items-center bg-[#1c1c1c] border border-[#363636] rounded p-0.5 gap-0.5" role="group">
                   <button type="button" data-tf-val="15" data-tf-bin="15m" class="cdc-tf-btn px-2 py-0.5 rounded text-[11px] font-semibold text-[#9ca3af] hover:text-white transition">15m</button>
                   <button type="button" data-tf-val="60" data-tf-bin="1h" class="cdc-tf-btn px-2 py-0.5 rounded text-[11px] font-semibold text-[#9ca3af] hover:text-white transition">1H</button>
                   <button type="button" data-tf-val="240" data-tf-bin="4h" class="cdc-tf-btn px-2 py-0.5 rounded text-[11px] font-semibold text-[#9ca3af] hover:text-white transition">4H</button>
                   <button type="button" data-tf-val="D" data-tf-bin="1d" class="cdc-tf-btn px-2 py-0.5 rounded text-[11px] font-semibold bg-lime-500 text-black transition">1D (วัน)</button>
-                  <button type="button" data-tf-val="W" data-tf-bin="1w" class="cdc-tf-btn px-2 py-0.5 rounded text-[11px] font-semibold text-[#9ca3af] hover:text-white transition">1W</button>
                 </div>
                 <label class="inline-flex items-center gap-1.5 bg-[#202020] border border-[#363636] px-2 py-0.5 rounded cursor-pointer text-[11px] text-emerald-300">
                   <input id="showTpSlLinesToggle" type="checkbox" checked class="accent-emerald-500 rounded" />
                   <span>TP / Entry / SL</span>
                 </label>
-                <!-- Interactive Zoom & Pan Controls (Up to 2 Years / 750 Days History) -->
+                <!-- Interactive Zoom & Pan Controls (Applies across all 4 Timeframe Charts) -->
                 <div class="inline-flex items-center bg-[#1c1c1c] border border-[#363636] rounded p-0.5 gap-1">
                   <button id="cdcZoomInBtn" type="button" class="px-2 py-0.5 rounded text-[11px] font-bold text-white hover:bg-[#333333] transition" title="ซูมเข้า (หรือหมุนลูกกลิ้งเมาส์)">＋ ซูมเข้า</button>
                   <button id="cdcZoomOutBtn" type="button" class="px-2 py-0.5 rounded text-[11px] font-bold text-white hover:bg-[#333333] transition" title="ซูมออก (หรือหมุนลูกกลิ้งเมาส์)">－ ซูมออก</button>
-                  <button id="cdcZoom2YBtn" type="button" class="px-2 py-0.5 rounded text-[11px] font-semibold text-amber-300 hover:bg-[#333333] transition" title="ซูมดูภาพรวมย้อนหลัง 2 ปีเต็ม (730 วัน)">2 ปี (2Y)</button>
+                  <button id="cdcZoom2YBtn" type="button" class="px-2 py-0.5 rounded text-[11px] font-semibold text-amber-300 hover:bg-[#333333] transition" title="ซูมดูภาพรวมย้อนหลัง 2 ปีเต็ม (730 แท่ง)">2 ปี (2Y)</button>
                   <button id="cdcZoomResetBtn" type="button" class="px-2 py-0.5 rounded text-[11px] text-[#9ca3af] hover:text-white hover:bg-[#333333] transition" title="รีเซ็ตมุมมองกราฟล่าสุด">รีเซ็ต</button>
                 </div>
               </div>
@@ -645,24 +599,98 @@
                 <span class="inline-flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-sm bg-[#FFFF00] inline-block"></span>Yellow</span>
               </div>
             </div>
-            <div class="relative w-full h-80">
-              <canvas id="cdcCanvasChart" class="w-full h-full block cursor-grab active:cursor-grabbing"></canvas>
+
+            <!-- Vertical Top-to-Bottom Stack: 15M -> 1H -> 4H -> 1D -> OBV & OBV EMA(20) -->
+            <div id="cdcMultiTfGrid" class="grid grid-cols-1 gap-3">
+              <!-- 1. TF 15M -->
+              <div class="bg-[#181818] border border-[#2d2d2d] rounded-md p-2.5 space-y-1.5">
+                <div class="flex items-center justify-between gap-1 text-[11px] border-b border-[#262626] pb-1.5">
+                  <div class="flex items-center gap-1.5">
+                    <span class="px-2 py-0.5 rounded bg-lime-500/20 border border-lime-500/40 text-lime-300 font-bold">15M</span>
+                    <span id="cdcMtfZone15m" class="px-1.5 py-0.5 rounded bg-emerald-950/90 border border-emerald-500/40 text-emerald-300 text-[10px] font-semibold">GREEN</span>
+                  </div>
+                  <div class="flex items-center gap-2.5 text-[10px] text-[#9ca3af]">
+                    <span>EMA12/26: <strong id="cdcMtfEma15m" class="text-white">-</strong></span>
+                    <span id="cdcMtfSig15m" class="text-lime-300 font-semibold">BUY</span>
+                  </div>
+                </div>
+                <div class="relative w-full h-52">
+                  <canvas id="cdcCanvas15m" class="w-full h-full block cursor-grab active:cursor-grabbing"></canvas>
+                </div>
+              </div>
+
+              <!-- 2. TF 1H -->
+              <div class="bg-[#181818] border border-[#2d2d2d] rounded-md p-2.5 space-y-1.5">
+                <div class="flex items-center justify-between gap-1 text-[11px] border-b border-[#262626] pb-1.5">
+                  <div class="flex items-center gap-1.5">
+                    <span class="px-2 py-0.5 rounded bg-sky-500/20 border border-sky-500/40 text-sky-300 font-bold">1H</span>
+                    <span id="cdcMtfZone1h" class="px-1.5 py-0.5 rounded bg-emerald-950/90 border border-emerald-500/40 text-emerald-300 text-[10px] font-semibold">GREEN</span>
+                  </div>
+                  <div class="flex items-center gap-2.5 text-[10px] text-[#9ca3af]">
+                    <span>EMA12/26: <strong id="cdcMtfEma1h" class="text-white">-</strong></span>
+                    <span id="cdcMtfSig1h" class="text-lime-300 font-semibold">BUY</span>
+                  </div>
+                </div>
+                <div class="relative w-full h-52">
+                  <canvas id="cdcCanvas1h" class="w-full h-full block cursor-grab active:cursor-grabbing"></canvas>
+                </div>
+              </div>
+
+              <!-- 3. TF 4H -->
+              <div class="bg-[#181818] border border-[#2d2d2d] rounded-md p-2.5 space-y-1.5">
+                <div class="flex items-center justify-between gap-1 text-[11px] border-b border-[#262626] pb-1.5">
+                  <div class="flex items-center gap-1.5">
+                    <span class="px-2 py-0.5 rounded bg-amber-500/20 border border-amber-500/40 text-amber-300 font-bold">4H</span>
+                    <span id="cdcMtfZone4h" class="px-1.5 py-0.5 rounded bg-emerald-950/90 border border-emerald-500/40 text-emerald-300 text-[10px] font-semibold">GREEN</span>
+                  </div>
+                  <div class="flex items-center gap-2.5 text-[10px] text-[#9ca3af]">
+                    <span>EMA12/26: <strong id="cdcMtfEma4h" class="text-white">-</strong></span>
+                    <span id="cdcMtfSig4h" class="text-lime-300 font-semibold">BUY</span>
+                  </div>
+                </div>
+                <div class="relative w-full h-52">
+                  <canvas id="cdcCanvas4h" class="w-full h-full block cursor-grab active:cursor-grabbing"></canvas>
+                </div>
+              </div>
+
+              <!-- 4. TF 1D -->
+              <div class="bg-[#181818] border border-[#2d2d2d] rounded-md p-2.5 space-y-1.5">
+                <div class="flex items-center justify-between gap-1 text-[11px] border-b border-[#262626] pb-1.5">
+                  <div class="flex items-center gap-1.5">
+                    <span class="px-2 py-0.5 rounded bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 font-bold">1D (วัน)</span>
+                    <span id="cdcMtfZone1d" class="px-1.5 py-0.5 rounded bg-emerald-950/90 border border-emerald-500/40 text-emerald-300 text-[10px] font-semibold">GREEN</span>
+                  </div>
+                  <div class="flex items-center gap-2.5 text-[10px] text-[#9ca3af]">
+                    <span>EMA12/26: <strong id="cdcMtfEma1d" class="text-white">-</strong></span>
+                    <span id="cdcMtfSig1d" class="text-lime-300 font-semibold">BUY</span>
+                  </div>
+                </div>
+                <div class="relative w-full h-52">
+                  <canvas id="cdcCanvas1d" class="w-full h-full block cursor-grab active:cursor-grabbing"></canvas>
+                </div>
+              </div>
+
+              <!-- 5. OBV (On-Balance Volume) + OBV EMA(20) Sub-Chart Stacked Directly Below 1D -->
+              <div class="bg-[#181818] border border-[#2d2d2d] rounded-md p-2.5 space-y-1.5">
+                <div class="flex items-center justify-between flex-wrap gap-2 text-[11px] border-b border-[#262626] pb-1.5">
+                  <div class="flex items-center gap-2">
+                    <span class="px-2 py-0.5 rounded bg-cyan-500/20 border border-cyan-500/40 text-cyan-300 font-bold">OBV &amp; OBV EMA(20)</span>
+                    <span id="obvTrendBadge" class="px-1.5 py-0.5 rounded bg-emerald-950/80 border border-emerald-500/40 text-emerald-300 text-[10px] font-semibold">OBV &gt; EMA20</span>
+                  </div>
+                  <div class="flex items-center gap-3 text-[10px]">
+                    <span class="inline-flex items-center gap-1 text-cyan-300 font-semibold"><span class="w-3 h-0.5 bg-[#22d3ee] inline-block"></span>OBV</span>
+                    <span class="inline-flex items-center gap-1 text-amber-300 font-semibold"><span class="w-3 h-0.5 bg-[#f59e0b] inline-block"></span>EMA(20)</span>
+                  </div>
+                </div>
+                <div class="relative w-full h-36">
+                  <canvas id="obvCanvasChart" class="w-full h-full block cursor-grab active:cursor-grabbing"></canvas>
+                </div>
+              </div>
             </div>
-            <!-- OBV (On-Balance Volume) + OBV EMA(20) Sub-Chart -->
-            <div class="pt-2 border-t border-[#262626] space-y-1.5">
-              <div class="flex items-center justify-between flex-wrap gap-2 text-[11px]">
-                <div class="flex items-center gap-2">
-                  <span class="font-semibold text-cyan-300">OBV & OBV EMA(20)</span>
-                  <span id="obvTrendBadge" class="px-2 py-0.5 rounded bg-emerald-950/80 border border-emerald-500/40 text-emerald-300 font-semibold">OBV &gt; EMA20</span>
-                </div>
-                <div class="flex items-center gap-3 text-[10px]">
-                  <span class="inline-flex items-center gap-1 text-cyan-300 font-semibold"><span class="w-3 h-0.5 bg-[#22d3ee] inline-block"></span>OBV</span>
-                  <span class="inline-flex items-center gap-1 text-amber-300 font-semibold"><span class="w-3 h-0.5 bg-[#f59e0b] inline-block"></span>EMA(20)</span>
-                </div>
-              </div>
-              <div class="relative w-full h-28">
-                <canvas id="obvCanvasChart" class="w-full h-full block"></canvas>
-              </div>
+
+            <!-- Hidden single-canvas container preserved for compatibility -->
+            <div class="hidden relative w-full h-80">
+              <canvas id="cdcCanvasChart" class="w-full h-full block cursor-grab active:cursor-grabbing"></canvas>
             </div>
           </div>
 
@@ -1420,7 +1448,7 @@ plotshape(Bear and Bull[1], "Sell", shape.labeldown, location.abovebar, color.re
           positionSize = totalNotional / leverage;
         }
 
-        const unitDecimals = entryPrice > 1000 ? 4 : 2;
+        const unitDecimals = 3;
         const priceDecimals = entryPrice < 10 ? 4 : (entryPrice < 200 ? 2 : 1);
 
         const assetSize = entryPrice > 0 ? totalNotional / entryPrice : 0;
@@ -1725,6 +1753,12 @@ plotshape(Bear and Bull[1], "Sell", shape.labeldown, location.abovebar, color.re
       // Full history arrays & interactive viewport state (shared across CDC chart & Bottom 4-Pane Synchronized Chart)
       let allCdcBars = [];
       let allObvPoints = [];
+      const mtfCdcStore = {
+        '15m': { tfVal: '15', bars: [], hoverMouse: null },
+        '1h':  { tfVal: '60', bars: [], hoverMouse: null },
+        '4h':  { tfVal: '240', bars: [], hoverMouse: null },
+        '1d':  { tfVal: 'D', bars: [], hoverMouse: null }
+      };
       let allSyncSeries = []; // { time, open, high, low, close, ema20, ema50, rsi, macd, signal, hist, obv, obvEma }
       let botHoverIdx = null; // Synchronized crosshair bar index across all 4 bottom panes
       let cdcVisibleCount = 65;   // Number of bars visible in viewport (zoomable from 20 to 200)
@@ -2355,7 +2389,345 @@ plotshape(Bear and Bull[1], "Sell", shape.labeldown, location.abovebar, color.re
         drawCdcCanvas();
       }
 
+      function buildCdcBarsArray(opens, highs, lows, closes, ema12Arr, ema26Arr, times, tfVal) {
+        const n = closes.length;
+        const bars = [];
+        let lastCrossType = 'BUY';
+        let lastCrossPrice = closes[n - 1] || 0;
+        let lastCrossIdx = Math.max(0, n - 14);
+        const nowMs = Date.now();
+        const stepMsMap = { '15': 15 * 60000, '60': 3600000, '240': 4 * 3600000, 'D': 86400000 };
+        const stepMs = stepMsMap[tfVal] || 86400000;
+
+        for (let i = 0; i < n; i++) {
+          const xPrice = closes[i];
+          const fast = ema12Arr[i];
+          const slow = ema26Arr[i];
+          if (fast === null || slow === null) continue;
+          const bull = fast > slow;
+          const bear = fast < slow;
+          let zone = 'GRAY', hex = '#888888', label = 'Neutral';
+          if (bull && xPrice > fast) { zone = 'GREEN'; hex = '#00FF00'; label = 'Green (Buy)'; }
+          else if (bear && xPrice > fast && xPrice > slow) { zone = 'BLUE'; hex = '#3b82f6'; label = 'Blue (Pre-Buy 2)'; }
+          else if (bear && xPrice > fast && xPrice < slow) { zone = 'AQUA'; hex = '#00FFFF'; label = 'Aqua (Pre-Buy 1)'; }
+          else if (bear && xPrice < fast) { zone = 'RED'; hex = '#FF0000'; label = 'Red (Sell)'; }
+          else if (bull && xPrice < fast && xPrice < slow) { zone = 'ORANGE'; hex = '#FFA500'; label = 'Orange (Pre-Sell 2)'; }
+          else if (bull && xPrice < fast && xPrice > slow) { zone = 'YELLOW'; hex = '#FFFF00'; label = 'Yellow (Pre-Sell 1)'; }
+
+          let buySignal = false, sellSignal = false;
+          if (i > 0 && ema12Arr[i - 1] !== null && ema26Arr[i - 1] !== null) {
+            const prevBull = ema12Arr[i - 1] > ema26Arr[i - 1];
+            const prevBear = ema12Arr[i - 1] < ema26Arr[i - 1];
+            if (bull && prevBear) { buySignal = true; lastCrossType = 'BUY'; lastCrossPrice = closes[i]; lastCrossIdx = i; }
+            else if (bear && prevBull) { sellSignal = true; lastCrossType = 'SELL'; lastCrossPrice = closes[i]; lastCrossIdx = i; }
+          }
+          const barTime = (times && times[i]) ? times[i] : (nowMs - (n - 1 - i) * stepMs);
+          bars.push({ idx: i, time: barTime, open: opens[i], high: highs[i], low: lows[i], close: closes[i], fast, slow, zone, hex, label, buySignal, sellSignal });
+        }
+        return { bars, lastCrossType, lastCrossPrice, barsAgo: Math.max(0, (n - 1) - lastCrossIdx) };
+      }
+
+      function updateMtfHeaderMeta(tfKey, built) {
+        const suffixMap = { '15m': '15m', '1h': '1h', '4h': '4h', '1d': '1d' };
+        const suf = suffixMap[tfKey];
+        if (!suf || !built || !built.bars || built.bars.length === 0) return;
+        const lastBar = built.bars[built.bars.length - 1];
+        const dec = lastBar.close < 10 ? 4 : (lastBar.close < 200 ? 2 : 1);
+
+        const zoneEl = document.getElementById(`cdcMtfZone${suf}`);
+        const emaEl = document.getElementById(`cdcMtfEma${suf}`);
+        const sigEl = document.getElementById(`cdcMtfSig${suf}`);
+
+        if (zoneEl) {
+          zoneEl.textContent = lastBar.zone;
+          if (lastBar.zone === 'GREEN') {
+            zoneEl.className = 'px-1.5 py-0.5 rounded bg-emerald-950/90 border border-emerald-500/40 text-emerald-300 text-[10px] font-semibold';
+          } else if (lastBar.zone === 'RED') {
+            zoneEl.className = 'px-1.5 py-0.5 rounded bg-rose-950/90 border border-rose-500/40 text-rose-300 text-[10px] font-semibold';
+          } else {
+            zoneEl.className = 'px-1.5 py-0.5 rounded bg-amber-950/90 border border-amber-500/40 text-amber-300 text-[10px] font-semibold';
+          }
+        }
+        if (emaEl) {
+          emaEl.textContent = `${formatNum(lastBar.fast, dec)} / ${formatNum(lastBar.slow, dec)}`;
+        }
+        if (sigEl) {
+          sigEl.textContent = `${built.lastCrossType} @ ${formatNum(built.lastCrossPrice, dec)}`;
+          sigEl.className = built.lastCrossType === 'BUY' ? 'text-lime-300 font-semibold' : 'text-rose-400 font-semibold';
+        }
+      }
+
+      function renderCdcBarsOnCanvas(canvasEl, fullBars, tfVal, hoverMouseObj) {
+        const slice = getViewportSlice(fullBars);
+        if (!canvasEl || !slice || slice.length === 0) return;
+        const rect = canvasEl.parentElement.getBoundingClientRect();
+        const dpr = window.devicePixelRatio || 1;
+        const width = Math.max(240, rect.width);
+        const height = Math.max(160, rect.height);
+
+        canvasEl.width = width * dpr;
+        canvasEl.height = height * dpr;
+        const ctx = canvasEl.getContext('2d');
+        ctx.scale(dpr, dpr);
+        ctx.clearRect(0, 0, width, height);
+
+        const padTop = 18, padBottom = 22, padLeft = 10, padRight = 92;
+        const plotW = width - padLeft - padRight;
+        const plotH = height - padTop - padBottom;
+
+        const entryVal = parseFloat(entryPriceInput.value) || latestMarketStats.lastPrice || 77815.0;
+        const slPct = Math.max(0.1, parseFloat(stopLossInput.value) || 3.0);
+        const tpPct = slPct * 2;
+        const isLong = selectedOrderDirection === 'LONG';
+        const tpVal = customTpOverridePrice
+          ? customTpOverridePrice
+          : (isLong ? entryVal * (1 + tpPct / 100) : entryVal * (1 - tpPct / 100));
+        const slVal = isLong ? entryVal * (1 - slPct / 100) : entryVal * (1 + slPct / 100);
+        const showLevels = !showTpSlLinesToggle || showTpSlLinesToggle.checked;
+
+        let minP = Infinity, maxP = -Infinity;
+        slice.forEach(b => {
+          if (b.low < minP) minP = b.low;
+          if (b.high > maxP) maxP = b.high;
+          if (b.fast < minP) minP = b.fast;
+          if (b.fast > maxP) maxP = b.fast;
+          if (b.slow < minP) minP = b.slow;
+          if (b.slow > maxP) maxP = b.slow;
+        });
+
+        if (showLevels && entryVal > 0) {
+          minP = Math.min(minP, entryVal, tpVal, slVal);
+          maxP = Math.max(maxP, entryVal, tpVal, slVal);
+        }
+
+        const marginBuffer = (maxP - minP) * 0.06 || 1;
+        minP -= marginBuffer;
+        maxP += marginBuffer;
+        const range = maxP - minP || 1;
+        const yOf = (p) => padTop + plotH - ((p - minP) / range) * plotH;
+        const priceAtY = (y) => maxP - ((y - padTop) / plotH) * range;
+
+        ctx.strokeStyle = '#222222';
+        ctx.lineWidth = 1;
+        ctx.fillStyle = '#888888';
+        ctx.font = '9px Inter, Noto Sans Thai, sans-serif';
+        const axisDec = entryVal < 10 ? 3 : (entryVal < 200 ? 2 : 0);
+        for (let g = 0; g <= 3; g++) {
+          const gy = padTop + (plotH / 3) * g;
+          const gp = maxP - (range / 3) * g;
+          ctx.beginPath();
+          ctx.moveTo(padLeft, gy);
+          ctx.lineTo(width - padRight, gy);
+          ctx.stroke();
+          ctx.fillText(gp.toFixed(axisDec), width - padRight + 4, gy + 3);
+        }
+
+        const count = slice.length;
+        const stepX = plotW / count;
+        const bodyW = Math.max(1.0, stepX * 0.68);
+
+        const tickStep = Math.max(1, Math.floor(count / 5));
+        ctx.fillStyle = '#9ca3af';
+        ctx.textAlign = 'center';
+        for (let i = 0; i < count; i += tickStep) {
+          const b = slice[i];
+          if (!b || !b.time) continue;
+          const prevTime = i >= tickStep && slice[i - tickStep] ? slice[i - tickStep].time : null;
+          const cx = padLeft + i * stepX + stepX / 2;
+          ctx.strokeStyle = '#1d1d1d';
+          ctx.beginPath();
+          ctx.moveTo(cx, padTop);
+          ctx.lineTo(cx, padTop + plotH);
+          ctx.stroke();
+          ctx.fillText(formatChartAxisDate(b.time, prevTime, tfVal), cx, height - 5);
+        }
+        ctx.textAlign = 'left';
+
+        ctx.strokeStyle = '#2e2e2e';
+        ctx.beginPath();
+        ctx.moveTo(padLeft, padTop + plotH);
+        ctx.lineTo(width - padRight, padTop + plotH);
+        ctx.stroke();
+
+        if (showLevels && entryVal > 0) {
+          const yEntry = yOf(entryVal), yTp = yOf(tpVal), ySl = yOf(slVal);
+          ctx.fillStyle = 'rgba(16, 185, 129, 0.08)';
+          ctx.fillRect(padLeft, Math.min(yEntry, yTp), plotW, Math.abs(yTp - yEntry));
+          ctx.fillStyle = 'rgba(244, 63, 94, 0.09)';
+          ctx.fillRect(padLeft, Math.min(yEntry, ySl), plotW, Math.abs(ySl - yEntry));
+        }
+
+        slice.forEach((b, idx) => {
+          const cx = padLeft + idx * stepX + stepX / 2;
+          const yHigh = yOf(b.high), yLow = yOf(b.low), yOpen = yOf(b.open), yClose = yOf(b.close);
+          ctx.strokeStyle = b.hex;
+          ctx.lineWidth = 1.1;
+          ctx.beginPath();
+          ctx.moveTo(cx, yHigh);
+          ctx.lineTo(cx, yLow);
+          ctx.stroke();
+
+          ctx.fillStyle = b.hex;
+          ctx.fillRect(cx - bodyW / 2, Math.min(yOpen, yClose), bodyW, Math.max(2, Math.abs(yClose - yOpen)));
+
+          if (b.buySignal) {
+            ctx.fillStyle = '#00FF00';
+            ctx.font = 'bold 8.5px Inter, sans-serif';
+            ctx.fillText('▲BUY', cx - 10, Math.min(padTop + plotH - 3, yLow + 10));
+          } else if (b.sellSignal) {
+            ctx.fillStyle = '#FF4444';
+            ctx.font = 'bold 8.5px Inter, sans-serif';
+            ctx.fillText('▼SELL', cx - 12, Math.max(padTop + 9, yHigh - 4));
+          }
+        });
+
+        // Slow EMA(26)
+        ctx.strokeStyle = '#38bdf8';
+        ctx.lineWidth = 1.6;
+        ctx.beginPath();
+        slice.forEach((b, idx) => {
+          const cx = padLeft + idx * stepX + stepX / 2, cy = yOf(b.slow);
+          if (idx === 0) ctx.moveTo(cx, cy); else ctx.lineTo(cx, cy);
+        });
+        ctx.stroke();
+
+        // Fast EMA(12)
+        ctx.strokeStyle = '#fb7185';
+        ctx.lineWidth = 1.3;
+        ctx.setLineDash([4, 3]);
+        ctx.beginPath();
+        slice.forEach((b, idx) => {
+          const cx = padLeft + idx * stepX + stepX / 2, cy = yOf(b.fast);
+          if (idx === 0) ctx.moveTo(cx, cy); else ctx.lineTo(cx, cy);
+        });
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        if (showLevels && entryVal > 0) {
+          const dec = entryVal < 10 ? 3 : (entryVal < 200 ? 2 : 1);
+          const drawTag = (price, colorHex, labelPrefix) => {
+            const y = yOf(price);
+            if (y < padTop - 3 || y > padTop + plotH + 3) return;
+            ctx.save();
+            ctx.strokeStyle = colorHex;
+            ctx.lineWidth = 1.2;
+            ctx.setLineDash([5, 4]);
+            ctx.beginPath();
+            ctx.moveTo(padLeft, y);
+            ctx.lineTo(width - padRight, y);
+            ctx.stroke();
+            ctx.setLineDash([]);
+            ctx.fillStyle = colorHex;
+            ctx.fillRect(width - padRight + 2, y - 7, padRight - 4, 14);
+            ctx.fillStyle = '#000000';
+            ctx.font = 'bold 8.5px Inter, sans-serif';
+            ctx.fillText(`${labelPrefix} ${price.toFixed(dec)}`, width - padRight + 4, y + 3);
+            ctx.restore();
+          };
+          drawTag(tpVal, '#10b981', 'TP');
+          drawTag(entryVal, '#f59e0b', 'ENT');
+          drawTag(slVal, '#f43f5e', 'SL');
+        }
+
+        if (hoverMouseObj && hoverMouseObj.x >= padLeft && hoverMouseObj.x <= width - padRight && hoverMouseObj.y >= padTop && hoverMouseObj.y <= padTop + plotH) {
+          const hoverIdx = Math.min(count - 1, Math.max(0, Math.floor((hoverMouseObj.x - padLeft) / stepX)));
+          const hb = slice[hoverIdx];
+          if (hb) {
+            const snapX = padLeft + hoverIdx * stepX + stepX / 2;
+            const snapY = hoverMouseObj.y;
+            const dec = entryVal < 10 ? 4 : (entryVal < 200 ? 2 : 1);
+            ctx.save();
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.35)';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([3, 3]);
+            ctx.beginPath(); ctx.moveTo(snapX, padTop); ctx.lineTo(snapX, padTop + plotH); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(padLeft, snapY); ctx.lineTo(width - padRight, snapY); ctx.stroke();
+            ctx.setLineDash([]);
+
+            const hoverDateStr = formatFullThaiDate(hb.time, tfVal);
+            const infoStr = `${hoverDateStr} | C: ${formatNum(hb.close, dec)} | EMA12: ${formatNum(hb.fast, dec)} EMA26: ${formatNum(hb.slow, dec)}`;
+            ctx.font = '9.5px Inter, Noto Sans Thai, sans-serif';
+            const iw = Math.min(plotW - 4, ctx.measureText(infoStr).width + 10);
+            ctx.fillStyle = 'rgba(17, 24, 39, 0.90)';
+            ctx.fillRect(padLeft + 2, 2, iw, 15);
+            ctx.fillStyle = hb.hex;
+            ctx.fillText(infoStr, padLeft + 6, 12.5);
+            ctx.restore();
+          }
+        }
+      }
+
+      function drawAllMtfCdcCanvases() {
+        const mapCanvas = {
+          '15m': document.getElementById('cdcCanvas15m'),
+          '1h':  document.getElementById('cdcCanvas1h'),
+          '4h':  document.getElementById('cdcCanvas4h'),
+          '1d':  document.getElementById('cdcCanvas1d')
+        };
+        Object.keys(mapCanvas).forEach(tfKey => {
+          const store = mtfCdcStore[tfKey];
+          const cEl = mapCanvas[tfKey];
+          if (cEl && store && store.bars && store.bars.length > 0) {
+            renderCdcBarsOnCanvas(cEl, store.bars, store.tfVal, store.hoverMouse);
+          }
+        });
+      }
+
+      function buildSyntheticMtfBarsForTf(tfKey, basePrice) {
+        const tfMultMap = { '15m': 0.003, '1h': 0.006, '4h': 0.014, '1d': 0.028 };
+        const stepMsMap = { '15m': 15 * 60000, '1h': 3600000, '4h': 4 * 3600000, '1d': 86400000 };
+        const volMult = tfMultMap[tfKey] || 0.006;
+        const barStepMs = stepMsMap[tfKey] || 86400000;
+        const amp = basePrice * volMult;
+        const step = (basePrice * volMult) / 14;
+        const wick = amp * 0.45;
+        const startPrice = Math.max(basePrice * 0.35, basePrice - (step * 320));
+        const opens = [], highs = [], lows = [], closes = [], times = [];
+        const totalSynth = 760;
+        const nowMs = Date.now();
+        let p = startPrice;
+        for (let i = 0; i < totalSynth; i++) {
+          times.push(nowMs - (totalSynth - 1 - i) * barStepMs);
+          const cycle = Math.sin(i / 4.5) * amp + Math.cos(i / 2.2) * (amp * 0.35) + (i * step);
+          const open = p;
+          const close = startPrice + cycle;
+          const high = Math.max(open, close) + wick * (0.6 + (i % 3) * 0.3);
+          const low = Math.min(open, close) - wick * (0.5 + ((i + 1) % 3) * 0.3);
+          opens.push(open); highs.push(high); lows.push(low); closes.push(close);
+          p = close;
+        }
+        closes[closes.length - 1] = basePrice;
+        const e12 = computeEMAArray(closes, 12);
+        const e26 = computeEMAArray(closes, 26);
+        const built = buildCdcBarsArray(opens, highs, lows, closes, e12, e26, times, mtfCdcStore[tfKey].tfVal);
+        mtfCdcStore[tfKey].bars = built.bars;
+        updateMtfHeaderMeta(tfKey, built);
+      }
+
+      async function fetchAllFourCdcTimeframes(symbol, fallbackBasePrice) {
+        const tfList = ['15m', '1h', '4h', '1d'];
+        await Promise.all(tfList.map(async (tfKey) => {
+          try {
+            const { klines } = await fetchBinanceFuturesOrSpotData(symbol, tfKey);
+            const times = klines.map(k => parseInt(k[0], 10));
+            const opens = klines.map(k => parseFloat(k[1]));
+            const highs = klines.map(k => parseFloat(k[2]));
+            const lows = klines.map(k => parseFloat(k[3]));
+            const closes = klines.map(k => parseFloat(k[4]));
+            const e12 = computeEMAArray(closes, 12);
+            const e26 = computeEMAArray(closes, 26);
+            const built = buildCdcBarsArray(opens, highs, lows, closes, e12, e26, times, mtfCdcStore[tfKey].tfVal);
+            mtfCdcStore[tfKey].bars = built.bars;
+            updateMtfHeaderMeta(tfKey, built);
+          } catch (e) {
+            buildSyntheticMtfBarsForTf(tfKey, fallbackBasePrice);
+          }
+        }));
+        drawAllMtfCdcCanvases();
+      }
+
       function drawCdcCanvas() {
+        drawAllMtfCdcCanvases();
         latestCdcBars = getViewportSlice(allCdcBars);
         if (!cdcCanvasChart || latestCdcBars.length === 0) return;
         const rect = cdcCanvasChart.parentElement.getBoundingClientRect();
@@ -2832,6 +3204,58 @@ plotshape(Bear and Bull[1], "Sell", shape.labeldown, location.abovebar, color.re
             drawObvCanvas();
           });
         }
+
+        // Interactive Wheel Zoom, Drag-to-Pan & Crosshair on the 4 separated Timeframe Canvases (15m, 1H, 4H, 1D)
+        [
+          ['15m', document.getElementById('cdcCanvas15m')],
+          ['1h',  document.getElementById('cdcCanvas1h')],
+          ['4h',  document.getElementById('cdcCanvas4h')],
+          ['1d',  document.getElementById('cdcCanvas1d')]
+        ].forEach(([tfKey, cEl]) => {
+          if (!cEl) return;
+          let mtfDragging = false;
+          let mtfStartX = 0;
+          let mtfStartOffset = 0;
+
+          cEl.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            const zoomStep = Math.max(4, Math.round(cdcVisibleCount * 0.14));
+            if (e.deltaY < 0) {
+              cdcVisibleCount = Math.max(18, cdcVisibleCount - zoomStep);
+            } else {
+              cdcVisibleCount = Math.min(760, cdcVisibleCount + zoomStep);
+            }
+            drawCdcCanvas();
+            drawObvCanvas();
+          }, { passive: false });
+
+          cEl.addEventListener('mousedown', (e) => {
+            mtfDragging = true;
+            mtfStartX = e.clientX;
+            mtfStartOffset = cdcPanRightOffset;
+          });
+
+          window.addEventListener('mouseup', () => { mtfDragging = false; });
+
+          cEl.addEventListener('mousemove', (e) => {
+            const rect = cEl.getBoundingClientRect();
+            mtfCdcStore[tfKey].hoverMouse = { x: e.clientX - rect.left, y: e.clientY - rect.top };
+            if (mtfDragging) {
+              const dx = e.clientX - mtfStartX;
+              const plotW = Math.max(180, rect.width - 84);
+              const deltaBars = Math.round((dx / plotW) * cdcVisibleCount);
+              cdcPanRightOffset = Math.max(0, mtfStartOffset + deltaBars);
+              drawObvCanvas();
+            }
+            drawAllMtfCdcCanvases();
+          });
+
+          cEl.addEventListener('mouseleave', () => {
+            mtfDragging = false;
+            mtfCdcStore[tfKey].hoverMouse = null;
+            drawAllMtfCdcCanvases();
+          });
+        });
       })();
 
             function analyzeElliottAndDivergenceFromKlines(highs, lows, closes, rsiArr, macdObj, obvObj) {
@@ -3005,38 +3429,10 @@ plotshape(Bear and Bull[1], "Sell", shape.labeldown, location.abovebar, color.re
         latestMarketStats.ema20 = e20[e20.length - 1] || targetLast * 0.995;
         latestMarketStats.ema50 = e50[e50.length - 1] || targetLast * 0.988;
 
+        ['15m', '1h', '4h', '1d'].forEach(tfk => buildSyntheticMtfBarsForTf(tfk, targetLast));
         computeAndRenderCdcActionZone(opens, highs, lows, closes, e12, e26, times);
         drawObvCanvas();
         analyzeElliottAndDivergenceFromKlines(highs, lows, closes, rsiArr, macdObj, obvObj);
-      }
-
-      async function loadAllBinanceFuturesSymbols() {
-        const optgroup = document.getElementById('allBinanceFuturesOptgroup');
-        if (!optgroup) return;
-        try {
-          const res = await fetch('https://fapi.binance.com/fapi/v1/exchangeInfo');
-          if (!res.ok) return;
-          const data = await res.json();
-          if (!data || !Array.isArray(data.symbols)) return;
-          const existing = new Set(Array.from(symbolSelect.options).map(o => o.value));
-          const perpSymbols = data.symbols
-            .filter(s => s.contractType === 'PERPETUAL' && s.quoteAsset === 'USDT' && s.status === 'TRADING' && !existing.has(s.symbol))
-            .map(s => ({ symbol: s.symbol, baseAsset: s.baseAsset }))
-            .sort((a, b) => a.symbol.localeCompare(b.symbol));
-          const frag = document.createDocumentFragment();
-          perpSymbols.forEach(item => {
-            const opt = document.createElement('option');
-            opt.value = item.symbol;
-            opt.setAttribute('data-tv', `BINANCE:${item.symbol}.P`);
-            opt.setAttribute('data-unit', item.baseAsset);
-            opt.setAttribute('data-quote', 'USDT');
-            opt.setAttribute('data-base', '1.0');
-            opt.className = 'bg-[#1e1e1e] text-white';
-            opt.textContent = `${item.symbol} Perp`;
-            frag.appendChild(opt);
-          });
-          optgroup.appendChild(frag);
-        } catch (e) {}
       }
 
       async function fetchBinanceFuturesOrSpotData(symbol, interval) {
@@ -3127,6 +3523,7 @@ plotshape(Bear and Bull[1], "Sell", shape.labeldown, location.abovebar, color.re
           const ema12Arr = computeEMAArray(closes, 12);
           const ema26Arr = computeEMAArray(closes, 26);
           computeAndRenderCdcActionZone(opens, highs, lows, closes, ema12Arr, ema26Arr, times);
+          fetchAllFourCdcTimeframes(symbol, lastPrice);
           drawObvCanvas();
           analyzeElliottAndDivergenceFromKlines(highs, lows, closes, rsiArr, macdObj, obvObj);
 
@@ -3340,7 +3737,6 @@ plotshape(Bear and Bull[1], "Sell", shape.labeldown, location.abovebar, color.re
       });
 
       // Initialize everything on load
-      loadAllBinanceFuturesSymbols();
       buildFallbackSyntheticBars('1d');
       updateSlHelper();
       calculateAll();
